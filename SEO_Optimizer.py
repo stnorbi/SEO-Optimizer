@@ -7,39 +7,46 @@ import sys, os
 #own packages
 from utils import fileUtils
 from Modules import buttonView
+from Modules import widgets
 
 iconPath = os.path.dirname(__file__) + "/images/"
 
 class SeoOptimizer(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-
-        self.setWindowOpacity(0.8)
         self.setWindowTitle("SEO Optimizer - Content Tool")
         self.setWindowIcon(QIcon(fileUtils.getIcon()["mainIcon"]))
-        self.resize(800,600)
+        self.resize(1350,900)
 
 
         centralWidget=QWidget()
-        centralWidget.windowOpacity()
-        centralWidget.setLayout(QVBoxLayout())
+        centralWidget.setLayout(QHBoxLayout())
         centralWidget.layout().setContentsMargins(0,0,0,0)
+        self.setCentralWidget(centralWidget)
 
-        viewLayout=QHBoxLayout()
+
+        viewLayout=QVBoxLayout()
         centralWidget.layout().addLayout(viewLayout)
+
+        # self.separator = widgets.Separator('horizontal')
+        # viewLayout.addWidget(self.separator)
 
         self.buttonView=buttonView.ButtonView(self)
         viewLayout.addWidget(self.buttonView)
+
+        self.setStyle()
 
 
     def paintEvent(self,event):
         painter=QPainter(self)
         bgPixmap=QPixmap(fileUtils.getIcon()["mainBackground"])
-        painter.setOpacity(0.5)
+        #painter.setOpacity(0.5)
         painter.drawPixmap(self.rect(),bgPixmap)
 
     def setStyle(self):
-        with open(iconPath)
+        with open(iconPath + 'style.qss', "r") as qss_file:
+            self.setStyleSheet(qss_file.read())
+
 
 
 app=QApplication(sys.argv)

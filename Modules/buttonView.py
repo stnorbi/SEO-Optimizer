@@ -19,12 +19,15 @@ class ButtonView(QWidget):
         self.layout().addLayout(buttonLayout)
 
         emailField=QLineEdit()
-        buttonLayout.addWidget(emailField)
+        emailField.setPlaceholderText("Mail Address")
+
 
         logIn_bttn=QPushButton("Log into Google")
         #logIn_bttn.clicked.connect("") #TODO: set up the connection with google
+
+        buttonLayout.addWidget(emailField)
         buttonLayout.addWidget(logIn_bttn)
 
 
-        separator=widgets.Separator("vertical")
-        self.layout().addWidget(separator)
+        # separator=widgets.Separator("horizontal")
+        # self.layout().addWidget(separator)
