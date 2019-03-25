@@ -15,19 +15,29 @@ class ButtonView(QWidget):
         self.layout().setContentsMargins(10,10,0,10)
         self.mainWindow=mainWindow
 
-        buttonLayout=QHBoxLayout()
+        buttonLayout = QVBoxLayout()
         self.layout().addLayout(buttonLayout)
 
-        emailField=QLineEdit()
+        emailField = QLineEdit()
         emailField.setPlaceholderText("Mail Address")
 
-
-        logIn_bttn=QPushButton("Log into Google")
-        #logIn_bttn.clicked.connect("") #TODO: set up the connection with google
+        logIn_bttn = QPushButton("Log into Google")
+        # logIn_bttn.clicked.connect("") #TODO: set up the connection with google
 
         buttonLayout.addWidget(emailField)
         buttonLayout.addWidget(logIn_bttn)
+        separator = widgets.Separator("horizontal")
+        self.layout().addWidget(separator)
 
 
-        # separator=widgets.Separator("horizontal")
-        # self.layout().addWidget(separator)
+        self.doclist=QListWidget()
+        self.layout().addWidget(self.doclist)
+
+
+
+    def keyPressEvent(self, event):
+        if event.key() == 16777274:
+            self.mainWindow.toggleFullScreen()
+
+    def getMailAddress(self):
+        emailAddress=emailField
