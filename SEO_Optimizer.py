@@ -6,7 +6,7 @@ import sys, os
 
 #own packages
 from utils import fileUtils
-from Modules import buttonView, docView
+from Modules import buttonView, docView, analysView
 from Modules import widgets
 
 iconPath = os.path.dirname(__file__) + "/images/"
@@ -20,21 +20,31 @@ class SeoOptimizer(QMainWindow):
 
 
         centralWidget=QWidget()
-        centralWidget.setLayout(QVBoxLayout())
+        centralWidget.setLayout(QHBoxLayout())
         centralWidget.layout().setContentsMargins(0,0,0,0)
         self.setCentralWidget(centralWidget)
 
 
-        viewLayout=QVBoxLayout()
+        viewLayout=QHBoxLayout()
         centralWidget.layout().addLayout(viewLayout)
 
+        editorLayout=QVBoxLayout()
+        centralWidget.layout().addLayout(editorLayout)
 
-        self.separator = widgets.Separator('vertical')
-        viewLayout.addWidget(self.separator)
+        # self.separator = widgets.Separator('horizontal')
+        # viewLayout.addWidget(self.separator)
 
         self.buttonView=buttonView.ButtonView(self)
         viewLayout.addWidget(self.buttonView)
 
+        self.separator = widgets.Separator('vertical')
+        viewLayout.addWidget(self.separator)
+
+        self.docView=docView.DocView(self)
+        editorLayout.addWidget(self.docView)
+
+        self.analysView=analysView.AnalysView(self)
+        editorLayout.addWidget(self.analysView)
         self.setStyle()
 
 

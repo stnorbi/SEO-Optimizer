@@ -1,28 +1,33 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit
+    QListWidgetItem, QColor, QLineEdit, QTextEdit
+from PyQt4.QtCore import Qt
 #from PyQt4.QtCore import Signal
 import os
 
 #own packages
 from Modules import widgets
 
-class dovView:
+class DocView(QWidget):
     def __init__(self,mainwindow):
         QWidget.__init__(self)
+        self.resize(500,500)
         self.setLayout(QVBoxLayout())
         self.layout().setContentsMargins(0,10,10,10)
-        self.setContextMenuPolicy(Qt.CustomcontextMenu)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
 
         self.mainWindow=mainwindow
-        self.progress=0
-        self.movieItems=[]
-        self.sorting="alphabet"
 
-        filterLayout = QHBoxLayout()
-        self.layout().addLayout(filterLayout)
+
+        editorLayout=QVBoxLayout()
+        self.layout().addLayout(editorLayout)
+
+        self.textEditor=QTextEdit()
+        self.textEditor.createStandardContextMenu()
+        editorLayout.addWidget(self.textEditor)
 
         separator = widgets.Separator("vertical")
-        filterLayout.addWidget(separator)
+#        filterLayout.addWidget(separator)
+
 
 

@@ -63,6 +63,7 @@ QPushButton {
     padding: 15px 15px 15px 15px;
     color: #000000;
     font: 12pt "Helvetica";
+    border-radius: 12px;
 }
 QPushButton:pressed {
     padding: 4px 14px 3px 16px;
@@ -101,4 +102,15 @@ QLineEdit{
     padding: 15px 15px 15px 15px;
     font: 12pt "Helvetica";
     color: #000000;
+}
+
+QTextEdit {
+    background-color: #FFF7E6;
+    font: 12pt "Helvetica";
+    color: #000000;
+}
+
+QTableWidget {
+    background-color: #FFF7E6;
+    font: 12pt "Helvetica";
 }

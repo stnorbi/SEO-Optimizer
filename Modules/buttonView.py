@@ -24,8 +24,13 @@ class ButtonView(QWidget):
         logIn_bttn = QPushButton("Log into Google")
         # logIn_bttn.clicked.connect("") #TODO: set up the connection with google
 
+        sync_bttn=QPushButton('Sync with Google Drive')
+
+
         buttonLayout.addWidget(emailField)
         buttonLayout.addWidget(logIn_bttn)
+        buttonLayout.addWidget(sync_bttn)
+
         separator = widgets.Separator("horizontal")
         self.layout().addWidget(separator)
 
