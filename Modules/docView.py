@@ -1,6 +1,6 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit, QTextEdit
+    QListWidgetItem, QColor, QLineEdit, QTextEdit, QToolBar, QMenu
 from PyQt4.QtCore import Qt, SIGNAL
 import os
 
@@ -17,18 +17,24 @@ class DocView(QWidget):
 
         self.mainWindow=mainwindow
 
-
         editorLayout=QVBoxLayout()
         self.layout().addLayout(editorLayout)
+
+
 
         self.textEditor=QTextEdit()
         self.textEditor.setUpdatesEnabled(True)
         self.textEditor.createStandardContextMenu()
         editorLayout.addWidget(self.textEditor)
 
-        separator = widgets.Separator("vertical")
-#        filterLayout.addWidget(separator)
+
 
     def getText(self):
         textBoxValue=self.textEditor.toPlainText()
+        print(textBoxValue)
+
+
+
+
+
 

@@ -1,7 +1,7 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
     QListWidgetItem, QColor, QLineEdit, QTableWidget, QTableWidgetItem
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, SIGNAL
 
 #from PyQt4.QtCore import Signal
 import os
@@ -46,7 +46,10 @@ class AnalysView(QWidget):
     def setWords(self,items):
         self.analyserTable.setRowCount(50)
         j=0
-        for word in items:
-            self.analyserTable.setItem(j,0,QTableWidgetItem(QTableWidgetItem(word)))
-            j=j+1
-            self.analyserTable.update()
+        if items:
+            for word in items:
+                self.analyserTable.setItem(j,0,QTableWidgetItem(QTableWidgetItem(word)))
+                j=j+1
+                self.analyserTable.update()
+        else:
+            print("empty")

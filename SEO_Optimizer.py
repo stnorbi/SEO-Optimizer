@@ -1,12 +1,13 @@
 #third party external packages
-from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, QSplitter
+from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, \
+        QSplitter, QToolBar, QMenuBar
 from PyQt4.QtCore import Qt
 import sys, os
 
 
 #own packages
 from utils import fileUtils
-from Modules import buttonView, docView, analysView
+from Modules import buttonView, docView, analysView, toolBar
 from Modules import widgets
 
 iconPath = os.path.dirname(__file__) + "/images/"
@@ -18,11 +19,14 @@ class SeoOptimizer(QMainWindow):
         self.setWindowIcon(QIcon(fileUtils.getIcon()["mainIcon"]))
         self.resize(1350,900)
 
+        menubar=toolBar.MenuBar(self)
+        self.setMenuBar(menubar)
 
         centralWidget=QWidget()
         centralWidget.setLayout(QHBoxLayout())
         centralWidget.layout().setContentsMargins(0,0,0,0)
         self.setCentralWidget(centralWidget)
+
 
 
         viewLayout=QHBoxLayout()
@@ -54,8 +58,6 @@ class SeoOptimizer(QMainWindow):
 
 
         self.setStyle()
-
-
 
 
     def paintEvent(self,event):
