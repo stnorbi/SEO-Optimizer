@@ -1,13 +1,13 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit, QTableWidget
+    QListWidgetItem, QColor, QLineEdit, QTableWidget, QTableWidgetItem
 from PyQt4.QtCore import Qt
 
 #from PyQt4.QtCore import Signal
 import os
 
 #own packages
-from Modules import widgets
+from Modules import widgets, docView
 
 class AnalysView(QWidget):
     def __init__(self,mainwindow):
@@ -24,7 +24,8 @@ class AnalysView(QWidget):
         self.layout().addLayout(AnalysLayout)
 
         self.analyserTable=QTableWidget()
-        self.analyserTable.setRowCount(50)
+        self.analyserTable.setUpdatesEnabled(True)
+        #self.analyserTable.setRowCount(50)
         self.analyserTable.setColumnCount(9)
         #self.analyserTable.resize(400,250)
         self.analyserTable.setHorizontalHeaderLabels(("Words;"
@@ -39,6 +40,13 @@ class AnalysView(QWidget):
                                                       ).split(";"))
         AnalysLayout.addWidget(self.analyserTable)
 
-
-
         separator = widgets.Separator("horizontal")
+
+
+    def setWords(self,items):
+        self.analyserTable.setRowCount(50)
+        j=0
+        for word in items:
+            self.analyserTable.setItem(j,0,QTableWidgetItem(QTableWidgetItem(word)))
+            j=j+1
+            self.analyserTable.update()

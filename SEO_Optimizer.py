@@ -45,7 +45,12 @@ class SeoOptimizer(QMainWindow):
 
         self.analysView=analysView.AnalysView(self)
         editorLayout.addWidget(self.analysView)
+
+        self.setWordList()
+
+
         self.setStyle()
+
 
 
 
@@ -60,8 +65,9 @@ class SeoOptimizer(QMainWindow):
             self.setStyleSheet(qss_file.read())
 
 
-
-
+    #backend modules
+    def setWordList(self):
+        self.analysView.setWords(self.docView.getText())
 
 app=QApplication(sys.argv)
 window=SeoOptimizer()
