@@ -29,12 +29,6 @@ class DocView(QWidget):
         separator = widgets.Separator("vertical")
 #        filterLayout.addWidget(separator)
 
-
-
-
     def getText(self):
         textBoxValue=self.textEditor.toPlainText()
-        docs=textBoxValue.split(',')
-        print(docs)
-        return docs
 

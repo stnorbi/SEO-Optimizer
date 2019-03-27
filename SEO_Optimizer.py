@@ -1,5 +1,5 @@
 #third party external packages
-from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon
+from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, QSplitter
 from PyQt4.QtCore import Qt
 import sys, os
 
@@ -26,6 +26,8 @@ class SeoOptimizer(QMainWindow):
 
 
         viewLayout=QHBoxLayout()
+        splitter=QSplitter(Qt.Vertical)
+
         centralWidget.layout().addLayout(viewLayout)
 
         editorLayout=QVBoxLayout()
@@ -37,16 +39,18 @@ class SeoOptimizer(QMainWindow):
         self.buttonView=buttonView.ButtonView(self)
         viewLayout.addWidget(self.buttonView)
 
+
+        editorLayout.addWidget(splitter)
+
         self.separator = widgets.Separator('vertical')
-        viewLayout.addWidget(self.separator)
+        #viewLayout.addWidget(self.separator)
+
 
         self.docView=docView.DocView(self)
-        editorLayout.addWidget(self.docView)
+        splitter.addWidget(self.docView)
 
         self.analysView=analysView.AnalysView(self)
-        editorLayout.addWidget(self.analysView)
-
-        self.setWordList()
+        splitter.addWidget(self.analysView)
 
 
         self.setStyle()
