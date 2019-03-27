@@ -48,6 +48,7 @@ class SeoOptimizer(QMainWindow):
         self.setStyle()
 
 
+
     def paintEvent(self,event):
         painter=QPainter(self)
         bgPixmap=QPixmap(fileUtils.getIcon()["mainBackground"])
