@@ -62,6 +62,7 @@ class SeoOptimizer(QMainWindow):
 
 
 
+
 app=QApplication(sys.argv)
 window=SeoOptimizer()
 window.show()
