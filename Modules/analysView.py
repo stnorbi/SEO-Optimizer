@@ -1,7 +1,7 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
     QListWidgetItem, QColor, QLineEdit, QTableWidget, QTableWidgetItem
-from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtCore import Qt, pyqtSignal
 
 #from PyQt4.QtCore import Signal
 import os
@@ -10,7 +10,7 @@ import os
 from Modules import widgets, docView
 
 class AnalysView(QWidget):
-    wordsChange=SIGNAL('list')
+    wordsChange=pyqtSignal(list)
 
     def __init__(self,mainwindow):
         QWidget.__init__(self)
@@ -28,10 +28,31 @@ class AnalysView(QWidget):
 
         separator = widgets.Separator("horizontal")
 
-        self.analyserTable.cellChanged.connect(self.analyserTable.setWordList)
+        self.textEdit=docView.TextEditor(self)
 
+        #self.analyserTable.cellChanged.connect(self.analyserTable.setWordList)
+
+        #self.analyserTable.cellChanged.connect(self.analyserTable.getWords)
+
+        #self.text=self.textEditor.textEditor.textChanged.connect(self.textEditor.getText)
+
+        self.text=[]
+        self.analyserTable.cellChanged.connect(self.setComparesion)
+
+
+    def setComparesion(self):
+        text=self.textEdit.getText()
+        wordList=self.analyserTable.setWordList()
+        print(text)
+        # if wordList:
+        #     for word in wordList:
+        #         if word in text:
+        #             print("OK")
+        # else:
+        #     print("error")
 
 class TableWidget(QTableWidget):
+    wordsChange = pyqtSignal(list)
     def __init__(self,parent):
         QTableWidget.__init__(self,parent)
         self.keyboardGrabber()
@@ -48,8 +69,9 @@ class TableWidget(QTableWidget):
                                       ).split(";"))
 
 
+
     def setWordList(self):
-        wordList=[]
+        wordList = []
         allRows = self.rowCount()
         self.setRowCount(allRows+1)
         if self.item(0, 0).text():
@@ -59,8 +81,11 @@ class TableWidget(QTableWidget):
 
 
 
+
     def addNewRow(self):
             self.insertRow(1)
 
     def refresh(self):
         self.clear()
+
+
