@@ -1,7 +1,7 @@
 #third party external packages
 from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, \
         QSplitter, QToolBar, QMenuBar
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, SIGNAL
 import sys, os
 
 
@@ -56,9 +56,7 @@ class SeoOptimizer(QMainWindow):
         self.analysView=analysView.AnalysView(self)
         splitter.addWidget(self.analysView)
 
-
         self.setStyle()
-
 
     def paintEvent(self,event):
         painter=QPainter(self)
@@ -73,7 +71,7 @@ class SeoOptimizer(QMainWindow):
 
     #backend modules
     def setWordList(self):
-        self.analysView.setWords(self.docView.getText())
+        self.analysView.setWords()
 
 app=QApplication(sys.argv)
 window=SeoOptimizer()

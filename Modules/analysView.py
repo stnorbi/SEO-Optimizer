@@ -24,32 +24,33 @@ class AnalysView(QWidget):
         self.layout().addLayout(AnalysLayout)
 
         self.analyserTable=QTableWidget()
+        self.analyserTable.keyboardGrabber()
         self.analyserTable.setUpdatesEnabled(True)
-        #self.analyserTable.setRowCount(50)
-        self.analyserTable.setColumnCount(9)
-        #self.analyserTable.resize(400,250)
-        self.analyserTable.setHorizontalHeaderLabels(("Words;"
-                                                      "Metric1;"
-                                                      "Metric2;"
-                                                      "Metric3;"
-                                                      "Metric4;"
-                                                      "Metric5;"
-                                                      "Metric6;"
-                                                      "Metric7;"
-                                                      "Metric8;"
+        self.analyserTable.setColumnCount(7)
+        self.analyserTable.setRowCount(1)
+        self.analyserTable.resize(400,250)
+        self.analyserTable.setHorizontalHeaderLabels(("Szavak;"
+                                                      "Megjelenítés;"
+                                                      "Pozíció;"
+                                                      "CTR;"
+                                                      "Kattintás;"
+                                                      "Tartalmazza?;"
                                                       ).split(";"))
         AnalysLayout.addWidget(self.analyserTable)
 
         separator = widgets.Separator("horizontal")
 
 
-    def setWords(self,items):
-        self.analyserTable.setRowCount(50)
-        j=0
-        if items:
-            for word in items:
-                self.analyserTable.setItem(j,0,QTableWidgetItem(QTableWidgetItem(word)))
-                j=j+1
-                self.analyserTable.update()
-        else:
-            print("empty")
+    def setWords(self):
+        allRows = self.analyserTable.rowCount()
+        if self.analyserTable.cellWidget(1, 1):
+            for row in range(0,allRows):
+                word=self.analyserTable.cellWidget(row,1)
+                print(word)
+
+
+
+    def addNewRow(self,rows):
+        if self.analyserTable.cellWidget(rows,1):
+            rows+=1
+            self.analyserTable.setRowCount(rows)

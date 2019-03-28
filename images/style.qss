@@ -110,7 +110,7 @@ QTextEdit {
 }
 
 QTableWidget {
-    background-color: #FFF7E6;
+    background-color: rgba(255,255,255);
     color: #000000;
-    font: 10pt "Helvetica";
+    font: 10pt "Helvetica"
 }
