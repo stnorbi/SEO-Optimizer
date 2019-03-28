@@ -1,14 +1,13 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit, QTextEdit, QToolBar, QMenu
+    QListWidgetItem, QColor, QLineEdit, QTextEdit, QToolBar, QMenu, QTextDocument
 from PyQt4.QtCore import Qt, pyqtSignal
 import os
 
 #own packages
-from Modules import widgets
+from Modules import widgets, analysView
 
 class DocView(QWidget):
-
 
     def __init__(self,mainwindow):
         QWidget.__init__(self)
@@ -25,6 +24,8 @@ class DocView(QWidget):
         self.textEditor=TextEditor(self)
         editorLayout.addWidget(self.textEditor)
 
+        self.textEditor.textChanged.connect(self.textEditor.slotSignal)
+
     # def setText(self):
     #     wordList=self.getText()
     #     print(wordList)
@@ -32,20 +33,28 @@ class DocView(QWidget):
 
 
 class TextEditor(QTextEdit):
-    textChange = pyqtSignal(list)
+    pressButton=pyqtSignal(list)
     def __init__(self,mainLayout):
         QTextEdit.__init__(self,mainLayout)
 
         self.setUpdatesEnabled(True)
         self.createStandardContextMenu()
 
-
-        # self.textEditor.textChanged.connect(self.getText)
+        self.textChanged.connect(self.getText)
 
     def getText(self):
-        textBoxValue = (self.toPlainText().split(' '))
-        print(textBoxValue)
+        textBoxValue = self.toPlainText().split(' ')
         return textBoxValue
+
+
+    def slotSignal(self):
+        text=self.getText()
+        print(text)
+        self.pressButton.emit(text)
+
+    #
+    # def keyPressEvent(self,*args,**kwargs):
+    #     self.pressButton.emit()
 
 
 

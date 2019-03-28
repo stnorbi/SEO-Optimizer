@@ -1,7 +1,7 @@
 #third party external packages
 from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, \
         QSplitter, QToolBar, QMenuBar
-from PyQt4.QtCore import Qt, SIGNAL
+from PyQt4.QtCore import Qt, pyqtSignal, QSettings
 import sys, os
 
 
@@ -19,6 +19,10 @@ class SeoOptimizer(QMainWindow):
         self.setWindowIcon(QIcon(fileUtils.getIcon()["mainIcon"]))
         self.resize(1350,900)
 
+        self.settings=QSettings("StNorbi Soft", "SEO-Optimizer")
+        if self.settings.value("geometry"):
+            self.restoreGeometry(self.settings.value("geometry"))
+
         menubar=toolBar.MenuBar(self)
         self.setMenuBar(menubar)
 
@@ -30,9 +34,8 @@ class SeoOptimizer(QMainWindow):
 
 
         viewLayout=QHBoxLayout()
-        splitter=QSplitter(Qt.Vertical)
-
         centralWidget.layout().addLayout(viewLayout)
+        splitter = QSplitter(Qt.Vertical)
 
         editorLayout=QVBoxLayout()
         centralWidget.layout().addLayout(editorLayout)
@@ -47,9 +50,8 @@ class SeoOptimizer(QMainWindow):
         editorLayout.addWidget(splitter)
 
         self.separator = widgets.Separator('vertical')
-        #viewLayout.addWidget(self.separator)
 
-
+        #add TextEditor & Table widget to the splitter
         self.docView=docView.DocView(self)
         splitter.addWidget(self.docView)
 
@@ -67,6 +69,10 @@ class SeoOptimizer(QMainWindow):
     def setStyle(self):
         with open(iconPath + 'style.qss', "r") as qss_file:
             self.setStyleSheet(qss_file.read())
+
+
+    def closeEvent(self,*args,**kwargs):
+        self.settings.setValue("geometry",self.saveGeometry())
 
 
     #backend modules

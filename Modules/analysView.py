@@ -7,7 +7,7 @@ from PyQt4.QtCore import Qt, pyqtSignal
 import os
 
 #own packages
-from Modules import widgets, docView
+from Modules import widgets
 
 class AnalysView(QWidget):
     wordsChange=pyqtSignal(list)
@@ -28,32 +28,10 @@ class AnalysView(QWidget):
 
         separator = widgets.Separator("horizontal")
 
-        self.textEdit=docView.TextEditor(self)
-
-        #self.analyserTable.cellChanged.connect(self.analyserTable.setWordList)
-
-        #self.analyserTable.cellChanged.connect(self.analyserTable.getWords)
-
-        #self.text=self.textEditor.textEditor.textChanged.connect(self.textEditor.getText)
-
-        self.text=[]
-        self.analyserTable.cellChanged.connect(self.setComparesion)
-
-
-    def setComparesion(self):
-        text=self.textEdit.getText()
-        wordList=self.analyserTable.setWordList()
-        print(text)
-        # if wordList:
-        #     for word in wordList:
-        #         if word in text:
-        #             print("OK")
-        # else:
-        #     print("error")
 
 class TableWidget(QTableWidget):
     wordsChange = pyqtSignal(list)
-    def __init__(self,parent):
+    def __init__(self,parent,text):
         QTableWidget.__init__(self,parent)
         self.keyboardGrabber()
         self.setUpdatesEnabled(True)
@@ -69,6 +47,7 @@ class TableWidget(QTableWidget):
                                       ).split(";"))
 
 
+        self.cellChanged.connect(self.setWordList)
 
     def setWordList(self):
         wordList = []
@@ -77,7 +56,20 @@ class TableWidget(QTableWidget):
         if self.item(0, 0).text():
             for row in range(0,allRows-1):
                 wordList.append(self.item(row,0).text())
+        print(wordList)
         return wordList
+
+
+    # def setComparesion(self,text):
+    #     wordList=self.setWordList()
+    #     return wordList
+        #self.wordsChange.emit(text)
+        # if wordList:
+        #     for word in wordList:
+        #         if word in text:
+        #             print("OK")
+        # else:
+        #     print("error")
 
 
 

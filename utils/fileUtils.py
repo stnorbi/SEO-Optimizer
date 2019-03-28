@@ -9,3 +9,6 @@ def getIcon():
            "mainBackground": iconpath + "mainbackground.jpg"
     }
     return icons
+
+def getText(text):
+    print(text)
