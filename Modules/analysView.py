@@ -23,61 +23,16 @@ class AnalysView(QWidget):
         AnalysLayout=QVBoxLayout()
         self.layout().addLayout(AnalysLayout)
 
-        self.analyserTable=TableWidget(self)
+        self.analyserTable=widgets.TableWidget(self)
         AnalysLayout.addWidget(self.analyserTable)
+
+        self.texteditor=widgets.TextEditor(self)
 
         separator = widgets.Separator("horizontal")
 
+        self.getWords()
 
-class TableWidget(QTableWidget):
-    wordsChange = pyqtSignal(list)
-    def __init__(self,parent,text):
-        QTableWidget.__init__(self,parent)
-        self.keyboardGrabber()
-        self.setUpdatesEnabled(True)
-        self.setColumnCount(7)
-        self.setRowCount(2)
-        self.resize(400,250)
-        self.setHorizontalHeaderLabels(("Szavak;"
-                                      "Megjelenítés;"
-                                      "Pozíció;"
-                                      "CTR;"
-                                      "Kattintás;"
-                                      "Tartalmazza?;"
-                                      ).split(";"))
-
-
-        self.cellChanged.connect(self.setWordList)
-
-    def setWordList(self):
-        wordList = []
-        allRows = self.rowCount()
-        self.setRowCount(allRows+1)
-        if self.item(0, 0).text():
-            for row in range(0,allRows-1):
-                wordList.append(self.item(row,0).text())
-        print(wordList)
-        return wordList
-
-
-    # def setComparesion(self,text):
-    #     wordList=self.setWordList()
-    #     return wordList
-        #self.wordsChange.emit(text)
-        # if wordList:
-        #     for word in wordList:
-        #         if word in text:
-        #             print("OK")
-        # else:
-        #     print("error")
-
-
-
-
-    def addNewRow(self):
-            self.insertRow(1)
-
-    def refresh(self):
-        self.clear()
-
-
+    def getWords(self):
+        text=self.texteditor.getText()
+        wordList=self.analyserTable.setWordList()
+        print(text, wordList)

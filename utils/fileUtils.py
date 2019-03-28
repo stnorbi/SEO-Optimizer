@@ -1,7 +1,6 @@
 import os, re, subprocess
 
 
-
 iconpath=os.path.dirname(__file__).replace("utils",'images')+"/"
 
 def getIcon():
@@ -12,3 +11,5 @@ def getIcon():
 
 def getText(text):
     print(text)
+
+
