@@ -7,8 +7,8 @@ import sys, os
 
 #own packages
 from utils import fileUtils
-from Modules import buttonView, docView, analysView, toolBar
-from Modules import widgets
+from Modules import buttonView, toolBar
+from Modules import widgets, seoAnalyser
 
 iconPath = os.path.dirname(__file__) + "/images/"
 
@@ -26,37 +26,27 @@ class SeoOptimizer(QMainWindow):
         menubar=toolBar.MenuBar(self)
         self.setMenuBar(menubar)
 
+        #mainwindow layout
         centralWidget=QWidget()
         centralWidget.setLayout(QHBoxLayout())
         centralWidget.layout().setContentsMargins(0,0,0,0)
         self.setCentralWidget(centralWidget)
 
-
-
+        #other widget layouts
         viewLayout=QHBoxLayout()
         centralWidget.layout().addLayout(viewLayout)
-        splitter = QSplitter(Qt.Vertical)
 
-        editorLayout=QVBoxLayout()
-        centralWidget.layout().addLayout(editorLayout)
+        analysLayout=QVBoxLayout()
+        centralWidget.layout().addLayout(analysLayout)
 
-        # self.separator = widgets.Separator('horizontal')
-        # viewLayout.addWidget(self.separator)
 
         self.buttonView=buttonView.ButtonView(self)
         viewLayout.addWidget(self.buttonView)
 
 
-        editorLayout.addWidget(splitter)
-
-        self.separator = widgets.Separator('vertical')
-
         #add TextEditor & Table widget to the splitter
-        self.docView=docView.DocView(self)
-        splitter.addWidget(self.docView)
-
-        self.analysView=analysView.AnalysView(self)
-        splitter.addWidget(self.analysView)
+        self.analyser=seoAnalyser.Analyser(self)
+        analysLayout.addWidget(self.analyser)
 
         self.setStyle()
 
