@@ -3,6 +3,10 @@ from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushBut
     QListWidgetItem, QColor, QLineEdit, QTextEdit, QTableWidget, QToolBar, QMenu, QSplitter, QTextList
 from PyQt4.QtCore import Qt, pyqtSignal
 import os
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+
 
 #own packages
 from Modules import widgets
@@ -37,12 +41,23 @@ class Analyser(QWidget):
 
 
     def setComparesion(self):
-        text=self.textEditor.writeList()
         keyWords=self.table.getKeyWordList()
-        print(text)
-        # for i in keyWords:
-        #     for j in text:
-        #         print(i in j)
+        words=self.tokenizer()
+        for i in keyWords:
+             if i in words:
+                 print(i,"Ok")
+             else:
+                print(i,"No")
+
+
+
+    def tokenizer(self):
+        text = self.textEditor.writeList()
+        stop_words=set(stopwords.words("hungarian"))
+        for sent in text:
+            tokens=word_tokenize(sent)
+            raw_words=[w for w in tokens if not w in stop_words]
+        return raw_words
 
 
 
@@ -59,7 +74,7 @@ class TextEditor(QTextEdit):
 
 
     def writeList(self):
-        text = self.toPlainText().split(' ')
+        text = self.toPlainText().split('.')
         return text
 
 
@@ -89,18 +104,18 @@ class TableWidget(QTableWidget):
     def addNewRow(self):
         wordList = []
         allRows = self.rowCount()
-        if len(self.item(allRows-1,0).text())>=1:
+        keywords=self.getKeyWordList()
+        if len(keywords)>0:
             self.setRowCount(allRows + 1)
 
-        #TODO: work on it!!!
+
     def getKeyWordList(self):
         keyWordList=[]
         allRows = self.rowCount()
-        if len(self.item(allRows-1,0).text())>=1:
+        if self.item(allRows-1,0) is not None:
             for row in range(0,allRows-1):
                 keyWordList.append(self.item(row,0).text())
         return keyWordList
-
 
 
 

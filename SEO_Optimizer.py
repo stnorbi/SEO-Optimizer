@@ -69,6 +69,9 @@ class SeoOptimizer(QMainWindow):
     def setWordList(self):
         self.analysView.setWords()
 
+
+
+
 app=QApplication(sys.argv)
 window=SeoOptimizer()
 window.show()
