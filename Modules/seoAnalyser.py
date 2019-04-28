@@ -39,27 +39,17 @@ class Analyser(QWidget):
 
         self.textEditor.textChanged.connect(self.setComparesion)
 
-
     def setComparesion(self):
         keyWords=self.table.getKeyWordList()
-        words=self.tokenizer()
+        words=self.textEditor.writeList()
+        checkList=[]
         for i in keyWords:
              if i in words:
-                 print(i,"Ok")
+                 checkList.append("Ok")
              else:
-                print(i,"No")
-
-
-
-    def tokenizer(self):
-        text = self.textEditor.writeList()
-        stop_words=set(stopwords.words("hungarian"))
-        for sent in text:
-            tokens=word_tokenize(sent)
-            raw_words=[w for w in tokens if not w in stop_words]
-        return raw_words
-
-
+                checkList.append("No")
+        print(checkList)
+        return checkList
 
 class TextEditor(QTextEdit):
     textSignal=pyqtSignal(list)
@@ -74,8 +64,11 @@ class TextEditor(QTextEdit):
 
 
     def writeList(self):
-        text = self.toPlainText().split('.')
-        return text
+        text = self.toPlainText()
+        stop_words = set(stopwords.words("hungarian"))
+        tokens = word_tokenize(text)
+        raw_words = [w for w in tokens if not w in stop_words]
+        return raw_words
 
 
 class TableWidget(QTableWidget):
@@ -98,7 +91,7 @@ class TableWidget(QTableWidget):
                                       ).split(";"))
 
 
-        self.cellChanged.connect(self.addNewRow)
+        self.cellEntered.connect(self.addNewRow)
 
 
     def addNewRow(self):
@@ -110,10 +103,10 @@ class TableWidget(QTableWidget):
 
 
     def getKeyWordList(self):
-        keyWordList=[]
+        keyWordList = []
         allRows = self.rowCount()
-        if self.item(allRows-1,0) is not None:
-            for row in range(0,allRows-1):
+        if self.item(allRows-1,0):
+            for row in range(0,allRows):
                 keyWordList.append(self.item(row,0).text())
         return keyWordList
 
