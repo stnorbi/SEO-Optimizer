@@ -1,6 +1,6 @@
 #third party packages
 from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit, QTextEdit, QTableWidget, QToolBar, QMenu, QSplitter, QTextList
+    QListWidgetItem, QColor, QLineEdit, QTextEdit, QTableWidget, QToolBar, QMenu, QSplitter, QTextList, QTableWidgetItem
 from PyQt4.QtCore import Qt, pyqtSignal
 import os
 from nltk.tokenize import word_tokenize
@@ -13,7 +13,7 @@ from Modules import widgets
 
 
 class Analyser(QWidget):
-    changeSignal=pyqtSignal(list)
+    comparesion=pyqtSignal(dict)
     def __init__(self,mainwindow):
         QWidget.__init__(self)
         self.mainwindow=mainwindow
@@ -38,18 +38,30 @@ class Analyser(QWidget):
 
 
         self.textEditor.textChanged.connect(self.setComparesion)
+        self.table.itemChanged.connect(self.setComparesion)
+        self.textEditor.textChanged.connect(self.getComparesion)
+
+
 
     def setComparesion(self):
         keyWords=self.table.getKeyWordList()
         words=self.textEditor.writeList()
-        checkList=[]
-        for i in keyWords:
-             if i in words:
-                 checkList.append("Ok")
+        # print(keyWords.keys())
+        # print(words)
+        self.checkList={}
+        for k,v in keyWords.items():
+             if v in words:
+                 self.checkList[k]="Ok"
              else:
-                checkList.append("No")
-        print(checkList)
-        return checkList
+                self.checkList[k]="No"
+        for i in self.checkList.items(): print(i)
+        self.comparesion.emit(self.checkList)
+        return self.checkList
+
+    def getComparesion(self):
+        for k,v in self.checkList.items():
+            self.table.setItem(k,5,QTableWidgetItem(v))
+
 
 class TextEditor(QTextEdit):
     textSignal=pyqtSignal(list)
@@ -67,11 +79,12 @@ class TextEditor(QTextEdit):
         text = self.toPlainText()
         stop_words = set(stopwords.words("hungarian"))
         tokens = word_tokenize(text)
-        raw_words = [w for w in tokens if not w in stop_words]
+        raw_words = [w.lower() for w in tokens if not w in stop_words]
         return raw_words
 
 
 class TableWidget(QTableWidget):
+    cellValue=pyqtSignal(dict)
     def __init__(self,parent):
         QTableWidget.__init__(self)
 
@@ -80,7 +93,7 @@ class TableWidget(QTableWidget):
         self.keyboardGrabber()
         self.setUpdatesEnabled(True)
         self.setColumnCount(7)
-        self.setRowCount(2)
+        self.setRowCount(5000)
         self.resize(400,250)
         self.setHorizontalHeaderLabels(("Szavak;"
                                       "Megjelenítés;"
@@ -89,25 +102,19 @@ class TableWidget(QTableWidget):
                                       "Kattintás;"
                                       "Tartalmazza?;"
                                       ).split(";"))
-
-
-        self.cellEntered.connect(self.addNewRow)
-
-
-    def addNewRow(self):
-        wordList = []
-        allRows = self.rowCount()
-        keywords=self.getKeyWordList()
-        if len(keywords)>0:
-            self.setRowCount(allRows + 1)
-
+    # def addNewRow(self,wlist):
+    #     wordList=wlist
+    #     allRows = self.rowCount()
+    #     if len(wordList)>=1:
+    #        self.insertRow(allRows)
 
     def getKeyWordList(self):
-        keyWordList = []
+        keyWordList = {}
         allRows = self.rowCount()
-        if self.item(allRows-1,0):
-            for row in range(0,allRows):
-                keyWordList.append(self.item(row,0).text())
+        for row in range(0,allRows):
+            if self.item(row, 0):
+                keyWordList[row]= self.item(row,0).text().lower()
+        self.cellValue.emit(keyWordList)
         return keyWordList
 
 
