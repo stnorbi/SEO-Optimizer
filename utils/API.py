@@ -89,5 +89,8 @@ def getWordData(keyWord):
                                                                                             attributes['COMPETITION'],
                                                                                             attributes['AVERAGE_CPC'][
                                                                                                 'microAmount'] / 1000000,
-                                                                                            attributes[
-                                                                                                'TARGETED_MONTHLY_SEARCHES']))
+                                                                                            attributes['TARGETED_MONTHLY_SEARCHES']))
+    return dataDict
+
+if __name__ == "__main__":
+    getWordData("Star Wars")
