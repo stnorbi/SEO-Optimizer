@@ -5,6 +5,7 @@ from PyQt4.QtCore import Qt, pyqtSignal
 import os
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from Modules import widgets
 
 
 
@@ -96,12 +97,15 @@ class TableWidget(QTableWidget):
         self.setRowCount(5000)
         self.resize(400,250)
         self.setHorizontalHeaderLabels(("Szavak;"
-                                      "Megjelenítés;"
-                                      "Pozíció;"
-                                      "CTR;"
+                                      "Átlag keresés;"
+                                      "Verseny;"
+                                      "Átlag CPC;"
                                       "Kattintás;"
                                       "Tartalmazza?;"
                                       ).split(";"))
+
+        self.cellPressed.connect(self.getTooltip)
+
     # def addNewRow(self,wlist):
     #     wordList=wlist
     #     allRows = self.rowCount()
@@ -117,7 +121,13 @@ class TableWidget(QTableWidget):
         self.cellValue.emit(keyWordList)
         return keyWordList
 
+    def getTooltip(self):
+        keyword_idx=[self.currentRow(),0]
+        keyword=self.item(keyword_idx[0],keyword_idx[1])
+        if keyword:
+            self.setToolTip(keyword.text())
 
 
     def refresh(self):
         self.clear()
+

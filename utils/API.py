@@ -14,23 +14,26 @@ targeting_idea_service = adwords_client.GetService('TargetingIdeaService', versi
 
 selector = {
     'ideaType': 'KEYWORD',
-    'requestType':'IDEAS'
+    'requestType':'STATS',
     }
 
 selector['requestedAttributeTypes'] = [
-    'KEYWORD_TEXT', 'SEARCH_VOLUME', 'CATEGORY_PRODUCTS_AND_SERVICES']
+    'KEYWORD_TEXT', 'SEARCH_VOLUME', 'COMPETITION','AVERAGE_CPC','TARGETED_MONTHLY_SEARCHES']
+
 
 offset = 0
-PAGE_SIZE = 200
+PAGE_SIZE = 100
 selector['paging'] = {
     'startIndex': str(offset),
     'numberResults': str(PAGE_SIZE)
 }
 
-selector['searchParameters'] = [{
-    'xsi_type': 'RelatedToQuerySearchParameter',
-    'queries': ['space cruise']
-}]
+selector['searchParameters']=[{
+    'xsi_type': 'RelatedToQuerySearchParameter','queries': ['vegán','online marketing','keresőoptimalizálás','hadoop', 'kutya']}
+    ,{'xsi_type': 'LocationSearchParameter','locations': {'id': 20415}}
+    ,{'xsi_type':'LanguageSearchParameter','languages': {'id':1024}}
+    ]
+# időkeret felállításának nézz utánaSS
 
 page = targeting_idea_service.get(selector)
 
@@ -41,8 +44,9 @@ for result in page['entries']:
   for attribute in result['data']:
     attributes[attribute['key']] = getattr(
         attribute['value'], 'value', '0')
-  print ('Keyword with "%s" text and average monthly search volume '
-         '"%s" was found with Products and Services categories: %s.'
-         % (attributes['KEYWORD_TEXT'],
+  print ('Keyword: "%s" \n average monthly search volume '
+         '"%s" \n Competition: %s \n Average CPC: %s \n Monthly Average Search: %s' % (attributes['KEYWORD_TEXT'],
             attributes['SEARCH_VOLUME'],
-            attributes['CATEGORY_PRODUCTS_AND_SERVICES']))
+            attributes['COMPETITION'],
+            attributes['AVERAGE_CPC']['microAmount']/1000000,
+            attributes['TARGETED_MONTHLY_SEARCHES']))
