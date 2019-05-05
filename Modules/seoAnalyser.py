@@ -10,7 +10,10 @@ from Modules import widgets
 
 
 #own packages
-from Modules import widgets
+from Modules import widgets, keywordStats
+
+filesPath=os.path.dirname(__file__).replace('Modules','Data')+ '/'
+
 
 
 class Analyser(QWidget):
@@ -39,21 +42,32 @@ class Analyser(QWidget):
 
 
         self.textEditor.textChanged.connect(self.setComparesion)
-        self.table.itemChanged.connect(self.setComparesion)
+        #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
 
+
+
+    # def set_WordList(self):
+    #     keyWords=self.table.getKeyWordList()
+    #     words=[]
+    #     for k,v in keyWords.items():
+    #         words.append(v)
+    #     return words
 
 
     def setComparesion(self):
         keyWords=self.table.getKeyWordList()
         words=self.textEditor.writeList()
+        kw_list = keyWords.values()
+        self.dataDownload(kw_list)
         # print(keyWords.keys())
         # print(words)
         self.checkList={}
         for k,v in keyWords.items():
-             if v in words:
+            #self.table.setItem(k, 1, QTableWidgetItem(list(keywordStats.KeyWord('kutya').data['Search Volume'])[0]))
+            if v in words:
                  self.checkList[k]="Ok"
-             else:
+            else:
                 self.checkList[k]="No"
         for i in self.checkList.items(): print(i)
         self.comparesion.emit(self.checkList)
@@ -62,6 +76,16 @@ class Analyser(QWidget):
     def getComparesion(self):
         for k,v in self.checkList.items():
             self.table.setItem(k,5,QTableWidgetItem(v))
+
+
+    def dataDownload(self,words):
+        file_names=os.listdir(filesPath)
+        print(file_names)
+        for i in words:
+            if i not in file_names:
+                wordList = keywordStats.KeyWordList(self,words)
+                wordList.getData()
+                wordList.saveData()
 
 
 class TextEditor(QTextEdit):
@@ -106,6 +130,9 @@ class TableWidget(QTableWidget):
 
         self.cellPressed.connect(self.getTooltip)
 
+
+
+
     # def addNewRow(self,wlist):
     #     wordList=wlist
     #     allRows = self.rowCount()
@@ -113,11 +140,13 @@ class TableWidget(QTableWidget):
     #        self.insertRow(allRows)
 
     def getKeyWordList(self):
+        keyWords=[]
         keyWordList = {}
         allRows = self.rowCount()
         for row in range(0,allRows):
             if self.item(row, 0):
                 keyWordList[row]= self.item(row,0).text().lower()
+                keyWords.append(self.item(row,0).text().lower())
         self.cellValue.emit(keyWordList)
         return keyWordList
 
@@ -126,6 +155,7 @@ class TableWidget(QTableWidget):
         keyword=self.item(keyword_idx[0],keyword_idx[1])
         if keyword:
             self.setToolTip(keyword.text())
+
 
 
     def refresh(self):

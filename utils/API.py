@@ -11,6 +11,11 @@ adwords_client = adwords.AdWordsClient.LoadFromStorage(google_yaml + "googleads.
 targeting_idea_service = adwords_client.GetService('TargetingIdeaService', version='v201809')
 
 
+dataFolder=os.path.dirname(__file__).replace('utils','Data')+'/'
+
+if  not os.path.isdir(dataFolder):
+    os.mkdir(dataFolder)
+
 
 class GetStats(QObject):
     downloadFinished=pyqtSignal()
@@ -81,16 +86,24 @@ def getWordData(keyWord):
         dataDict['Search Volume'] =attributes['SEARCH_VOLUME'],
         dataDict['CMP'] =attributes['COMPETITION'],
         dataDict['CPC'] =attributes['AVERAGE_CPC']['microAmount'] / 1000000,
-        dataDict['Monthly Research'] = attributes[    'TARGETED_MONTHLY_SEARCHES']
+ #       dataDict['Monthly Research'] = attributes[    'TARGETED_MONTHLY_SEARCHES']
 
-        print('Keyword: "%s" \n average monthly search volume '
-              '"%s" \n Competition: %s \n Average CPC: %s \n Monthly Average Search: %s' % (attributes['KEYWORD_TEXT'],
-                                                                                            attributes['SEARCH_VOLUME'],
-                                                                                            attributes['COMPETITION'],
-                                                                                            attributes['AVERAGE_CPC'][
-                                                                                                'microAmount'] / 1000000,
-                                                                                            attributes['TARGETED_MONTHLY_SEARCHES']))
+        # print('Keyword: "%s" \n average monthly search volume '
+        #       '"%s" \n Competition: %s \n Average CPC: %s \n Monthly Average Search: %s' % (attributes['KEYWORD_TEXT'],
+        #                                                                                     attributes['SEARCH_VOLUME'],
+        #                                                                                     attributes['COMPETITION'],
+        #                                                                                     attributes['AVERAGE_CPC'][
+        #                                                                                         'microAmount'] / 1000000,
+        #                                                                                     attributes['TARGETED_MONTHLY_SEARCHES']))
     return dataDict
 
-if __name__ == "__main__":
-    getWordData("Star Wars")
+def saveData(data, keyWord):
+    print("saving data for", keyWord)
+
+    with open(dataFolder + keyWord + "_data_.json", "w") as dataFile:
+        json.dump(data, dataFile)
+
+
+# if __name__ == "__main__":
+#     for i in ['kutya','macska','véreb']:
+#         getWordData(i)
