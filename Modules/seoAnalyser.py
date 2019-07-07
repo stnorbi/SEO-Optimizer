@@ -42,9 +42,8 @@ class Analyser(QWidget):
 
 
         self.textEditor.textChanged.connect(self.setComparesion)
-        #self.table.itemChanged.connect(self.setComparesion)
+        self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
-
 
 
     # def set_WordList(self):
@@ -56,12 +55,14 @@ class Analyser(QWidget):
 
 
     def setComparesion(self):
-        keyWords=self.table.getKeyWordList()
+        '''
+        compare the content of the textEditor widget (words) and the words in the analyser table
+
+        :return: boolean "list", JSON (YES/NO) of the words based on findings
+
+        '''
+        keyWords=self.table.keyWordList
         words=self.textEditor.writeList()
-        kw_list = keyWords.values()
-        self.dataDownload(kw_list)
-        # print(keyWords.keys())
-        # print(words)
         self.checkList={}
         for k,v in keyWords.items():
             #self.table.setItem(k, 1, QTableWidgetItem(list(keywordStats.KeyWord('kutya').data['Search Volume'])[0]))
@@ -69,23 +70,16 @@ class Analyser(QWidget):
                  self.checkList[k]="Ok"
             else:
                 self.checkList[k]="No"
-        for i in self.checkList.items(): print(i)
         self.comparesion.emit(self.checkList)
         return self.checkList
 
     def getComparesion(self):
+        '''
+        write the result of words comparesion into 5th column of the analyser table
+
+        '''
         for k,v in self.checkList.items():
             self.table.setItem(k,5,QTableWidgetItem(v))
-
-
-    def dataDownload(self,words):
-        file_names=os.listdir(filesPath)
-        print(file_names)
-        for i in words:
-            if i not in file_names:
-                wordList = keywordStats.KeyWordList(self,words)
-                wordList.getData()
-                wordList.saveData()
 
 
 class TextEditor(QTextEdit):
@@ -118,7 +112,7 @@ class TableWidget(QTableWidget):
         self.keyboardGrabber()
         self.setUpdatesEnabled(True)
         self.setColumnCount(7)
-        self.setRowCount(5000)
+        self.setRowCount(1)
         self.resize(400,250)
         self.setHorizontalHeaderLabels(("Szavak;"
                                       "Átlag keresés;"
@@ -127,10 +121,9 @@ class TableWidget(QTableWidget):
                                       "Kattintás;"
                                       "Tartalmazza?;"
                                       ).split(";"))
-
+        self.keyWordList={}
         self.cellPressed.connect(self.getTooltip)
-
-
+        self.cellChanged.connect(self.getKeyWordList)
 
 
     # def addNewRow(self,wlist):
@@ -141,14 +134,20 @@ class TableWidget(QTableWidget):
 
     def getKeyWordList(self):
         keyWords=[]
-        keyWordList = {}
         allRows = self.rowCount()
+        #self.dataDownload(word)
+        self.rowdelet()
         for row in range(0,allRows):
             if self.item(row, 0):
-                keyWordList[row]= self.item(row,0).text().lower()
-                keyWords.append(self.item(row,0).text().lower())
-        self.cellValue.emit(keyWordList)
-        return keyWordList
+                word=self.item(row,0).text().lower()
+                self.dataDownload(word)
+                self.keyWordList[row]= self.item(row,0).text().lower()
+                #keyWords.append(word)
+
+        self.rowInserting()
+
+        self.cellValue.emit(self.keyWordList)
+        return self.keyWordList
 
     def getTooltip(self):
         keyword_idx=[self.currentRow(),0]
@@ -156,7 +155,44 @@ class TableWidget(QTableWidget):
         if keyword:
             self.setToolTip(keyword.text())
 
+    def dataDownload(self,words):
+        """
+        Download and save the Adwords related numbers into JSON file (per word).
+        Only the new words have been downloaded.
 
+        :param words: list of words from the table
+        :return: the JSON files of keywords
+        """
+        file_names=os.listdir(filesPath)
+        t=0
+        for j in file_names:
+            if words not in j:
+                t+=1
+        if t==len(file_names) or len(file_names)==0:
+            wordList = keywordStats.KeyWordList(self,words)
+            wordList.getData()
+            wordList.saveData()
+
+
+    def rowInserting(self):
+        """
+        :return: add a new empty row to table widget
+        """
+        nr_rows=self.rowCount()
+        if self.item(nr_rows-1,0):
+            if len(self.item(nr_rows-1,0).text())!=0:
+                self.insertRow(nr_rows)
+
+    def rowdelet(self):
+        """
+        :return: delet the last empty row if the former cell is empty in column 1
+        """
+        nr_rows = self.rowCount()
+
+        if self.item(nr_rows-1,0) is None or len(self.item(nr_rows-1,0).text())==0:
+            self.removeRow(nr_rows-1)
+        if len(self.currentItem().text())==0:
+            self.removeRow(self.currentRow())
 
     def refresh(self):
         self.clear()
