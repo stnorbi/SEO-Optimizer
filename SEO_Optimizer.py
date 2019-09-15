@@ -9,8 +9,10 @@ import sys, os
 from utils import fileUtils
 from Modules import buttonView, toolBar
 from Modules import widgets, seoAnalyser
+from utils import API
 
 iconPath = os.path.dirname(__file__) + "/images/"
+dataPath=os.path.dirname(__file__) + "/Data/"
 
 class SeoOptimizer(QMainWindow):
     def __init__(self):
@@ -63,6 +65,10 @@ class SeoOptimizer(QMainWindow):
 
     def closeEvent(self,*args,**kwargs):
         self.settings.setValue("geometry",self.saveGeometry())
+        API.delData(dataPath)
+        text=self.analyser.textEditor.toPlainText()
+        fileUtils.saveText(text)
+
 
 
     #backend modules

@@ -5,6 +5,7 @@ from PyQt4.QtCore import Qt, pyqtSignal
 import os
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from nltk.stem.snowball import SnowballStemmer
 from Modules import widgets
 
 
@@ -92,14 +93,18 @@ class TextEditor(QTextEdit):
         self.setUpdatesEnabled(True)
         self.createStandardContextMenu()
 
+    #TODO: Ha van mentett szöveg a Data könyvtárban, akkor itt inicializáld, hogy
+    #       belekerüljön a szövegszerkesztőbe.
 
 
     def writeList(self):
+        stemmer=SnowballStemmer('hungarian')
         text = self.toPlainText()
         stop_words = set(stopwords.words("hungarian"))
         tokens = word_tokenize(text)
         raw_words = [w.lower() for w in tokens if not w in stop_words]
-        return raw_words
+        stemmed=[stemmer.stem(x) for x in raw_words]
+        return stemmed
 
 
 class TableWidget(QTableWidget):
@@ -121,9 +126,15 @@ class TableWidget(QTableWidget):
                                       "Kattintás;"
                                       "Tartalmazza?;"
                                       ).split(";"))
+
+
         self.keyWordList={}
         self.cellPressed.connect(self.getTooltip)
         self.cellChanged.connect(self.getKeyWordList)
+
+
+        #TODO: Tedd Disable-re a szavakon kívüli oszlopok módosítását.
+
 
 
     # def addNewRow(self,wlist):
@@ -180,8 +191,14 @@ class TableWidget(QTableWidget):
         """
         nr_rows=self.rowCount()
         if self.item(nr_rows-1,0):
-            if len(self.item(nr_rows-1,0).text())!=0:
-                self.insertRow(nr_rows)
+            #if len(self.item(nr_rows-1,0).text())!=0:
+                # item = QTableWidgetItem()
+                # #item.setFlags(item.flags() | Qt.ItemIsSelectable)
+                # self.setItem(nr_rows, 5, item)
+           self.insertRow(nr_rows)
+
+
+
 
     def rowdelet(self):
         """

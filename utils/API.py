@@ -55,6 +55,7 @@ def getInfoWorker(queue,signal):
         queue.task_done()
         signal.emit()
 
+
 def getWordData(keyWord):
     """
     download the google stat of a word from Adwords
@@ -127,6 +128,18 @@ def saveData(data, keyWord):
 
     with open(dataFolder + keyWord + "_data.json", "w",encoding='utf-8') as dataFile:
         json.dump(data, dataFile,ensure_ascii=False)
+
+
+def delData(folder_path):
+    """
+    :param folder_path: path of the json files of the DATA directory.
+    """
+
+    files=[ f for f in os.listdir(folder_path) ]
+
+    for file in files:
+        #print(file)
+        os.remove(folder_path + file)
 
 
 # if __name__ == "__main__":

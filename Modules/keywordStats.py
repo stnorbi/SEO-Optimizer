@@ -42,6 +42,8 @@ class KeyWordList(QTableWidgetItem):
     def saveData(self):
         API.saveData(self.data, self.word)
 
+
+
 # if __name__ == "__main__":
 #     valami=KeyWordList(KeyWordList,'kutya')
 #     valami.getData()

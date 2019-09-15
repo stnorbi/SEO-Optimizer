@@ -2,6 +2,7 @@ import os, re, subprocess
 
 
 iconpath=os.path.dirname(__file__).replace("utils",'images')+"/"
+textPath=os.path.dirname(__file__).replace("utils",'Data')+"/"
 
 def getIcon():
     icons={"mainIcon": iconpath+"mainIcon.jpg",
@@ -10,6 +11,10 @@ def getIcon():
     return icons
 
 def getText(text):
-    print(text)
+    pass
 
+def saveText(text):
+
+    with open(textPath + "baseText.txt","w") as file:
+        file.write(text)
 
