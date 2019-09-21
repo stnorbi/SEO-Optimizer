@@ -11,9 +11,10 @@ from Modules import widgets
 
 
 #own packages
-from Modules import widgets, keywordStats
+from Modules import widgets
+from utils import API, fileUtils
 
-filesPath=os.path.dirname(__file__).replace('Modules','Data')+ '/'
+#filesPath=os.path.dirname(__file__).replace('Modules','Data')+ '/'
 
 
 
@@ -43,7 +44,7 @@ class Analyser(QWidget):
 
 
         self.textEditor.textChanged.connect(self.setComparesion)
-        self.table.itemChanged.connect(self.setComparesion)
+        #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
 
 
@@ -127,7 +128,7 @@ class TableWidget(QTableWidget):
                                       "Tartalmazza?;"
                                       ).split(";"))
 
-
+        self.GetStats=API.GetStats()
         self.keyWordList={}
         self.cellPressed.connect(self.getTooltip)
         self.cellChanged.connect(self.getKeyWordList)
@@ -144,20 +145,25 @@ class TableWidget(QTableWidget):
     #        self.insertRow(allRows)
 
     def getKeyWordList(self):
+
         keyWords=[]
+        wordobjects=[]
         allRows = self.rowCount()
         #self.dataDownload(word)
         self.rowdelet()
         for row in range(0,allRows):
             if self.item(row, 0):
                 word=self.item(row,0).text().lower()
-                self.dataDownload(word)
+                #self.dataDownload(word) TODO: erre figyelj!!!
                 self.keyWordList[row]= self.item(row,0).text().lower()
-                #keyWords.append(word)
+                wordobjects.append(word)
 
         self.rowInserting()
 
+        self.GetStats.setKeywords(wordobjects)
+
         self.cellValue.emit(self.keyWordList)
+
         return self.keyWordList
 
     def getTooltip(self):
@@ -174,15 +180,15 @@ class TableWidget(QTableWidget):
         :param words: list of words from the table
         :return: the JSON files of keywords
         """
-        file_names=os.listdir(filesPath)
-        t=0
-        for j in file_names:
-            if words not in j:
-                t+=1
-        if t==len(file_names) or len(file_names)==0:
-            wordList = keywordStats.KeyWordList(self,words)
-            wordList.getData()
-            wordList.saveData()
+        # file_names=os.listdir(filesPath)
+        # t=0
+        # for j in file_names:
+        #     if words not in j:
+        #         t+=1
+        # if t==len(file_names) or len(file_names)==0:
+        #     wordList = keywordStats.KeyWordList(self,words)
+        #     wordList.getData()
+        #     wordList.saveData()
 
 
     def rowInserting(self):

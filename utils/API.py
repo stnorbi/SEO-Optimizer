@@ -13,30 +13,44 @@ targeting_idea_service = adwords_client.GetService('TargetingIdeaService', versi
 
 dataFolder=os.path.dirname(__file__).replace('utils','Data')+'/'
 
+
 if  not os.path.isdir(dataFolder):
     os.mkdir(dataFolder)
 
 
 class GetStats(QObject):
-    downloadFinished=pyqtSignal()
+
+    downloadFinished = pyqtSignal()
 
     def __init__(self):
-        GetStats.__init__(self)
-        self.keywordQueue=Queue()
+        super(GetStats,self).__init__()
+        self.keywordQueue = Queue()
         self.keywords=[]
         self.progress=True
         self.currentDownloaded=None
 
+
     def setKeywords(self,wordObject):
         self.keywords=wordObject
-
+        file_names = os.listdir(dataFolder)
+        print(file_names)
         for obj in self.keywords:
-            self.keywordQueue.put(obj)
+            t=0
+            for j in file_names:
+                fileName=j.split("_")[0]
+                if obj not in fileName:
+                     t+=1
+            if t>=len(file_names) or len(file_names)==0:
+                self.keywordQueue.put(obj)
 
         self.getData()
 
     def getData(self):
-        t = Thread(target=getInfoWorker, args=(self.keywordQueue, self.downloadFinished))
+        for i in range(10):
+            t = Thread(target=getInfoWorker, args=(self.keywordQueue,self.downloadFinished))
+            t.start()
+
+        self.keywordQueue.join()
 
 def getInfoWorker(queue,signal):
     """
@@ -47,12 +61,12 @@ def getInfoWorker(queue,signal):
     :return:
     """
 
-    while not queue.empty:
+    while not queue.empty():
         wordObj=queue.get()
 
         wordData=getWordData(wordObj)
-
         queue.task_done()
+
         signal.emit()
 
 
@@ -115,6 +129,8 @@ def getWordData(keyWord):
                 #,attributes['TARGETED_MONTHLY_SEARCHES']
                 ))
 
+    saveData(dataDict,keyWord)
+
     return dataDict
 
 def saveData(data, keyWord):
@@ -124,11 +140,10 @@ def saveData(data, keyWord):
     :param keyWord: a keyword from the table wordlist
     :return: saved JSON file for a keyword
     """
-    print("saving data for", keyWord)
 
     with open(dataFolder + keyWord + "_data.json", "w",encoding='utf-8') as dataFile:
         json.dump(data, dataFile,ensure_ascii=False)
-
+    print("saving data for", keyWord)
 
 def delData(folder_path):
     """
@@ -137,12 +152,13 @@ def delData(folder_path):
 
     files=[ f for f in os.listdir(folder_path) ]
 
+
     for file in files:
         #print(file)
         os.remove(folder_path + file)
 
 
 # if __name__ == "__main__":
-#     for i in ['online marketing','sexshop','vibrátor']:
-#         f=getWordData(i)
-#         saveData(f,i)
+#     api=GetStats()
+#     api.setKeywords(['online marketing','sexshop','vibrátor'])
+# #    getWordData("majom")

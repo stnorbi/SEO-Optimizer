@@ -3,7 +3,7 @@ from utils import API
 from PyQt4.QtGui import QTableWidgetItem
 
 
-class KeyWordList(QTableWidgetItem):
+class KeyWord(QTableWidgetItem):
     def __init__(self,parent,keyword):
         QTableWidgetItem.__init__(self)
         self.parent=parent
@@ -39,8 +39,6 @@ class KeyWordList(QTableWidgetItem):
                 self.mth_volume = self.data["Monthly Research"]
 
 
-    def saveData(self):
-        API.saveData(self.data, self.word)
 
 
 
