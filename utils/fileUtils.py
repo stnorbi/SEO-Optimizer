@@ -1,5 +1,5 @@
 import os, re, subprocess
-
+import json
 
 iconpath=os.path.dirname(__file__).replace("utils",'images')+"/"
 textPath=os.path.dirname(__file__).replace("utils",'Data')+"/"
@@ -20,3 +20,15 @@ def saveText(text):
     with open(textPath + "baseText.txt","w") as file:
         file.write(text)
 
+def readData(word,filePath):
+    file=filePath + word + "_data.json"
+    with open(file) as json_file:
+        data=json.load(json_file)
+    return data
+
+
+
+if __name__ == "__main__":
+    wordData=readData('majom',filesPath)
+    for k,v in wordData.items():
+        print(k,"\n\t",v)
