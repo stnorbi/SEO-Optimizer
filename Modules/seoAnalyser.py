@@ -3,9 +3,7 @@ from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushBut
     QListWidgetItem, QColor, QLineEdit, QTextEdit, QTableWidget, QToolBar, QMenu, QSplitter, QTextList, QTableWidgetItem
 from PyQt4.QtCore import Qt, pyqtSignal
 import os
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
+
 from Modules import widgets
 
 
@@ -28,6 +26,8 @@ class Analyser(QWidget):
         #self.layout().setContentsMargins(0,10,10,10)
         #self.setContextMenuPolicy(Qt.CustomContextMenu)
 
+        self.checkList={}
+
         analyserLayout=QVBoxLayout()
         self.layout().addLayout(analyserLayout)
 
@@ -35,17 +35,17 @@ class Analyser(QWidget):
         analyserLayout.addWidget(splitter)
 
         #instance of text editor
-        self.textEditor=TextEditor(self)
+        self.textEditor=widgets.TextEditor(self)
         splitter.addWidget(self.textEditor)
 
         #instance of tabble
-        self.table=TableWidget(self)
+        self.table=widgets.TableWidget(self)
         splitter.addWidget(self.table)
-
 
         self.textEditor.textChanged.connect(self.setComparesion)
         #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
+
 
 
     # def set_WordList(self):
@@ -65,9 +65,8 @@ class Analyser(QWidget):
         '''
         keyWords=self.table.keyWordList
         words=self.textEditor.writeList()
-        self.checkList={}
+
         for k,v in keyWords.items():
-            #self.table.setItem(k, 1, QTableWidgetItem(list(keywordStats.KeyWord('kutya').data['Search Volume'])[0]))
             if v in words:
                  self.checkList[k]="Ok"
             else:
@@ -77,146 +76,14 @@ class Analyser(QWidget):
 
     def getComparesion(self):
         '''
-        write the result of words comparesion into 5th column of the analyser table
+        write the result of words comparesion into 5th or 4th column of the analyser table
 
         '''
         for k,v in self.checkList.items():
+            #if self.table.isColumnHidden(4)==True:
             self.table.setItem(k,5,QTableWidgetItem(v))
 
 
-class TextEditor(QTextEdit):
-    textSignal=pyqtSignal(list)
-    def __init__(self,parent):
-        QTextEdit.__init__(self)
-
-        self.parent=parent
-
-        self.setUpdatesEnabled(True)
-        self.createStandardContextMenu()
-
-    #TODO: Ha van mentett szöveg a Data könyvtárban, akkor itt inicializáld, hogy
-    #       belekerüljön a szövegszerkesztőbe.
 
 
-    def writeList(self):
-        stemmer=SnowballStemmer('hungarian')
-        text = self.toPlainText()
-        stop_words = set(stopwords.words("hungarian"))
-        tokens = word_tokenize(text)
-        raw_words = [w.lower() for w in tokens if not w in stop_words]
-        stemmed=[stemmer.stem(x) for x in raw_words]
-        return stemmed
-
-
-class TableWidget(QTableWidget):
-    cellValue=pyqtSignal(dict)
-    def __init__(self,parent):
-        QTableWidget.__init__(self)
-
-        self.parent=parent
-
-        self.keyboardGrabber()
-        self.setUpdatesEnabled(True)
-        self.setColumnCount(7)
-        self.setRowCount(1)
-        self.resize(400,250)
-        self.setHorizontalHeaderLabels(("Szavak;"
-                                      "Átlag keresés;"
-                                      "Verseny;"
-                                      "Átlag CPC;"
-                                      "Kattintás;"
-                                      "Tartalmazza?;"
-                                      ).split(";"))
-
-        self.GetStats=API.GetStats()
-        self.keyWordList={}
-        self.cellPressed.connect(self.getTooltip)
-        self.cellChanged.connect(self.getKeyWordList)
-
-
-        #TODO: Tedd Disable-re a szavakon kívüli oszlopok módosítását.
-
-
-
-    # def addNewRow(self,wlist):
-    #     wordList=wlist
-    #     allRows = self.rowCount()
-    #     if len(wordList)>=1:
-    #        self.insertRow(allRows)
-
-    def getKeyWordList(self):
-
-        keyWords=[]
-        wordobjects=[]
-        allRows = self.rowCount()
-        #self.dataDownload(word)
-        self.rowdelet()
-        for row in range(0,allRows):
-            if self.item(row, 0):
-                word=self.item(row,0).text().lower()
-                #self.dataDownload(word) TODO: erre figyelj!!!
-                self.keyWordList[row]= self.item(row,0).text().lower()
-                wordobjects.append(word)
-
-        self.rowInserting()
-
-        self.GetStats.setKeywords(wordobjects)
-
-        self.cellValue.emit(self.keyWordList)
-
-        return self.keyWordList
-
-    def getTooltip(self):
-        keyword_idx=[self.currentRow(),0]
-        keyword=self.item(keyword_idx[0],keyword_idx[1])
-        if keyword:
-            self.setToolTip(keyword.text())
-
-    def dataDownload(self,words):
-        """
-        Download and save the Adwords related numbers into JSON file (per word).
-        Only the new words have been downloaded.
-
-        :param words: list of words from the table
-        :return: the JSON files of keywords
-        """
-        # file_names=os.listdir(filesPath)
-        # t=0
-        # for j in file_names:
-        #     if words not in j:
-        #         t+=1
-        # if t==len(file_names) or len(file_names)==0:
-        #     wordList = keywordStats.KeyWordList(self,words)
-        #     wordList.getData()
-        #     wordList.saveData()
-
-
-    def rowInserting(self):
-        """
-        :return: add a new empty row to table widget
-        """
-        nr_rows=self.rowCount()
-        if self.item(nr_rows-1,0):
-            #if len(self.item(nr_rows-1,0).text())!=0:
-                # item = QTableWidgetItem()
-                # #item.setFlags(item.flags() | Qt.ItemIsSelectable)
-                # self.setItem(nr_rows, 5, item)
-           self.insertRow(nr_rows)
-
-
-
-
-    def rowdelet(self):
-        """
-        :return: delet the last empty row if the former cell is empty in column 1
-        """
-        nr_rows = self.rowCount()
-
-        if self.item(nr_rows-1,0) is None or len(self.item(nr_rows-1,0).text())==0:
-            self.removeRow(nr_rows-1)
-        if len(self.currentItem().text())==0:
-            self.removeRow(self.currentRow())
-
-    def refresh(self):
-        self.clear()
 
