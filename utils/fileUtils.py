@@ -27,8 +27,3 @@ def readData(word,filePath):
     return data
 
 
-
-if __name__ == "__main__":
-    wordData=readData('majom',filesPath)
-    for k,v in wordData.items():
-        print(k,"\n\t",v)
