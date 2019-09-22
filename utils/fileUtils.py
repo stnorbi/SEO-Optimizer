@@ -1,5 +1,7 @@
 import os, re, subprocess
 import json
+import pandas as pd
+
 
 iconpath=os.path.dirname(__file__).replace("utils",'images')+"/"
 textPath=os.path.dirname(__file__).replace("utils",'Data')+"/"
@@ -24,6 +26,12 @@ def readData(word,filePath):
     file=filePath + word + "_data.json"
     with open(file) as json_file:
         data=json.load(json_file)
+    return data
+
+
+def readCSV(word,filePath):
+    file=filePath+word+"_dataMotnhly.csv"
+    data=pd.read_csv(file)
     return data
 
 
