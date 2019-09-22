@@ -30,8 +30,7 @@ def readData(word,filePath):
 
 
 def readCSV(word,filePath):
-    file=filePath+word+"_dataMotnhly.csv"
+    file=filePath + word + "_dataMonthly.csv"
     data=pd.read_csv(file)
     return data
-
 
