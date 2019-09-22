@@ -2,6 +2,8 @@ from PyQt4.QtCore import QObject, pyqtSignal
 from queue import Queue
 import json, os,time
 from threading import Thread
+import pandas as pd
+from zeep import Client
 
 from googleads import adwords
 
@@ -122,17 +124,17 @@ def getWordData(keyWord):
         dataDict['CPC'] =attributes['AVERAGE_CPC']['microAmount'] / 1000000,
         dataDictMonth['Monthly Research']=attributes['TARGETED_MONTHLY_SEARCHES']
 
-        print('Keyword: "%s" \n average monthly search volume '
-              '"%s" \n '
-              'Competition: %s \n '
-              'Average CPC: %s \n '
-              'Monthly Average Search: %s'
-              % (attributes['KEYWORD_TEXT'],
-                attributes['SEARCH_VOLUME'],
-                attributes['COMPETITION'],
-                attributes['AVERAGE_CPC']['microAmount'] / 1000000
-               ,attributes['TARGETED_MONTHLY_SEARCHES']
-                ))
+        # print('Keyword: "%s" \n average monthly search volume '
+        #       '"%s" \n '
+        #       'Competition: %s \n '
+        #       'Average CPC: %s \n '
+        #       'Monthly Average Search: %s'
+        #       % (attributes['KEYWORD_TEXT'],
+        #         attributes['SEARCH_VOLUME'],
+        #         attributes['COMPETITION'],
+        #         attributes['AVERAGE_CPC']['microAmount'] / 1000000
+        #        ,attributes['TARGETED_MONTHLY_SEARCHES']
+        #         ))
 
     saveData(dataDict,dataDictMonth,keyWord)
 
@@ -150,11 +152,18 @@ def saveData(data,dataDictMonth, keyWord):
             json.dump(data, dataFile,ensure_ascii=False)
         print("saving data for", keyWord)
 
-#   TODO: Az alábbi részt javítsd, amilyen hamar csak lehet Tooltip-hez kell!!!
-    # if dataDictMonth:
-    #     with open(dataFolder + keyWord + "_dataMonthly.txt", "w") as dataFile:
-    #         dataFile.write(dataDictMonth)#, dataFile)
-    #     print("saving dataMonthly for", keyWord)
+    if dataDictMonth:
+        dict={}
+        df = pd.DataFrame()
+        for i in dataDictMonth['Monthly Research']:
+            dict['year']=i['year']
+            dict['month']=i['month']
+            dict['count']=i['count']
+            jsonDf=pd.DataFrame(dict,index=[0])
+            df=df.append(jsonDf, ignore_index=True)
+
+        df.to_csv(dataFolder + keyWord + "_dataMonthly.csv",index=False)
+        print("saving dataMonthly for", keyWord)
 
 
 def delData(folder_path):
