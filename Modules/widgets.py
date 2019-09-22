@@ -134,12 +134,13 @@ class TableWidget(QTableWidget):
         return self.keyWordList
 
     def getTooltip(self):
-        keyword_idx=[self.currentRow(),0]
-        keyword=self.item(keyword_idx[0],keyword_idx[1])
-        if keyword:
-            w = word.Word(keyword, keyword_idx)
-            #self.setToolTip(w.mth_volume)
-            self.setToolTip(keyword.text())
+        pass
+        #  keyword_idx=[self.currentRow(),0]
+        # keyword=self.item(keyword_idx[0],keyword_idx[1])
+        # if keyword:
+        #     w = word.Word(keyword, keyword_idx)
+        #     self.setToolTip(w.mth_volume)
+        #     self.setToolTip(keyword.text())
 
     def dataDownload(self,words):
         """
