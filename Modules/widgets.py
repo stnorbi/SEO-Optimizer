@@ -6,13 +6,16 @@ from PyQt4.QtGui import (QGraphicsView, QGraphicsScene,
                              QGraphicsEllipseItem, QGraphicsSceneHoverEvent,
                              QGraphicsSceneMouseEvent)
 
-import sys
+import sys,math
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
+import matplotlib.pyplot as plt
+
+import seaborn as sns
 
 #own packages
-from utils import API
+from utils import API, fileUtils
 from Modules import word
 
 
@@ -74,9 +77,9 @@ class TableWidget(QTableWidget):
 
         self.GetStats=API.GetStats()
         self.keyWordList={}
-        self.cellPressed.connect(self.getTooltip)
         self.cellChanged.connect(self.getKeyWordList)
-        self.cellDoubleClicked.connect(self.fillTable)
+        self.cellPressed.connect(self.fillTable)
+        self.cellDoubleClicked.connect(self.getTooltip)
 
         #TODO: Tedd Disable-re a szavakon kívüli oszlopok módosítását.
 
@@ -134,10 +137,25 @@ class TableWidget(QTableWidget):
         return self.keyWordList
 
     def getTooltip(self):
-        pass
-        #  keyword_idx=[self.currentRow(),0]
-        # keyword=self.item(keyword_idx[0],keyword_idx[1])
-        # if keyword:
+        keyword_idx=[self.currentRow(),0]
+        keyword=self.item(keyword_idx[0],keyword_idx[1]).text()
+
+        if keyword and keyword_idx:
+            data = fileUtils.readCSV(keyword, fileUtils.filesPath)
+            data = data.sort_values(['year', 'month'], ascending=[True, True])
+            data['year'] = data['year'].apply(str)
+            data['month'] = data['month'].apply(str)
+            data['year_month'] = data['year'] + "-" + data['month']
+            print(data)
+
+            # TODO: DataViz-t tedd külön thread-be. Y tengelyt konvertáld integer-ré.
+            plt.figure("SEO Content Tool DataViz")
+            sns.lineplot(x='year_month', y="count", data=data)
+            plt.xticks(rotation=15)
+            plt.xlabel('Év és Hónap')
+            plt.title('Search Trend of ' + keyword + ' keyWord')
+            plt.show()
+
         #     w = word.Word(keyword, keyword_idx)
         #     self.setToolTip(w.mth_volume)
         #     self.setToolTip(keyword.text())
