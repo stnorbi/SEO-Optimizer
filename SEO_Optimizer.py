@@ -28,27 +28,36 @@ class SeoOptimizer(QMainWindow):
         menubar=toolBar.MenuBar(self)
         self.setMenuBar(menubar)
 
+        #splitter
+        splitter = QSplitter(Qt.Horizontal)
+
+
         #mainwindow layout
         centralWidget=QWidget()
         centralWidget.setLayout(QHBoxLayout())
         centralWidget.layout().setContentsMargins(0,0,0,0)
         self.setCentralWidget(centralWidget)
 
+
         #other widget layouts
         viewLayout=QHBoxLayout()
         centralWidget.layout().addLayout(viewLayout)
+
+
+        self.buttonView=buttonView.ButtonView(self)
+        splitter.addWidget(self.buttonView)
+
 
         analysLayout=QVBoxLayout()
         centralWidget.layout().addLayout(analysLayout)
 
 
-        # self.buttonView=buttonView.ButtonView(self)
-        # viewLayout.addWidget(self.buttonView)
-
-
         #add TextEditor & Table widget to the splitter
         self.analyser=seoAnalyser.Analyser(self)
-        analysLayout.addWidget(self.analyser)
+        splitter.addWidget(self.analyser)
+
+
+        centralWidget.layout().addWidget(splitter)
 
         self.setStyle()
 
