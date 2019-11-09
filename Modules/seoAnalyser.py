@@ -3,9 +3,12 @@ from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushBut
     QListWidgetItem, QColor, QLineEdit, QTextEdit, QTableWidget, QToolBar, QMenu, QSplitter, QTextList, QTableWidgetItem
 from PyQt4.QtCore import Qt, pyqtSignal
 import os
+from collections import Counter
 
 from Modules import widgets
 from nltk.stem.snowball import SnowballStemmer
+from nltk import chunk
+import nltk
 
 
 #own packages
@@ -13,8 +16,6 @@ from Modules import widgets
 from utils import API, fileUtils
 
 #filesPath=os.path.dirname(__file__).replace('Modules','Data')+ '/'
-
-
 
 class Analyser(QWidget):
     comparesion=pyqtSignal(dict)
@@ -46,6 +47,8 @@ class Analyser(QWidget):
         #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
 
+        #instance of stemmer
+        self.stemmer = SnowballStemmer('hungarian')
 
     def setComparesion(self):
         '''
@@ -66,11 +69,11 @@ class Analyser(QWidget):
             else:
                 self.checkList[k]="No"
         self.comparesion.emit(self.checkList)
+        #self.wordEntities(self.textEditor.writeList())
         return self.checkList
 
     def wordStemmer(self,raw_word):
-        stemmer = SnowballStemmer('hungarian')
-        stemmed=stemmer.stem(raw_word)
+        stemmed=self.stemmer.stem(raw_word)
 
         return stemmed
 
@@ -83,7 +86,17 @@ class Analyser(QWidget):
             #if self.table.isColumnHidden(4)==True:
             self.table.setItem(k,5,QTableWidgetItem(v))
 
+    def wordEntities(self,word):
+        tagged=nltk.pos_tag(word)
+        entities=chunk.ne_chunk(tagged)
+        print(tagged)
 
+        return entities
 
+    def wordCounter(self,wordList):
+        wordCount=Counter(wordList)
+        print(wordCount)
+
+        return wordCount
 
 

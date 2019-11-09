@@ -7,10 +7,11 @@ from PyQt4.QtGui import (QGraphicsView, QGraphicsScene,
                              QGraphicsSceneMouseEvent)
 
 import sys,math
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize, wordpunct_tokenize
 from nltk.corpus import stopwords
 from threading import Thread
 from nltk.stem.snowball import SnowballStemmer
+import nltk
 
 #own packages
 from utils import API, fileUtils
@@ -45,8 +46,11 @@ class TextEditor(QTextEdit):
     def writeList(self):
         text = self.toPlainText()
         stop_words = set(stopwords.words("hungarian"))
-        tokens = word_tokenize(text)
-        raw_words = [w.lower() for w in tokens if not w in stop_words]
+        tokens=wordpunct_tokenize(text)
+        text = nltk.Text(tokens)
+        #tokens = word_tokenize(text)
+        words = [w.lower() for w in text if w.isalpha()]
+        raw_words = [w.lower() for w in words if not w in stop_words]
         return raw_words
 
 
