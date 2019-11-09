@@ -18,21 +18,12 @@ class ButtonView(QWidget):
         buttonLayout = QVBoxLayout()
         self.layout().addLayout(buttonLayout)
 
-        emailField = QLineEdit()
-        emailField.setPlaceholderText("Mail Address")
 
-        logIn_bttn = QPushButton("Log into Google")
-        # logIn_bttn.clicked.connect("") #TODO: set up the connection with google
-
-        sync_bttn=QPushButton('Sync with Google Drive')
-
-
-        buttonLayout.addWidget(emailField)
-        buttonLayout.addWidget(logIn_bttn)
-        buttonLayout.addWidget(sync_bttn)
-
-        separator = widgets.Separator("horizontal")
-        self.layout().addWidget(separator)
+        show_DashBoard = ShowDashboard()
+        buttonLayout.addWidget(show_DashBoard)
+        #
+        # separator = widgets.Separator("horizontal")
+        # self.layout().addWidget(separator)
 
 
         self.doclist=QListWidget()
@@ -46,3 +37,25 @@ class ButtonView(QWidget):
 
     def getMailAddress(self):
         emailAddress=emailField
+
+
+
+class ShowDashboard(QPushButton):
+    def __init__(self):
+        QPushButton.__init__(self)
+        self.setText("Enable Dashboard")
+        self.setCheckable(True)
+        self.setChecked(False)
+
+
+    def turnOn(self,runProcess):
+        self.clicked.connect(runProcess)
+        self.setChecked(True)
+
+
+
+    def checkedChecker(self):
+        if self.isChecked():
+            self.setText("Dashboard is enabled")
+        else:
+            self.setText("Enable Dashboard")
