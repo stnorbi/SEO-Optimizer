@@ -71,3 +71,9 @@ class ToolTip(Figure):
     #     img=Image.open(filePath)
     #     img = img.resize((5, 10), Image.ANTIALIAS)
     #     return img
+
+
+
+class DashBoard(Figure):
+    pass
+#        self.wordCounter(self.textEditor.writeList())
