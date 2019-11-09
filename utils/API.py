@@ -63,13 +63,9 @@ def getInfoWorker(queue,signal):
     """
 
     while not queue.empty():
-        wordObj=queue.get()
-        try:
-            wordData=getWordData(wordObj)
-        except:
-            time.sleep(40)
-            wordData = getWordData(wordObj)
 
+        wordObj=queue.get()
+        wordData=getWordData(wordObj)
         queue.task_done()
 
         signal.emit()
@@ -108,37 +104,39 @@ def getWordData(keyWord):
         , {'xsi_type': 'LanguageSearchParameter', 'languages': {'id': 1024}}
     ]
     # időkeret felállításának nézz utánaSS
+    try:
+        page = targeting_idea_service.get(selector)
 
-    page = targeting_idea_service.get(selector)
 
+        for result in page['entries']:
+            attributes = {}
+            for attribute in result['data']:
+                attributes[attribute['key']] = getattr(
+                    attribute['value'], 'value', '0')
 
-    for result in page['entries']:
-        attributes = {}
-        for attribute in result['data']:
-            attributes[attribute['key']] = getattr(
-                attribute['value'], 'value', '0')
+            dataDict['KeyWord']=attributes['KEYWORD_TEXT'],
+            dataDict['Search Volume'] =attributes['SEARCH_VOLUME'],
+            dataDict['CMP'] =attributes['COMPETITION'],
+            dataDict['CPC'] =attributes['AVERAGE_CPC']['microAmount'] / 1000000,
+            dataDictMonth['Monthly Research']=attributes['TARGETED_MONTHLY_SEARCHES']
 
-        dataDict['KeyWord']=attributes['KEYWORD_TEXT'],
-        dataDict['Search Volume'] =attributes['SEARCH_VOLUME'],
-        dataDict['CMP'] =attributes['COMPETITION'],
-        dataDict['CPC'] =attributes['AVERAGE_CPC']['microAmount'] / 1000000,
-        dataDictMonth['Monthly Research']=attributes['TARGETED_MONTHLY_SEARCHES']
+            # print('Keyword: "%s" \n average monthly search volume '
+            #       '"%s" \n '
+            #       'Competition: %s \n '
+            #       'Average CPC: %s \n '
+            #       'Monthly Average Search: %s'
+            #       % (attributes['KEYWORD_TEXT'],
+            #         attributes['SEARCH_VOLUME'],
+            #         attributes['COMPETITION'],
+            #         attributes['AVERAGE_CPC']['microAmount'] / 1000000
+            #        ,attributes['TARGETED_MONTHLY_SEARCHES']
+            #         ))
 
-        # print('Keyword: "%s" \n average monthly search volume '
-        #       '"%s" \n '
-        #       'Competition: %s \n '
-        #       'Average CPC: %s \n '
-        #       'Monthly Average Search: %s'
-        #       % (attributes['KEYWORD_TEXT'],
-        #         attributes['SEARCH_VOLUME'],
-        #         attributes['COMPETITION'],
-        #         attributes['AVERAGE_CPC']['microAmount'] / 1000000
-        #        ,attributes['TARGETED_MONTHLY_SEARCHES']
-        #         ))
+        saveData(dataDict,dataDictMonth,keyWord)
 
-    saveData(dataDict,dataDictMonth,keyWord)
-
-    return dataDict
+        return dataDict
+    except:
+        return None
 
 def saveData(data,dataDictMonth, keyWord):
     """

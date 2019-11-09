@@ -9,15 +9,13 @@ from PyQt4.QtGui import (QGraphicsView, QGraphicsScene,
 import sys,math
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
+from threading import Thread
 from nltk.stem.snowball import SnowballStemmer
-import matplotlib.pyplot as plt
-
-import seaborn as sns
 
 #own packages
 from utils import API, fileUtils
 from Modules import word
-
+from Modules import figures
 
 class Separator(QFrame):
     def __init__(self, type="horizontal"):
@@ -45,12 +43,10 @@ class TextEditor(QTextEdit):
 
 
     def writeList(self):
-        stemmer=SnowballStemmer('hungarian')
         text = self.toPlainText()
         stop_words = set(stopwords.words("hungarian"))
         tokens = word_tokenize(text)
         raw_words = [w.lower() for w in tokens if not w in stop_words]
-        #stemmed=[stemmer.stem(x) for x in tokens]
         return raw_words
 
 
@@ -136,62 +132,34 @@ class TableWidget(QTableWidget):
 
         return self.keyWordList
 
+
+
     def getTooltip(self):
         keyword_idx=[self.currentRow(),0]
         keyword=self.item(keyword_idx[0],keyword_idx[1]).text()
 
         if keyword and keyword_idx:
             data = fileUtils.readCSV(keyword, fileUtils.filesPath)
-            data = data.sort_values(['year', 'month'], ascending=[True, True])
-            data['year'] = data['year'].apply(str)
-            data['month'] = data['month'].apply(str)
-            data['year_month'] = data['year'] + "-" + data['month']
-            print(data)
+            tooltip=figures.ToolTip()
+            tooltip.sortData(data)
+            self.getWorker(Thread,tooltip.customPlot,tooltip.data,keyword)
 
-            # TODO: DataViz-t tedd külön thread-be. Y tengelyt konvertáld integer-ré.
-            plt.figure("SEO Content Tool DataViz")
-            sns.lineplot(x='year_month', y="count", data=data)
-            plt.xticks(rotation=15)
-            plt.xlabel('Év és Hónap')
-            plt.title('Search Trend of ' + keyword + ' keyWord')
-            plt.show()
 
-        #     w = word.Word(keyword, keyword_idx)
-        #     self.setToolTip(w.mth_volume)
-        #     self.setToolTip(keyword.text())
+    def getWorker(self,thread,customPlot,data,keyword):
+        thread = Thread(target=customPlot, args=[data, keyword])
+        thread.setDaemon(True)
+        thread.start()
 
-    def dataDownload(self,words):
-        """
-        Download and save the Adwords related numbers into JSON file (per word).
-        Only the new words have been downloaded.
 
-        :param words: list of words from the table
-        :return: the JSON files of keywords
-        """
-        # file_names=os.listdir(filesPath)
-        # t=0
-        # for j in file_names:
-        #     if words not in j:
-        #         t+=1
-        # if t==len(file_names) or len(file_names)==0:
-        #     wordList = keywordStats.KeyWordList(self,words)
-        #     wordList.getData()
-        #     wordList.saveData()
 
 
     def rowInserting(self):
         """
-        :return: add a new empty row to table widget
+        :return: add a new empty row to table widget, if n-th row is not empty
         """
         nr_rows=self.rowCount()
         if self.item(nr_rows-1,0):
-            #if len(self.item(nr_rows-1,0).text())!=0:
-                # item = QTableWidgetItem()
-                # #item.setFlags(item.flags() | Qt.ItemIsSelectable)
-                # self.setItem(nr_rows, 5, item)
            self.insertRow(nr_rows)
-
-
 
 
     def rowdelet(self):
@@ -211,49 +179,6 @@ class TableWidget(QTableWidget):
 
 
 
-
-
-
-
-# class ToolTip(QGraphicsEllipseItem):
-#     def __init__(self, top_left_x, top_left_y, radius):
-#         super().__init__(0, 0, radius, radius)
-#         self.setPos(top_left_x, top_left_y)
-#         self.setBrush(Qt.red)
-#         self.setAcceptHoverEvents(True)
-#
-#         self.setToolTip("Test")
-#
-#     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent'):
-#         QApplication.instance().setOverrideCursor(Qt.OpenHandCursor)
-#
-#     def hoverLeaveEvent(self, event: 'QGraphicsSceneHoverEvent'):
-#         QApplication.instance().restoreOverrideCursor()
-#
-#     def mouseMoveEvent(self, event: 'QGraphicsSceneMouseEvent'):
-#         new_cursor_position   = event.scenePos()
-#         old_cursor_position   = event.lastScenePos()
-#         old_top_left_corner   = self.scenePos()
-#         new_top_left_corner_x = new_cursor_position.x() - old_cursor_position.x() + old_top_left_corner.x()
-#         new_top_left_corner_y = new_cursor_position.y() - old_cursor_position.y() + old_top_left_corner.y()
-#         self.setPos(QPointF(new_top_left_corner_x, new_top_left_corner_y))
-#
-#     def mousePressEvent(self, event: 'QGraphicsSceneMouseEvent'): pass
-#
-#     def mouseDoubleClickEvent(self, event: 'QGraphicsSceneMouseEvent'): pass
-#
-#     def mouseReleaseEvent(self, event: 'QGraphicsSceneMouseEvent'):
-#         self.setToolTip("<h3>pos: <hr>x({}), y({})</h3>"                  # < +++++
-#                         "".format(self.pos().x(), self.pos().y()))
-#
-# class MyTooltip(QGraphicsView):
-#     def __init__(self):
-#         super().__init__()
-#         self.scene = QGraphicsScene()
-#         self.setScene(self.scene)
-#         self.setSceneRect(0, 0, 250, 250)
-#         self.disk = ToolTip(50, 50, 20)
-#         self.scene.addItem(self.disk)
 
 # if __name__ == '__main__':
 #     app = QApplication([])

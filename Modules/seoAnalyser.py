@@ -5,7 +5,7 @@ from PyQt4.QtCore import Qt, pyqtSignal
 import os
 
 from Modules import widgets
-
+from nltk.stem.snowball import SnowballStemmer
 
 
 #own packages
@@ -38,22 +38,13 @@ class Analyser(QWidget):
         self.textEditor=widgets.TextEditor(self)
         splitter.addWidget(self.textEditor)
 
-        #instance of tabble
+        #instance of table
         self.table=widgets.TableWidget(self)
         splitter.addWidget(self.table)
 
         self.textEditor.textChanged.connect(self.setComparesion)
         #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
-
-
-
-    # def set_WordList(self):
-    #     keyWords=self.table.getKeyWordList()
-    #     words=[]
-    #     for k,v in keyWords.items():
-    #         words.append(v)
-    #     return words
 
 
     def setComparesion(self):
@@ -64,15 +55,24 @@ class Analyser(QWidget):
 
         '''
         keyWords=self.table.keyWordList
-        words=self.textEditor.writeList()
+        words=[self.wordStemmer(i) for i in (self.textEditor.writeList())]
+        print(words)
 
         for k,v in keyWords.items():
-            if v in words:
+            t=self.wordStemmer(v)
+            print(t)
+            if t in words:
                  self.checkList[k]="Ok"
             else:
                 self.checkList[k]="No"
         self.comparesion.emit(self.checkList)
         return self.checkList
+
+    def wordStemmer(self,raw_word):
+        stemmer = SnowballStemmer('hungarian')
+        stemmed=stemmer.stem(raw_word)
+
+        return stemmed
 
     def getComparesion(self):
         '''

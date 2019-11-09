@@ -42,8 +42,8 @@ class SeoOptimizer(QMainWindow):
         centralWidget.layout().addLayout(analysLayout)
 
 
-        self.buttonView=buttonView.ButtonView(self)
-        viewLayout.addWidget(self.buttonView)
+        # self.buttonView=buttonView.ButtonView(self)
+        # viewLayout.addWidget(self.buttonView)
 
 
         #add TextEditor & Table widget to the splitter
