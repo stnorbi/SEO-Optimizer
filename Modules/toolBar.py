@@ -1,6 +1,7 @@
-from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, \
-        QSplitter, QToolBar, QMenuBar, QAction
-from PyQt4.QtCore import Qt
+from PyQt5.QtGui import  QPainter, QPixmap, QIcon
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSplitter, QToolBar, QMenuBar
+from PyQt5.QtCore import Qt
+
 import sys, os
 
 

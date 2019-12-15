@@ -1,6 +1,7 @@
 #third party packages
-from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
+    QListWidgetItem, QLineEdit
+from PyQt5.QtGui import QColor
 #from PyQt4.QtCore import Signal
 import os
 
@@ -51,11 +52,12 @@ class ShowDashboard(QPushButton):
     def turnOn(self,runProcess):
         self.clicked.connect(runProcess)
         self.setChecked(True)
+        return self.isChecked()
 
 
 
-    def checkedChecker(self):
-        if self.isChecked():
+    def checkedChecker(self,isChecked):
+        if isChecked == True:
             self.setText("Dashboard is enabled")
         else:
             self.setText("Enable Dashboard")

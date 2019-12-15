@@ -1,6 +1,6 @@
 from utils import API
 #from Modules import seoAnalyser
-from PyQt4.QtGui import QTableWidgetItem
+from PyQt5.QtGui import QTableWidgetItem
 
 
 class KeyWord(QTableWidgetItem):

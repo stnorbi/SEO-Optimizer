@@ -1,6 +1,6 @@
 import os, re
 from utils import fileUtils
-from PyQt4.QtGui import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem
 
 class Word(QTableWidgetItem):
     def __init__(self,name,index):

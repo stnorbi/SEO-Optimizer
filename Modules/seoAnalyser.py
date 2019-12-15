@@ -1,7 +1,10 @@
 #third party packages
-from PyQt4.QtGui import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
-    QListWidgetItem, QColor, QLineEdit, QTextEdit, QTableWidget, QToolBar, QMenu, QSplitter, QTextList, QTableWidgetItem
-from PyQt4.QtCore import Qt, pyqtSignal
+from PyQt5.QtGui import  QColor, QTextList
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QToolBar, QMenu, QListWidget, QPushButton, QFileDialog,\
+                            QListWidgetItem, QLineEdit, QTextEdit, QTableWidget, QSplitter, QTableWidgetItem
+from PyQt5.QtCore import Qt, pyqtSignal, QSettings
+
+
 import os
 from collections import Counter
 

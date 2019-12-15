@@ -16,8 +16,6 @@ class ToolTip(Figure):
         #self.fig.rcParams['figure.facecolor'] = 'yellow'
         self.fig.rcParams["image.aspect"]='auto'
 
-
-
         self.data=None
 
     def sortData(self,data):
@@ -31,11 +29,8 @@ class ToolTip(Figure):
 
     def customPlot(self,data,keyword):
 
-
         self.fig.figure(num="SEO TOOL - DataViz")
         self.fig.title('Keresések alakulása ' + keyword + ' kulcsszóra')
-
-
 
         self.setData(data)
 
@@ -56,11 +51,8 @@ class ToolTip(Figure):
     def setData(self,data):
         sns.barplot(x='year_month', y="count", data=data)
 
-
-
     def showViz(self):
         self.fig.show()
-
 
     def setBackground(self,filePath):
         #image=self.imageResizer(filePath)

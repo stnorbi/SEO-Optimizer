@@ -1,7 +1,7 @@
 #third party external packages
-from PyQt4.QtGui import QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPainter, QPixmap, QIcon, \
-        QSplitter, QToolBar, QMenuBar
-from PyQt4.QtCore import Qt, pyqtSignal, QSettings
+from PyQt5.QtGui import  QPainter, QPixmap, QIcon
+from PyQt5.QtWidgets import QMainWindow,QApplication, QWidget, QVBoxLayout, QHBoxLayout, QSplitter, QToolBar, QMenuBar
+from PyQt5.QtCore import Qt, pyqtSignal, QSettings
 import sys, os
 
 

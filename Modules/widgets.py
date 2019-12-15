@@ -1,10 +1,11 @@
 #third party packages
-from PyQt4.QtGui import QFrame, QPushButton, QIcon, QLabel, QPainter, QColor, QBrush, QPen, QCursor, QApplication, \
-    QTextEdit, QTableWidget, QTableWidgetItem
-from PyQt4.QtCore import QSize, Qt, pyqtSignal,QPointF
-from PyQt4.QtGui import (QGraphicsView, QGraphicsScene,
-                             QGraphicsEllipseItem, QGraphicsSceneHoverEvent,
-                             QGraphicsSceneMouseEvent)
+from PyQt5.QtWidgets import QFrame, QPushButton, QLabel, QApplication, QTextEdit, QTableWidget, QTableWidgetItem, \
+                            QGraphicsView, QGraphicsScene, QGraphicsEllipseItem, QGraphicsSceneHoverEvent, \
+                            QGraphicsSceneMouseEvent
+
+from PyQt5.QtCore import QSize, Qt, pyqtSignal,QPointF
+from PyQt5.QtGui import (QIcon, QPainter, QColor, QBrush, QPen, QCursor,
+                             )
 
 import sys,math
 from nltk.tokenize import word_tokenize, wordpunct_tokenize
