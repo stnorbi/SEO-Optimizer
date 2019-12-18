@@ -147,7 +147,8 @@ class TableWidget(QTableWidget):
             data = fileUtils.readCSV(keyword, fileUtils.filesPath)
             tooltip=figures.ToolTip()
             tooltip.sortData(data)
-            self.getWorker(Thread,tooltip.customPlot,tooltip.data,keyword)
+            tooltip.customPlot(tooltip.data,keyword)
+            #self.getWorker(Thread,tooltip.customPlot,tooltip.data,keyword)
 
 
     def getWorker(self,thread,customPlot,data,keyword):
