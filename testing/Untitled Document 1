@@ -1,0 +1,4 @@
+- Adj egy plusz TableWidget-et a search console adataihoz.
+- Az első táblázatot formázd a keyplanner-höz.
+- A kicsi textfield-et fogd be a link-hez, aminek az adatiat lehívod google search-ből.
+
