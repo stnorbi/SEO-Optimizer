@@ -40,12 +40,13 @@ class TextEditor(QTextEdit):
         self.setUpdatesEnabled(True)
         self.createStandardContextMenu()
 
+        self.text=self.toPlainText()
     #TODO: Ha van mentett szöveg a Data könyvtárban, akkor itt inicializáld, hogy
     #       belekerüljön a szövegszerkesztőbe.
 
-
     def writeList(self):
         text = self.toPlainText()
+        fileUtils.saveText(text)
         stop_words = set(stopwords.words("hungarian"))
         tokens=wordpunct_tokenize(text)
         text = nltk.Text(tokens)
@@ -102,10 +103,8 @@ class TableWidget(QTableWidget):
                 item=QTableWidgetItem(str(w.avg_search[0]))
                 self.setItem(k,1,item)
 
-
                 item=QTableWidgetItem(str(w.cmp))
                 self.setItem(k,2,item)
-
 
                 item=QTableWidgetItem(str(w.avg_cpc[0]))
                 self.setItem(k,3,item)
@@ -113,7 +112,6 @@ class TableWidget(QTableWidget):
 
     def getKeyWordList(self):
         """
-
 
         :return: keyWordList dictionary. Its keys are the row indexes.
         """
@@ -138,7 +136,6 @@ class TableWidget(QTableWidget):
         return self.keyWordList
 
 
-
     def getTooltip(self):
         keyword_idx=[self.currentRow(),0]
         keyword=self.item(keyword_idx[0],keyword_idx[1]).text()
@@ -155,8 +152,6 @@ class TableWidget(QTableWidget):
         thread = Thread(target=customPlot, args=[data, keyword])
         thread.setDaemon(True)
         thread.start()
-
-
 
 
     def rowInserting(self):

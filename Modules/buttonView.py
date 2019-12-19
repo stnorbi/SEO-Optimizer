@@ -6,7 +6,7 @@ from PyQt5.QtGui import QColor
 import os
 
 #own packages
-from Modules import widgets
+from Modules import widgets, seoAnalyser
 
 class ButtonView(QWidget):
     def __init__(self,mainWindow):
@@ -48,6 +48,7 @@ class ShowDashboard(QPushButton):
         self.setCheckable(True)
         self.setChecked(False)
 
+        self.clicked.connect(self.runTextMining)
 
     def turnOn(self,runProcess):
         self.clicked.connect(runProcess)
@@ -61,3 +62,8 @@ class ShowDashboard(QPushButton):
             self.setText("Dashboard is enabled")
         else:
             self.setText("Enable Dashboard")
+
+    def runTextMining(self):
+        textMiner = seoAnalyser.TextMiner()
+        textMiner.preProcess()
+

@@ -4,9 +4,12 @@ import pandas as pd
 
 
 iconpath=os.path.dirname(__file__).replace("utils",'images')+"/"
-textPath=os.path.dirname(__file__).replace("utils",'Data')+"/"
+#textPath=os.path.dirname(__file__).replace("utils",'Data')+"/"
 
 filesPath=os.path.dirname(__file__).replace('utils','Data')+ '/'
+
+#FilePath for TextMining module
+textPath=os.path.dirname(__file__).replace('utils','TextMining') + '/hunlp-pipeline/'
 
 def getIcon():
     icons={"mainIcon": iconpath+"mainIcon.jpg",
@@ -14,12 +17,14 @@ def getIcon():
     }
     return icons
 
-def getText(text):
-    pass
+def getText(textPath):
+    with open(textPath + "test.txt", "r") as file:
+        text=file.read()
+
 
 def saveText(text):
-
-    with open(textPath + "baseText.txt","w") as file:
+    print(text)
+    with open(textPath + "test.txt","w") as file:
         file.write(text)
 
 def readData(word,filePath):
@@ -33,3 +38,9 @@ def readCSV(word,filePath):
     file=filePath + word + "_dataMonthly.csv"
     data=pd.read_csv(file)
     return data
+
+def readPOS(textPath):
+    headers = ["Raw Words", "Default", "POS", "Word & POS"]
+    df=pd.read_csv(textPath+"test.txt.ana",sep='\t',header=None)
+    df.columns = headers
+    return df

@@ -7,6 +7,7 @@ from PIL import Image
 
 
 
+
 class ToolTip(Figure):
     def __init__(self, *args, **kwargs):
         Figure.__init__(self, *args, **kwargs)
@@ -67,5 +68,6 @@ class ToolTip(Figure):
 
 
 class DashBoard(Figure):
-    pass
-#        self.wordCounter(self.textEditor.writeList())
+    def __init__(self):
+        pass
+

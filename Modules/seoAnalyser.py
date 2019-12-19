@@ -1,21 +1,24 @@
-#third party packages
+#Front-End (third party) packages
 from PyQt5.QtGui import  QColor, QTextList
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QToolBar, QMenu, QListWidget, QPushButton, QFileDialog,\
                             QListWidgetItem, QLineEdit, QTextEdit, QTableWidget, QSplitter, QTableWidgetItem
 from PyQt5.QtCore import Qt, pyqtSignal, QSettings
 
-
+#Back-End packages
 import os
 from collections import Counter
-
-from Modules import widgets
 from nltk.stem.snowball import SnowballStemmer
 from nltk import chunk
 import nltk
 
+#Packages for TextMining
+import subprocess
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 #own packages
-from Modules import widgets
+from Modules import widgets, buttonView
 from utils import API, fileUtils
 
 #filesPath=os.path.dirname(__file__).replace('Modules','Data')+ '/'
@@ -46,6 +49,8 @@ class Analyser(QWidget):
         self.table=widgets.TableWidget(self)
         splitter.addWidget(self.table)
 
+
+        #Connecting to Signal
         self.textEditor.textChanged.connect(self.setComparesion)
         #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
@@ -62,11 +67,9 @@ class Analyser(QWidget):
         '''
         keyWords=self.table.keyWordList
         words=[self.wordStemmer(i) for i in (self.textEditor.writeList())]
-        print(words)
 
         for k,v in keyWords.items():
             t=self.wordStemmer(v)
-            print(t)
             if t in words:
                  self.checkList[k]="Ok"
             else:
@@ -89,17 +92,78 @@ class Analyser(QWidget):
             #if self.table.isColumnHidden(4)==True:
             self.table.setItem(k,5,QTableWidgetItem(v))
 
-    def wordEntities(self,word):
-        tagged=nltk.pos_tag(word)
-        entities=chunk.ne_chunk(tagged)
-        print(tagged)
+    # def wordEntities(self,word):
+    #     tagged=nltk.pos_tag(word)
+    #     entities=chunk.ne_chunk(tagged)
+    #     print(tagged)
+    #
+    #     return entities
+    #
+    # def wordCounter(self,wordList):
+    #     wordCount=Counter(wordList)
+    #     print(wordCount)
+    #
+    #     return wordCount
 
-        return entities
 
-    def wordCounter(self,wordList):
-        wordCount=Counter(wordList)
-        print(wordCount)
 
-        return wordCount
 
+
+class TextMiner:
+    #textmining=pyqtSignal(str)
+    def __init__(self):
+
+        self.posTrans = {
+            "NOUN": "Főnév"
+            , "ART": "Névelő"
+            , "VERB": "Ige"
+            , "ADJ": "Melléknév"
+            , "ADV": "Határozószó"
+            , "PUNCT": "Központozás"
+            , "CONJ": "Kötőszó"
+            , "PREV": "Melléknévi igenév"
+        }
+
+        # button=buttonView.ShowDashboard()
+        # button.clicked.connect(self.preProcess.emit)
+
+    def getText(self):
+        text=fileUtils.getText(fileUtils.textPath)
+        return text
+
+    def posTagger(self):
+        """
+        Determine the "Parts of Speech" of the words written in the TextBox
+
+        Return: POS of the words as text file in '/TextMining/hunlp-pipeline/test.txt.ana'
+        """
+        text=self.getText()
+        fileUtils.saveText(text)
+        os.system("sh "+fileUtils.textPath + "test.sh")
+
+
+    def preProcess(self):
+        self.posTagger()
+        df=fileUtils.readPOS(fileUtils.textPath)
+        df = df[["Raw Words", "Default", "POS"]]
+        df["POS"] = df["POS"].str.split("<", expand=True)
+
+        for k, v in self.posTrans.items():
+            df.loc[df['POS'] == k, 'POS_HU'] = v
+
+        self.df=df
+        return self.df
+
+
+    def posWordCount(self,df):
+        wordsPOS = df[["POS_HU", "Default"]]
+        wordsPOS.groupby("POS_HU").count()
+
+        self.posCount=wordsPOS
+
+        return self.posCount
+
+
+    def worker(self):
+        pass
 
