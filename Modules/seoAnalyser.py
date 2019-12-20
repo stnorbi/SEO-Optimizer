@@ -49,11 +49,11 @@ class Analyser(QWidget):
         self.table=widgets.TableWidget(self)
         splitter.addWidget(self.table)
 
-
         #Connecting to Signal
         self.textEditor.textChanged.connect(self.setComparesion)
         #self.table.itemChanged.connect(self.setComparesion)
         self.textEditor.textChanged.connect(self.getComparesion)
+
 
         #instance of stemmer
         self.stemmer = SnowballStemmer('hungarian')
@@ -92,22 +92,6 @@ class Analyser(QWidget):
             #if self.table.isColumnHidden(4)==True:
             self.table.setItem(k,5,QTableWidgetItem(v))
 
-    # def wordEntities(self,word):
-    #     tagged=nltk.pos_tag(word)
-    #     entities=chunk.ne_chunk(tagged)
-    #     print(tagged)
-    #
-    #     return entities
-    #
-    # def wordCounter(self,wordList):
-    #     wordCount=Counter(wordList)
-    #     print(wordCount)
-    #
-    #     return wordCount
-
-
-
-
 
 class TextMiner:
     #textmining=pyqtSignal(str)
@@ -124,26 +108,26 @@ class TextMiner:
             , "PREV": "Melléknévi igenév"
         }
 
-        # button=buttonView.ShowDashboard()
-        # button.clicked.connect(self.preProcess.emit)
+        # self.button=buttonView.ShowDashboard(self)
+        # self.button.turnOn(self.preProcess)
 
     def getText(self):
-        text=fileUtils.getText(fileUtils.textPath)
+        text=widgets.TextEditor(self).textWriter()
+        #text=fileUtils.getText(fileUtils.textPath)
         return text
 
-    def posTagger(self):
+    def posTagger(self,text):
         """
         Determine the "Parts of Speech" of the words written in the TextBox
 
         Return: POS of the words as text file in '/TextMining/hunlp-pipeline/test.txt.ana'
         """
-        text=self.getText()
-        fileUtils.saveText(text)
         os.system("sh "+fileUtils.textPath + "test.sh")
 
 
     def preProcess(self):
-        self.posTagger()
+        text=self.getText()
+        self.posTagger(text)
         df=fileUtils.readPOS(fileUtils.textPath)
         df = df[["Raw Words", "Default", "POS"]]
         df["POS"] = df["POS"].str.split("<", expand=True)
@@ -152,6 +136,7 @@ class TextMiner:
             df.loc[df['POS'] == k, 'POS_HU'] = v
 
         self.df=df
+        print(self.df.head())
         return self.df
 
 

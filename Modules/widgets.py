@@ -40,12 +40,12 @@ class TextEditor(QTextEdit):
         self.setUpdatesEnabled(True)
         self.createStandardContextMenu()
 
-        self.text=self.toPlainText()
+
     #TODO: Ha van mentett szöveg a Data könyvtárban, akkor itt inicializáld, hogy
     #       belekerüljön a szövegszerkesztőbe.
 
     def writeList(self):
-        text = self.toPlainText()
+        text = self.textWriter()#self.toPlainText()
         fileUtils.saveText(text)
         stop_words = set(stopwords.words("hungarian"))
         tokens=wordpunct_tokenize(text)
@@ -55,6 +55,9 @@ class TextEditor(QTextEdit):
         raw_words = [w.lower() for w in words if not w in stop_words]
         return raw_words
 
+    def textWriter(self):
+        text=self.toPlainText()
+        return text
 
 class TableWidget(QTableWidget):
     cellValue=pyqtSignal(dict)
