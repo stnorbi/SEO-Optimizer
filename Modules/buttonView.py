@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPus
 from PyQt5.QtGui import QColor
 #from PyQt4.QtCore import Signal
 import os
+import matplotlib.pyplot as plt
 
 #own packages
 from Modules import widgets, seoAnalyser
@@ -50,18 +51,14 @@ class ShowDashboard(QPushButton):
         self.setCheckable(True)
         self.setChecked(False)
 
-
-
-
         self.turnOn(self.runTextMining)
 
 
     def turnOn(self,runProcess):
         self.clicked.connect(runProcess)
-        self.setChecked(True)
+        # self.setChecked(True)
+        # self.checkedChecker(self.isChecked())
         return self.isChecked()
-
-
 
     def checkedChecker(self,isChecked):
         if isChecked == True:
@@ -71,4 +68,13 @@ class ShowDashboard(QPushButton):
 
     def runTextMining(self):
         textMiner = seoAnalyser.TextMiner()
-        textMiner.preProcess()
+        df=textMiner.preProcess()
+        posWordCount=textMiner.posWordCount(df)
+
+        self.setChecked(True)
+        self.checkedChecker(self.isChecked())
+
+        #testing
+        aggregation = posWordCount.groupby("POS_HU").count()
+        aggregation.plot.pie(y="Default",legend=False,autopct='%1.1f%%', fontsize=8)
+        plt.show()

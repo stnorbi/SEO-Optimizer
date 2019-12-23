@@ -1,8 +1,11 @@
-
+#third party packages
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import seaborn as sns
 from PIL import Image
+import pyqtgraph as pg
+import sys
+from PyQt5.QtWidgets import  QMainWindow,QApplication, QWidget, QVBoxLayout, QHBoxLayout
 
 
 
@@ -67,7 +70,43 @@ class ToolTip(Figure):
 
 
 
-class DashBoard(Figure):
-    def __init__(self):
-        pass
+class DashBoard(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(DashBoard,self).__init__(*args, **kwargs)
 
+        self.setWindowTitle("SEO Optimizer - TextMining Dashboard")
+
+        #main widget Layout
+        centralWidget=QWidget()
+        centralWidget.setLayout(QHBoxLayout())
+        centralWidget.layout().setContentsMargins(0,0,0,0)
+        self.setCentralWidget(centralWidget)
+
+
+        #other widget layouts
+        viewLayout=QHBoxLayout()
+        centralWidget.layout().addLayout(viewLayout)
+
+        self.graphWidget = pg.PlotWidget(self)
+        viewLayout.addWidget(self.graphWidget)
+
+
+        hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
+
+
+
+
+        # plot data: x, y values
+        self.graphWidget.plot(hour, temperature)
+
+
+    def main():
+        app = QApplication(sys.argv)
+        main = DashBoard()
+        main.show()
+        sys.exit(app.exec_())
+
+
+if __name__=='__main__':
+    DashBoard.main()
