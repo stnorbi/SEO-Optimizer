@@ -69,11 +69,17 @@ class ShowDashboard(QPushButton):
     def runTextMining(self):
         textMiner = seoAnalyser.TextMiner()
         df=textMiner.preProcess()
+
+        #Doing further calculation
         posWordCount=textMiner.posWordCount(df)
+
 
         self.setChecked(True)
         self.checkedChecker(self.isChecked())
 
+
+    def dataViz(self):
+        pass
         #testing
         aggregation = posWordCount.groupby("POS_HU").count()
         aggregation.plot.pie(y="Default",legend=False,autopct='%1.1f%%', fontsize=8)

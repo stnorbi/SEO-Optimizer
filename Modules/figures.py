@@ -4,6 +4,9 @@ from matplotlib.figure import Figure
 import seaborn as sns
 from PIL import Image
 import pyqtgraph as pg
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
+import pandas as pd
 import sys
 from PyQt5.QtWidgets import  QMainWindow,QApplication, QWidget, QVBoxLayout, QHBoxLayout
 
@@ -90,15 +93,16 @@ class DashBoard(QMainWindow):
         self.graphWidget = pg.PlotWidget(self)
         viewLayout.addWidget(self.graphWidget)
 
+        self.canvasWidget=Canvas(self,4)
+        viewLayout.addWidget(self.canvasWidget)
 
         hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
 
 
-
-
         # plot data: x, y values
         self.graphWidget.plot(hour, temperature)
+
 
 
     def main():
@@ -106,6 +110,21 @@ class DashBoard(QMainWindow):
         main = DashBoard()
         main.show()
         sys.exit(app.exec_())
+
+
+
+class Canvas(FigureCanvas):
+    def __init__(self,parent=None,width = 5, height = 5, dpi = 100):
+        fig=Figure(figsize=(width,height),dpi=dpi)
+        self.axes = fig.add_subplot(111)
+
+        FigureCanvas.__init__(self, fig)
+        self.setParent(parent)
+
+        self.plot()
+
+    def plot(self):
+        pass #TODO: találd ki mi legyen a vizualizálás algoritmusa
 
 
 if __name__=='__main__':
