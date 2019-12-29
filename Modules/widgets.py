@@ -59,9 +59,10 @@ class TextEditor(QTextEdit):
         text=self.toPlainText()
         return text
 
+
 class TableWidget(QTableWidget):
     cellValue=pyqtSignal(dict)
-    def __init__(self,parent):
+    def __init__(self,parent=None):
         QTableWidget.__init__(self)
 
         self.parent=parent
@@ -87,6 +88,8 @@ class TableWidget(QTableWidget):
         self.cellDoubleClicked.connect(self.getTooltip)
 
         #TODO: Tedd Disable-re a szavakon kívüli oszlopok módosítását.
+
+
 
 
     def fillTable(self):
@@ -180,6 +183,10 @@ class TableWidget(QTableWidget):
     def refresh(self):
         self.clear()
 
+
+    def collectWords(self):
+        keywords=self.keyWordList
+        return keywords
 
 
 

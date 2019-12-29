@@ -1,17 +1,22 @@
-#third party packages
+#GUI Libraries
+from PyQt5.QtWidgets import  QMainWindow,QApplication, QWidget, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem
+
+#Data Processing Libraries
+import pandas as pd
+import numpy as np
+import sys
+
+#Dataviz Libraries
+import pyqtgraph as pg
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 import seaborn as sns
 from PIL import Image
-import pyqtgraph as pg
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
-import pandas as pd
-import sys
-from PyQt5.QtWidgets import  QMainWindow,QApplication, QWidget, QVBoxLayout, QHBoxLayout
+from wordcloud import WordCloud
 
-
-
+#Own Libraries
+from Modules import widgets
 
 
 class ToolTip(Figure):
@@ -74,8 +79,8 @@ class ToolTip(Figure):
 
 
 class DashBoard(QMainWindow):
-    def __init__(self, *args, **kwargs):
-        super(DashBoard,self).__init__(*args, **kwargs)
+    def __init__(self):
+        QMainWindow.__init__(self)
 
         self.setWindowTitle("SEO Optimizer - TextMining Dashboard")
 
@@ -90,42 +95,81 @@ class DashBoard(QMainWindow):
         viewLayout=QHBoxLayout()
         centralWidget.layout().addLayout(viewLayout)
 
-        self.graphWidget = pg.PlotWidget(self)
-        viewLayout.addWidget(self.graphWidget)
+        verticalLeft=QVBoxLayout()
+        centralWidget.layout().addLayout(verticalLeft)
 
-        self.canvasWidget=Canvas(self,4)
-        viewLayout.addWidget(self.canvasWidget)
-
-        hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        temperature = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
-
-
-        # plot data: x, y values
-        self.graphWidget.plot(hour, temperature)
+        verticalRight=QVBoxLayout()
+        centralWidget.layout().addLayout(verticalRight)
 
 
 
-    def main():
-        app = QApplication(sys.argv)
-        main = DashBoard()
-        main.show()
-        sys.exit(app.exec_())
+        self.canvasRightTop=Canvas(self)
+        verticalRight.addWidget(self.canvasRightTop)
+
+
+        self.canvasRightBottom=Canvas(self)
+        verticalRight.addWidget(self.canvasRightBottom)
+
+        self.canvasLeftTop=Canvas(self)
+        verticalLeft.addWidget(self.canvasLeftTop)
+
+        self.canvasLeftBottom=QTableWidget(self)
+        verticalLeft.addWidget(self.canvasLeftBottom)
+
+
+
+
+    def tablePlot(self,df,table):
+        headers = ["Szavak","Darab"]
+
+        table.setRowCount(df.shape[0])
+        table.setColumnCount(len(headers))
+        table.setHorizontalHeaderLabels(headers)
+
+        df_index = df.index
+        df_value=df.values
+
+        for row in range(len(df_index)):
+            table.setItem(row, 0, QTableWidgetItem(str(df_index[row])))
+            table.setItem(row, 1, QTableWidgetItem(str(df_value[row][0])))
+
 
 
 
 class Canvas(FigureCanvas):
-    def __init__(self,parent=None,width = 5, height = 5, dpi = 100):
-        fig=Figure(figsize=(width,height),dpi=dpi)
-        self.axes = fig.add_subplot(111)
+    def __init__(self,parent=None,width = 15, height = 5, dpi = 100):
 
-        FigureCanvas.__init__(self, fig)
+        fig=Figure(figsize=(width,height),dpi=dpi)
+        # self.axes = fig.add_subplot(111)
+
+        FigureCanvas.__init__(self,fig)
         self.setParent(parent)
 
-        self.plot()
 
-    def plot(self):
-        pass #TODO: találd ki mi legyen a vizualizálás algoritmusa
+    def piePlot(self,df,title=None):
+        x=[i[0] for i in np.array(df)]
+        labels = list(df[df.columns[0]].index)
+        self.figure.suptitle(title)
+        ax = self.figure.add_subplot(111)
+        ax.pie(x, labels=labels,autopct='%1.1f%%')
 
 
-if __name__=='__main__':
-    DashBoard.main()
+    def setWordCloud(self,df,WC):
+        text=str(df) #df['Default']
+        wordcloud = WC(font_path=None, width = 1800, height=1000,
+           stopwords=None, max_font_size=None, font_step=1, mode='RGB',
+            collocations=True, colormap=None, normalize_plurals=True).generate(text)
+
+        ax=self.figure.add_subplot(111)
+
+        # Display the generated image:
+        ax.imshow(wordcloud, interpolation="nearest", aspect="equal")
+        ax.axis("off")
+        self.figure.tight_layout(pad=0)
+
+
+    def barPlot(self, text):
+
+        keyWordList=self.table.keyWordList
+
+        print(keyWordList.items())

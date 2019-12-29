@@ -2,12 +2,13 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton, QFileDialog, \
     QListWidgetItem, QLineEdit
 from PyQt5.QtGui import QColor
-#from PyQt4.QtCore import Signal
 import os
 import matplotlib.pyplot as plt
+import numpy as np
+from wordcloud import WordCloud as WC
 
 #own packages
-from Modules import widgets, seoAnalyser
+from Modules import widgets, seoAnalyser, figures
 
 class ButtonView(QWidget):
     def __init__(self,mainWindow):
@@ -23,7 +24,7 @@ class ButtonView(QWidget):
 
         show_DashBoard = ShowDashboard(self)
         buttonLayout.addWidget(show_DashBoard)
-        #
+
         # separator = widgets.Separator("horizontal")
         # self.layout().addWidget(separator)
 
@@ -31,6 +32,8 @@ class ButtonView(QWidget):
         self.doclist=QListWidget()
         self.layout().addWidget(self.doclist)
 
+        # run child methods
+        show_DashBoard.turnOn(show_DashBoard.runTextMining)
 
     def keyPressEvent(self, event):
         if event.key() == 16777274:
@@ -51,8 +54,6 @@ class ShowDashboard(QPushButton):
         self.setCheckable(True)
         self.setChecked(False)
 
-        self.turnOn(self.runTextMining)
-
 
     def turnOn(self,runProcess):
         self.clicked.connect(runProcess)
@@ -68,19 +69,23 @@ class ShowDashboard(QPushButton):
 
     def runTextMining(self):
         textMiner = seoAnalyser.TextMiner()
-        df=textMiner.preProcess()
+        # df=textMiner.preProcess()
 
         #Doing further calculation
-        posWordCount=textMiner.posWordCount(df)
+        posWordCount=textMiner.posCount
+        repeatedWords=textMiner.wordCounter(textMiner.data)
 
+        self.dashBoard=figures.DashBoard()
+        self.dashBoard.canvasRightTop.piePlot(posWordCount,'Szófajok megoszlása')
+        self.dashBoard.tablePlot(repeatedWords,self.dashBoard.canvasLeftBottom)
+        self.dashBoard.canvasRightBottom.setWordCloud(textMiner.data['Default'],WC)
+        self.dashBoard.canvasLeftTop.barPlot('text')
+
+        self.dashBoard.show()
 
         self.setChecked(True)
         self.checkedChecker(self.isChecked())
 
 
-    def dataViz(self):
-        pass
-        #testing
-        aggregation = posWordCount.groupby("POS_HU").count()
-        aggregation.plot.pie(y="Default",legend=False,autopct='%1.1f%%', fontsize=8)
-        plt.show()
+    def plotDataViz(self):
+        self.runTextMining()

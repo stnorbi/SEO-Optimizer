@@ -108,8 +108,10 @@ class TextMiner:
             , "PREV": "Melléknévi igenév"
         }
 
-        # self.button=buttonView.ShowDashboard(self)
-        # self.button.turnOn(self.preProcess)
+        self.data=self.preProcess()
+        self.posCount=self.posWordCount(self.data)
+        self.repeatedWords=self.repeatChecker(self.data)
+
 
     def getText(self):
         text=widgets.TextEditor(self).textWriter()
@@ -136,19 +138,37 @@ class TextMiner:
             df.loc[df['POS'] == k, 'POS_HU'] = v
 
         self.df=df
-        print(self.df.head())
         return self.df
 
 
     def posWordCount(self,df):
         wordsPOS = df[["POS_HU", "Default"]]
-        wordsPOS.groupby("POS_HU").count()
+        wordsPOS=wordsPOS.groupby("POS_HU").count()
 
         self.posCount=wordsPOS
 
         return self.posCount
 
 
-    def worker(self):
-        pass
+    def wordCounter(self,df):
+        df=df[df['POS_HU']!='Központozás']
+        df=df[df['POS_HU']!='Névelő']
+        wordCount=df[["Default","POS_HU"]]
+        wordCount=wordCount.groupby(["Default"]).count()
+        wordCount=wordCount.sort_values(by='POS_HU', ascending=False)
+
+        return wordCount
+
+
+    def repeatChecker(self,df):
+        df=df[df['POS_HU']!='Központozás']
+        df=df[df['POS_HU']!='Névelő']
+        repeated=df[['Raw Words','POS_HU']]
+        repeated=repeated.groupby("Raw Words").count()
+        doubled=repeated[repeated['POS_HU']>1]
+
+        repeatedWords=list(doubled[doubled.columns[0]].index)
+
+        return repeatedWords
+
 
