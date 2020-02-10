@@ -76,7 +76,7 @@ class SeoOptimizer(QMainWindow):
         self.settings.setValue("geometry",self.saveGeometry())
         API.delData(dataPath)
         text=self.analyser.textEditor.toPlainText()
-        fileUtils.saveText(text)
+        #fileUtils.saveText(text)
 
 
 

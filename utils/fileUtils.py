@@ -19,11 +19,10 @@ def getIcon():
 
 def getText(textPath):
     with open(textPath + "test.txt", "r") as file:
-        text=file.read()
+        file.read()
 
 
 def saveText(text):
-    print(text)
     with open(textPath + "test.txt","w") as file:
         file.write(text)
 

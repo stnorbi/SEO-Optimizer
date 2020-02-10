@@ -176,8 +176,3 @@ def delData(folder_path):
         #print(file)
         os.remove(folder_path + file)
 
-
-# if __name__ == "__main__":
-#     api=GetStats()
-#     api.setKeywords(['online marketing','sexshop','vibrátor'])
-# #    getWordData("majom")
