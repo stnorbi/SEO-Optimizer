@@ -1,1 +1,4 @@
-/testing/test3.py
+/testing/*
+/Authentication/*
+/env/*
+
