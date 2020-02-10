@@ -116,7 +116,8 @@ class DashBoard(QMainWindow):
         self.canvasLeftBottom=QTableWidget(self)
         verticalLeft.addWidget(self.canvasLeftBottom)
 
-
+        self.table=widgets.TableWidget(self)
+        print(self.table.keyWordList.items())
 
 
     def tablePlot(self,df,table):
@@ -169,7 +170,7 @@ class Canvas(FigureCanvas):
 
 
     def barPlot(self, text):
-
+        self.table=widgets.TableWidget(self)
         keyWordList=self.table.keyWordList
 
         print(keyWordList.items())
