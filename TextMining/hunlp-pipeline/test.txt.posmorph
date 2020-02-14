@@ -1,0 +1,24 @@
+Állatok	NOUN<PLUR>	 4 áll/NOUN<POSS<2><PLUR>> állat/NOUN<PLUR> állat/VERB<PERS<1>> áll/VERB[CAUS]/VERB<PERS<1>>
+vannak	VERB<PLUR>	 1 van/VERB<PLUR>
+mindenhol	ADV	 1 mindenhol/ADV
+az	ART	 3 az/DET az/NOUN a/ART
+erdőben	NOUN<CAS<INE>>	 1 erdő/NOUN<CAS<INE>>
+.	PUNCT	 1 ./PUNCT
+ 0
+Ha	CONJ	 3 ha/UTT-INT ha/CONJ Ha/NOUN
+nem	ADV	 3 nem/UTT-INT nem/ADV nem/NOUN
+tudtuk	VERB<PAST><PERS<1>><PLUR><DEF>	 2 tud/VERB<PAST><PERS<1>><PLUR><DEF> tudta/NOUN<POSS<PLUR>>
+volna	VERB<COND>	 3 van/VERB<COND<PAST>> van/VERB<COND> volna/VERB
+elintézni	VERB<INF>	 2 elintéz/VERB<INF> el/PREV+intéz/VERB<INF>
+őket	NOUN<PERS><PLUR><CAS<ACC>>	 1 ők/NOUN<PERS><PLUR><CAS<ACC>>
+,	PUNCT	 1 ,/PUNCT
+akkor	ADV	 4 akkor/CONJ akkor/ADV az/DET<CAS<TEM>> az/NOUN<CAS<TEM>>
+nekünk	NOUN<PERS<1>><PLUR><CAS<DAT>>	 1 ti/NOUN<PERS<1>><PLUR><CAS<DAT>>
+jönnek	VERB<PLUR>	 1 jön/VERB<PLUR>
+.	PUNCT	 1 ./PUNCT
+ 0
+Csodálatos	ADJ	 3 csodálatos/ADJ csodálat/NOUN[ATTRIB]/ADJ csodálat/NOUN[ATTRIB]/ADJ
+ez	NOUN	 2 ez/DET ez/NOUN
+a	ART	 1 a/ART
+képregény	NOUN	 1 képregény/NOUN
+ 0

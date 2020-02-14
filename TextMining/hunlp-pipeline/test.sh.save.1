@@ -1,0 +1,8 @@
+DIRPATH=/media/norbert/Datas/Python/SEO_Content_Tool/TextMining/hunlp-pipeline/
+echo ${DIRPATH}
+#export BASEPATH=${DIRPATH}hunlp-pipeline
+
+
+sh ${DIRPATH}010.huntoken < ${DIRPATH}test.txt > ${DIRPATH}test.txt.tok011.hunpos-hunmorph < ${DIRPATH}test.txt.tok > ${DIRPATH} test.txt.posmorph
+./012.stem -m --morphdel '||' test.txt.posmorph test.txt.stem
+./013.chooseana.py test.txt.stem > test.txt.ana

@@ -1,0 +1,1293 @@
+This is info/ocamorph.info, produced by makeinfo version 4.13 from
+texinfo/ocamorph.texinfo.
+
+INFO-DIR-SECTION Ocamorph
+START-INFO-DIR-ENTRY
+* texinfo: (Ocamorph)                  Ocamorph Reference Manual
+END-INFO-DIR-ENTRY
+
+
+File: ocamorph.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
+
+Ocamorph Reference Manual
+*************************
+
+* Menu:
+
+* Introduction::
+* License::
+* About::
+* Installation::
+* Bootstrapping::
+* Command-line Control::
+* Resource Specification::
+* Related Software and Resources::
+* Concept Index::
+* Files Index::
+* Options Index::
+* Control Flags Index::
+* Frequently Asked Questions::
+
+
+File: ocamorph.info,  Node: Introduction,  Next: License,  Prev: Top,  Up: Top
+
+1 Introduction
+**************
+
+This document presents the Ocamorph morphological analyser which is
+being developed as part of the Budapest Institute of Technology Media
+Education and Research Center's HunTool Natural Language Processing
+Toolkit.  `http://mokk.bme.hu'
+
+* Menu:
+
+* Ocamorph::
+* Motivation::
+
+
+File: ocamorph.info,  Node: Ocamorph,  Next: Motivation,  Prev: Introduction,  Up: Introduction
+
+1.1 Ocamorph: A Short Description
+=================================
+
+Ocamorph is a morphological analyser. It is an implementation of the
+online layer of the Hunmorph morphological analysis architecture.
+
+Ocamorph is language independent. It reads "ispell-type" language
+resources and can analyse text based on the resources. Ocamorph
+implements various word analysis routines such as morphological
+analysis and lemmatization.
+
+     Note: This document is not intended to describe how to create the
+     language resources that feed the analyer with language dependent
+     knowledge.  See *note Resource Specification:: for a specification
+     of the input resources. The format described there is not intended
+     to be edited manually. Hunlex, a resource compilation tool
+     provides a convenient description language in which you can
+     describe morphologies and can compile the "ispell-type" resources
+     needed by ocamorph based on various configuration options.
+
+In particular, this document provides you with:
+  1. The compulsory tedium about *note License::, *note Authors::,
+     *note Contact::, *note Submitting a Bug Report::, etc.  *Note
+     About::.
+
+  2. The indispensable but trivial Installation notes, *note
+     Installation::.
+
+  3. How to use ocamorph and *note Command-line Control::.
+
+  4. The detailed exposition of the input language dependent resource
+     format (*note Resource Specification::);
+
+  5. Information about *note Related Software and Resources::.
+
+
+
+File: ocamorph.info,  Node: Motivation,  Prev: Ocamorph,  Up: Introduction
+
+1.2 Motivation
+==============
+
+The motivation behind HunLex came from two opposing types of
+requirements "lexical resources" are supposed to fulfill:
+
+  1. (i) scalability, maintainability, extensibility; and
+
+  2. (ii) optimized format for the application.
+
+The constraints in (i) favour one central, redundancy-free, abstract,
+but transparent specification, while the ones in (ii) require possibly
+multiple application-specific, potentially redundant, optimized formats.
+
+In order to reconcile these two opposing requirements, HunLex introduces
+an offline layer into the word-analysis workflow, which mediates between
+two levels of resources:
+
+  1. a central database conforming to (i) (also primary resource, input
+     resource),
+
+  2. various application-specific formats conforming to (ii) (also
+     secondary or output resource)
+
+The primary resources are supposed to reasonably designed to help human
+maintanance, and the secondary ones are supposed to optimize very
+different things ranging from file size, performance with the tool that
+uses it, coverage, robustness, verbosity, normative strictness
+depending on who uses it for what purpose.
+
+HunLex is used to "compile" the primary resources into a particular
+application-specific format. This resource compilation phase is an
+offline process which is highly configurable so that users can
+fine-tune the output resources according to their needs.
+
+By introducing this layer of offline resource compilation, maintenance,
+extendability, portability of lexical resources is possible without
+compromising your performance on specific word-analysis tasks.
+
+Providing the environment for a sensible primary resource specification
+framework and managing the offline precompilation process are the
+raison d'e^tre behind Hunlex.
+
+
+File: ocamorph.info,  Node: License,  Next: About,  Prev: Introduction,  Up: Top
+
+2 License
+*********
+
+Ocamorph is free software.
+
+It is licensed under the *Creative Commons Attribution License*.  To
+view a copy of this license, visit
+`http://creativecommons.org/licenses/by/2.5/' or send a letter to
+Creative Commons, 543 Howard Street, 5th Floor, San Francisco,
+California, 94105, USA.
+
+There are no restrictions on downloading it other than your bandwidth
+and our slothful ways of making things available.
+
+There are no restrictions on use either other than its deficiencies,
+clumsy features and bugs. However, this can be amended, because there
+are no restrictions on modifying it either.  See also *note
+Contribution::.
+
+Freedom of use implies that any product (analysed text) that you
+created using ocamorph is yours and you hold the right to distribute it
+in any way. Consider letting us know that you used ocamorph, though;
+see *note Contact::.
+
+What is more, there are no restrictions on redistributing this software
+or modified versions of it.
+
+
+File: ocamorph.info,  Node: About,  Next: Installation,  Prev: License,  Up: Top
+
+3 Authors, Contact, Bugs
+************************
+
+* Menu:
+
+* LicenseExtra::
+* Submitting a Bug Report ::
+* Requesting a New Feature::
+* Praises::
+* Contribution::
+* Reference::
+* Authors::
+* Acknowledgements::
+* Contact::
+
+
+File: ocamorph.info,  Node: LicenseExtra,  Next: Submitting a Bug Report,  Prev: About,  Up: About
+
+3.1 License? What license?
+==========================
+
+*Note License::.
+
+
+File: ocamorph.info,  Node: Submitting a Bug Report,  Next: Requesting a New Feature,  Prev: LicenseExtra,  Up: About
+
+3.2 Submitting a Bug Report
+===========================
+
+If you find a bug or an undesireable feature or anything that is worth a
+couple of lines ranting at the authors, please go ahead and send a
+bugreport on the MOKK Lab bugzilla page at `http://mokk.bme.hu' or send
+a mail to me (*note Contact::).
+
+
+File: ocamorph.info,  Node: Requesting a New Feature,  Next: Praises,  Prev: Submitting a Bug Report,  Up: About
+
+3.3 Requesting a New Feature
+============================
+
+So you are using hunlex and find yourself realizing that you would need
+a certain feature desparately but it happens not to be implemented.  Go
+ahead and request it from the authors (*note Contact::) or sit silently
+and hope!
+
+
+File: ocamorph.info,  Node: Praises,  Next: Contribution,  Prev: Requesting a New Feature,  Up: About
+
+3.4 Praises
+===========
+
+If you have an opinion about ocamorph and would like the authors to
+hear about it. *Note Contact::.
+
+
+File: ocamorph.info,  Node: Contribution,  Next: Reference,  Prev: Praises,  Up: About
+
+3.5 Contribution
+================
+
+Ocamorph is open source development, so developpers are welcome to
+contribute to make it better in any imaginable way. Contact us (*note
+Contact::) to work out the details of how and what you would want to
+contribute to Ocamorph.
+
+
+File: ocamorph.info,  Node: Reference,  Next: Authors,  Prev: Contribution,  Up: About
+
+3.6 Reference
+=============
+
+For the context of the whole huntools kit, use
+
+@InProceedings{tron:etal:05,
+  author =       {Viktor Tr\'on and Gy\''orgy Gyepesi and P\'eter Hal\'acsy and Andr\'as Kornai and L\'aszl\'o N\'emeth and D\'aniel Varga},
+  title =        {Hunmorph: open source word analysis},
+  booktitle =    {Proceedings of the ACL 2005 Workshop on Software},
+  year =         2005
+}
+
+These and other papers can be downloaded from the MOKK Lab publications
+page at `http://mokk.bme.hu'
+
+
+File: ocamorph.info,  Node: Authors,  Next: Acknowledgements,  Prev: Reference,  Up: About
+
+3.7 Authors
+===========
+
+The author of ocamorph and this document is Viktor Trón. He can be
+mailed to on
+<v.tron@ed.ac.uk>
+Hopefully more can be found on MOKK Lab's pages at `http://mokk.bme.hu'.
+
+Viktor Trón and Péter Halácsy wrote the C binding for ocamorph.
+
+Péter Halácsy is the author of the MacOS package of the ocamorph
+executable.
+
+Attila Balogh made the MS Windows executable.
+
+
+File: ocamorph.info,  Node: Acknowledgements,  Next: Contact,  Prev: Authors,  Up: About
+
+3.8 Acknowledgements
+====================
+
+Thanks to Péter Halácsy, Dániel Varga and András Kornai who contributed
+various ideas and design suggestions during the development of ocamorph.
+
+Thanks to Chrisoph Filliatre, whose ocaml modules implementing
+bitvectors and tries are the basis for the respective ocamorph
+components.
+
+Special thanks to Dániel Varga and Péter Halácsy for extensive testing
+of ocamorh.
+
+
+File: ocamorph.info,  Node: Contact,  Prev: Acknowledgements,  Up: About
+
+3.9 Contact
+===========
+
+We can get in contact if you
+  1. Mail to Viktor Trón on
+     <v.tron@ed.ac.uk>
+
+  2. Join the forums on `http://mokk.bme.hu'
+
+  3. Submit a bug report (*note Submitting a Bug Report::) or feature
+     request (*note Requesting a New Feature::).
+
+
+
+File: ocamorph.info,  Node: Installation,  Next: Bootstrapping,  Prev: About,  Up: Top
+
+4 Installation
+**************
+
+So you want to install ocamorph (*note Introduction::) from the source
+distribution.  This document describes what and how you can install
+with this distribution.
+
+* Menu:
+
+* Download::
+* Supported Platforms::
+* Prerequisites::
+* Install::
+* Installation in more detail::
+* Uninstall and Reinstall::
+* Installed Files and Directories::
+* Documentation ::
+
+
+File: ocamorph.info,  Node: Download,  Next: Supported Platforms,  Prev: Installation,  Up: Installation
+
+4.1 Download
+============
+
+The latest version of the ocamorph source distribution is always
+available from the MOKK LAB website at
+`http://mokk.bme.hu/tools/ocamorph' or, if all else fails, by mailing
+to Viktor Trón <v.tron@ed.ac.uk>.
+
+
+File: ocamorph.info,  Node: Supported Platforms,  Next: Prerequisites,  Prev: Download,  Up: Installation
+
+4.2 Supported Platforms
+=======================
+
+Ocamorph can be compiled on any platform for which there is an `ocaml'
+compiler (*note Prerequisites::). This includes all Linuxes, unices,
+MacOSX, MS Windows. There are binary packages for these platforms on
+the MOKK LAB website at `http://mokk.bme.hu/tools/ocamorph'.
+
+
+File: ocamorph.info,  Node: Prerequisites,  Next: Install,  Prev: Supported Platforms,  Up: Installation
+
+4.3 Prerequisites
+=================
+
+If you install ocamorph from the source package you need to have some
+other software installed on your system.
+
+ -- Prerequisite: ocaml
+     Ocamorph is written in the "ocaml" programming language
+     `http://www.ocaml.org/'.  OCaml compilers are available for
+     virtually all platforms in various package formats for free from
+     `http://caml.inria.fr/ocaml/distrib.html'.
+
+     You will need `ocaml' version >=3.08.2 to compile ocamorph.
+
+ -- Prerequisite: make
+     Installation is based on `OCamlMakefile' (i.e., `ocaml-make')
+     courtesy of Markus Mottl
+     `http://www.ai.univie.ac.at/~markus/home/ocaml_sources.html#OCamlMakefile'
+     `OCamlMakefile' presupposes `GNU make' >= 3.80 but ocamorph
+     installation works with earlier versions of GNU make as well.  The
+     installation tries to determine the make version automatically and
+     uses a workaround Makefile in case you use make <3.80.  In case
+     this fails, set the `Makefile' variable `OCAMLMAKEFILE' to either
+     `OCamlMakefile' (for make >=3.80) or `make_pre3.80.OCamlMakefile'
+     (for make <3.80).
+
+
+ -- Prerequisite: C library
+     If you want to compile and install the C library for ocamorph, you
+     need `ar' and `ranlib'.
+
+
+ -- Prerequisite: Documentation
+     If you want to compile the documentation for ocamorph, you need
+     the GNU `texinfo' software documentation system installed.
+     `ftp://ftp.gnu.org/gnu/texinfo/'
+
+
+File: ocamorph.info,  Node: Install,  Next: Installation in more detail,  Prev: Prerequisites,  Up: Installation
+
+4.4 Install
+===========
+
+ocamorph is installed in the good old way by typing
+
+     $ make && sudo make install
+
+in the toplevel directory of the unpacked distribution.  If this works,
+great! Go ahead to *note Bootstrapping::.
+
+
+File: ocamorph.info,  Node: Installation in more detail,  Next: Uninstall and Reinstall,  Prev: Install,  Up: Installation
+
+4.5 Advanced Install
+====================
+
+The ocamorph distribution is available in a source tarball called
+`ocamorph.tgz'.  First you have to unpack it by typing
+
+     $ tar xzvf ocamorph.tgz
+
+Then, you enter the toplevel directory of the unpacked distribution with
+     $ cd ocamorph
+
+To compile the tools and libraries and documentation, simply type
+
+     $ make
+
+in the toplevel directory of the distribution.
+
+To install it (on what gets installed, *note Installed Files and
+Directories::), type
+
+     $ make install
+
+Well, by default this would want to install things under `/usr/local',
+so you have to have admin permissions. If you are not root but you are
+in the sudoers file with the appropriate rights, you type:
+
+     $ sudo make install
+
+You can change the location of the installation by changing the install
+prefix path with
+
+     $ sudo make `INSTALLPREFIX'=`/my/favourite/path' install
+
+Changing the location of installation for individual install targets
+individually is not recommended but easy-peasy if you have a clue about
+`make' and `Makefile'-s. To do this you have to change the relevant
+`Makefile'-s in the subdirectories of the distribution.  *Note
+Installed Files and Directories::.
+
+If you have problems, doubleckeck that you have the prerequisites
+(*note Prerequisites::). If you think you followed the instructions but
+still have problems, submit a bug report (*note Submitting a Bug
+Report::).
+
+If you are upgrading an earlier version of ocamorph, you may want to
+uninstall the earlier one first (*note Uninstall and Reinstall::).
+
+If you do not want to compile and install the ocamorph C library, then
+use
+
+     $ make CLIB=
+     $ make CLIB= install
+
+you can also compile any of the ocaml subprojects separately by setting
+the `SUBPROJS' variable:
+
+     $ make SUBPROJS="ocamorphlib" CLIB=
+
+The subprojects are called: `ocamorph_debug ocamorphlib
+ocamorph_noassert' If you compile subprojects individually than you
+have to cleanup after the projects, cause intermediate targets are
+incompatible.
+
+     $ make SUBPROJS="ocamorphlib" cleanup
+
+
+File: ocamorph.info,  Node: Uninstall and Reinstall,  Next: Installed Files and Directories,  Prev: Installation in more detail,  Up: Installation
+
+4.6 Uninstall and Reinstall
+===========================
+
+The install prefix is remembered in the source distribution in the file
+`install_prefix'. So after you `cd' into the toplevel directory of the
+distribution, you can uninstall ocamorph by typing
+
+     $ make uninstall
+
+You can reinstall ocamorph with
+
+     $ make reinstall
+
+at any time if you make modifications to the code or compile options.
+
+After installation you can delete the whole source and build tree,
+however, in this case the install location will not be remembered so
+uninstall and reinstall are not available.
+
+     *Warning:* Note that if you fiddle with changing the location of
+     individual install targets, uninstall and resinstall will not work
+     correctly.
+
+
+File: ocamorph.info,  Node: Installed Files and Directories,  Next: Documentation,  Prev: Uninstall and Reinstall,  Up: Installation
+
+4.7 Installed Files and Directories
+===================================
+
+The following files and directories are installed, paths are relative to
+the install prefix (*note Install::):
+
+   * `bin/ocamorph_debug' 
+
+     is the executable which can be run on the command line (*note
+     Command-line Control::) and can be used for debugging.
+
+   * `bin/ocamorph_debug' 
+
+     is the executable which can be run on the command line (*note
+     Command-line Control::) and cannot be used for debugging.
+     Otherwise it has the same functionality as `ocamorph_debug'.
+
+   * `bin/ocamorph' 
+
+     the symbolic link to `ocamorph_noassert' and can be run on the
+     command line (*note Command-line Control::).
+
+   * `lib/ocamorph' 
+
+     is the directrory in which the ocamorph library components are
+     installed.
+
+   * `lib/ocamorph/ocamorph.cmxa' 
+
+     is the ocamorph ocaml native code library.
+
+   * `lib/ocamorph/ocamorph.cmi' 
+
+     is the ocamorph ocaml native code library.
+
+   * `lib/ocamorph/libocamorph.a' 
+
+     is the ocamorph static C library. See
+
+   * `lib/ocamorph/ocamorph.h' 
+
+     is the C header file for ocamorph C library.
+
+   * `share/doc/ocamorph/' 
+
+     is a directory containing the ocamorph documentation.
+     Subdirectories indicate the various document formats (see *note
+     Documentation::) most probably including a replica of this
+     document.
+
+   * `ocamorph.1' 
+
+     is the ocamorph man page, that describes the command-line use of
+     ocamorph (see *note Command-line Control::).
+
+
+
+File: ocamorph.info,  Node: Documentation,  Prev: Installed Files and Directories,  Up: Installation
+
+4.8 Documentation
+=================
+
+Ocamorph documentation is available in various formats.  You can
+compile and install them from the source distribution by changing to
+the doc directory and typing `make'.
+
+Available formats are
+
+   * info texinfo pages
+
+   * plaintext
+
+   * html big bundle of html
+
+   * bightml one big file
+
+   * dvi
+
+   * ps
+
+   * pdf compiling a pdf is done with `texi2pdf' (which is a
+     prerequisite for pdf generation)
+
+
+File: ocamorph.info,  Node: Bootstrapping,  Next: Command-line Control,  Prev: Installation,  Up: Top
+
+5 Bootstrapping
+***************
+
+
+File: ocamorph.info,  Node: Command-line Control,  Next: Resource Specification,  Prev: Bootstrapping,  Up: Top
+
+6 Command-line Control
+**********************
+
+This chapter describes how to use ocamorph on the command line.
+
+* Menu:
+
+* Invoking ocamorph::
+* Options::
+* Man page::
+
+
+File: ocamorph.info,  Node: Invoking ocamorph,  Next: Options,  Prev: Command-line Control,  Up: Command-line Control
+
+6.1 Invoking ocamorph
+=====================
+
+ocamorph can be invoked by typing `ocamorph' on the command line (in a
+shell, terminal). On windows platforms the name of the executable is
+`ocamorph.exe'.
+
+If you install ocamorph from the source distribution, then two
+executables are created (see *note Installation::):
+
+   * `ocamorph_debug', and
+
+   * `ocamorph_noassert'
+
+`ocamorph_debug' can be used for debugging by setting the command-line
+option `debug_level'. `ocamorph' is a symbolic link to
+`ocamorph_noassert', which cannot be used for debugging.
+`ocamorph_noassert' is faster than `ocamorph_debug', but apart from
+debugging, the two executables are functionally equivalent.  The usage
+of ocamorph is the same with both of these executables.
+
+
+File: ocamorph.info,  Node: Options,  Next: Man page,  Prev: Invoking ocamorph,  Up: Command-line Control
+
+6.2 Options
+===========
+
+All command line options are preceded by '-'. Only resource options are
+mandatory, the rest have default values.  Some options take arguments
+which are described in detail below.  Options can be given in any order.
+
+* Menu:
+
+* Resource Options::
+* Algorithmic options::
+* Input and output options::
+* Generic options::
+
+
+File: ocamorph.info,  Node: Resource Options,  Next: Algorithmic options,  Prev: Options,  Up: Options
+
+6.2.1 Resource Options
+----------------------
+
+Ocamorph reads ispell-type resources, i.e., an affix and a dictionary
+file. The specification of these language resources are described in
+*note Resource Specification::.
+
+ -- Option: `--aff' affix file
+     AFFIX FILE is the path to the affix file.  This option should be
+     used together with the `--dic' option.
+
+ -- Option: `--dic' dictionary file
+     AFFIX FILE is the path to the dictionary file.  This option should
+     be used together with the `--aff' option.
+
+Typical usage of ocamorph with the `-aff' and `--dic' options is
+
+     $ ocamorph --aff ./morphdb_en.aff --dic ./morphdb_en.dic
+
+ -- Option: `--bin' binary file
+     where BINARY-FILE is the ocamorph native format resource.  If used
+     together with the `-aff' and `--dic' options, ocamorph compiles
+     the native format resource and writes it to BINARY-FILE.
+
+     If the `--bin' option is given without the `-aff' and `--dic'
+     options, then BINARY-FILE is read.
+
+
+The ocamorph native resource format is a dump of the internal data
+structures that ocamorph uses for the analysis. This means that there
+is no initialization overhead if ocamorph is used with the native
+resource.
+
+The native resource format is actually a memory dump of the internal
+data structure performed by the `ocaml' `Marshal' module.  The native
+format therefore is portable between platforms but not necessarily
+portable between versions of ocamorph compiled with a different version
+of the ocaml compiler (since the implementation of the Marshal module
+is not guaranteed to be stable). If there is a problem with reading a
+native format resource that was created with an incompatible version of
+ocamorph, the program exits with an error.  In such a case, you have to
+make sure you either have the appropriate version of the resource or
+you have the fully portable text format aff and dic files and create
+the native format yourself with your version ocamorph.  Typing
+
+     $ echo | ocamorph --aff ./morphdb_en.aff --dic ./morphdb_en.dic --bin ./morphdb_en.bin
+
+reads in the aff and dic files and creates the native format writing it
+to `./morphdb_en.bin'.  Once the compatible native format resource is
+available, ocamorph should be started with it. This makes ocamorph
+start up immediately.
+
+A typical interactive use of ocamorph looks like this:
+     $ ocamorph --bin ./morphdb_hu.bin
+     szeretlek
+     > szeretlek
+     szeret/VERB<PERS<OBJ<2>>>
+
+ -- Option: `--minimize'
+     If this option is given the native format resource ocamorph
+     generates is minimized.
+
+     This option should be used together with the `-aff', `--dic' and
+     `--bin' options (when native format resources are generated from
+     the aff and dic files).
+
+Ocamorph uses a coupled trie (a tree-like data-structure where the
+branches are labelled with characters) to store the lexicon and affix
+rules. If the `--minimize' option is given this trie is minimized by
+collapsing identical subtries basically resulting in a finite automaton.
+
+This minimization is computationally intensive and therefore may take a
+very long time to perform (Minimizing the Hungarian morphological
+database on my MacOS X 10.4 (1.67GHz, 2Gb RAM) takes 15 minutes).
+Although minimized tries give slightly better runtime perfomance, their
+major virtue is that the resulting resource takes less space as well as
+less memory space when loaded.
+
+The exact performance effects of minimization is not fully clear to me
+yet.
+
+
+File: ocamorph.info,  Node: Algorithmic options,  Next: Input and output options,  Prev: Resource Options,  Up: Options
+
+6.2.2 Algorithmic options
+-------------------------
+
+These options influence the behaviour of the analysis algorithm.  
+
+ -- Option: `--saf'
+     If the `--saf' (stop at first analysis) option is given, the
+     algorithm does not enumerate all the alternative analyses of a
+     token, but stops after the first one is found.
+
+Typically, this option is used when ocamorph is used for stemming in
+document indexing or if postprocessing of alternatives would be too
+expensive.
+
+ -- Option: `--compounds'
+     If the `--compounds' option is given the algorithm also gives back
+     compound analyses.
+
+Only compounds that are licenced in the resource file are possible.
+This option serves to enable the compounds that are ligitimated in the
+lexical resources.  
+
+ -- Option: `--blocking'
+     If the `--blocking' option is given the algorithm gives back less
+     analyses. A lexical (non-affixed) partial analysis always blocks
+     one that involves affixation. Out of two partial analyses, only
+     ones that are not equivalent are kept.
+
+Blocking is typically used if language resources are redundant in that
+they contain entries which are also productively analized by affixation
+or compounding but the two are considered equivalent. Blocking
+effectively implements the idea that productive generation of an item
+by affixation or compounding is a fallback option in case the item is
+not found lexicalized.
+
+Blocking is done directly in the algorithm (as opposed to
+post-processing), therefore gives better runtime performance than full
+analysis without blocking.
+
+The `blocking' and `compounds' options can be used alongside in which
+case blocking also suppresses a compound analysis if the compound is
+entered as a lexical item.
+
+
+File: ocamorph.info,  Node: Input and output options,  Next: Generic options,  Prev: Algorithmic options,  Up: Options
+
+6.2.3 Input and output options
+------------------------------
+
+ -- Option: `--in' INPUT_FILE
+     the tokens to be analysed are read from INPUT_FILE. By default
+     input is read from standard input.
+
+The default file format has one token per line. Alternatively one can
+use the `--field' option.  
+
+ -- Option: `--field' FIELD_NUM
+     the input is assumed to contain lines with tabulator delimited
+     fields. Only the string in column FIELD_NUM is considered a token
+     to be analysed. Columns start from 1. Somewhat in the spirit of
+     awk, 0 means the whole line which is the default behaviour.
+
+A common use of the `--field' option is when we want to enrich a file
+with record fields with morphological analysis. A typical such
+situation is a frequency dictionary.
+
+ -- Option: `--out' OUTPUT_FILE
+     the output is written to OUTPUT_FILE. By default ocamorph uses the
+     standard output.
+
+The format of the output is
+TAG_PREAMBLE + INPUT_LINE + NO_OF_ANALYSES + ANALYSES
+
+where ANALYSES is the sequence of analyses delimited by TAG_SEP.
+
+TAG_PREAMBLE and TAG_SEP can be changed via options: 
+
+ -- Option: `--tab_preamble' TAG_PREAMBLE
+     specifies the tag preamble. By default the preamble string is "> ".
+
+ -- Option: `--tab_sep' TAG_PREAMBLE
+     specifies the tag separator. By default the delimiter string is a
+     newline.
+
+Additionally we can output the number of analyses: 
+
+ -- Option: `--count_analyses'
+     If the `--count_analyses' option is given the number of analyses
+     is prepended to the array of analyses (delimited by TAG_SEP).  By
+     default the number of analyses is not output.  Note that using
+     this with the `--saf' (stop at first analysis) option does not
+     make much sense.
+
+A typical use of these input/output options is illustrated with the
+following command line:
+
+     $ cat text|tr -s ' ' '\n' | sort | uniq -c | sed 's/^ *//' | tr ' ' '\t' |\
+      ocamorph --bin ./morphdb_en.bin --field 2 --tag_sep ' ' --tag_preamble '' \
+     --count_analyses > text.analysed.freq
+
+
+File: ocamorph.info,  Node: Generic options,  Prev: Input and output options,  Up: Options
+
+6.2.4 Generic options
+---------------------
+
+ -- Option: `--debug_level' DEBUG_LEVEL
+     DEBUG_LEVEL is an integer that specifies the debug level,
+     virtually the verbosity of ocamorph.  The higher the number the
+     more verbose.
+
+Ocamorph writes messages to the standard error.
+
+Debug levels have the following effects:
+   * 0: the default value. Only error messages are written to standard
+     error
+
+   * 1: Basic messages and warnings
+
+   * 2-6: more and more logs used for debugging. Only available with
+     `ocamorph_debug'
+
+   * <0: completely silent. Even error messages are suppressed. Errors
+     throw exceptions and you only see them the way the ocaml runtime
+     system verbalizes them.
+
+ -- Option: `--help'
+     displays the list of options and quits
+
+ -- Option: `--version'
+     displays the version number and quits
+
+
+File: ocamorph.info,  Node: Man page,  Prev: Options,  Up: Command-line Control
+
+6.3 Man page
+============
+
+This last section is a verbatim include of the ocamorph manpage (which
+is automatically generated by `help2man').  Please be suspicious if it
+seems inconsistent with the previous section.
+
+OCAMORPH(1)			 User Commands			   OCAMORPH(1)
+
+
+
+NAME
+       ocamorph - manual page for ocamorph 0.1
+
+SYNOPSIS
+       <command> <options>
+
+OPTIONS
+       option description (default settings)
+
+       ------------------------------------------
+
+       --aff  input affix file (affix.aff)
+
+       --dic  input dictionary file (dictionary.dic)
+
+       --bin  binary format (no)
+
+       ALGORITHMIC OPTIONS
+
+       --minimize
+	      minimize	the  trie  [gives better performance, saves space, but
+	      takes long to build] (no)
+
+       --saf  stop at first analysis (no)
+
+       --compounds
+	      allow compounds (no)
+
+       --blocking
+	      blocking by lexicalized relative stems (no)
+
+       INPUT OPTIONS
+
+       --in   input from file (stdin)
+
+       --out  output to file (stdout)
+
+       --field
+	      analyse only this field (0 = whole line)
+
+       OUTPUT OPTIONS
+
+       --count_analyses
+	      outputs the number of analyses (no)
+
+       --tag_preamble
+	      preamble string ("> ")
+
+       --tag_sep
+	      tag separator (newline)
+
+       GENERIC OPTIONS
+
+       --debug_level
+	      debug level (0)
+
+       --help display this list of options and quits
+
+       --version
+	      displays version info and quits
+
+       -help  Display this list of options
+
+SEE ALSO
+       The full documentation for ocamorph is maintained as a Texinfo  manual.
+       If  the info and ocamorph programs are properly installed at your site,
+       the command
+
+	      info ocamorph
+
+       should give you access to the complete manual.
+
+
+
+ocamorph 0.1			 December 2005			   OCAMORPH(1)
+
+
+File: ocamorph.info,  Node: Resource Specification,  Next: Related Software and Resources,  Prev: Command-line Control,  Up: Top
+
+7 Resource Specification
+************************
+
+
+File: ocamorph.info,  Node: Related Software and Resources,  Next: Concept Index,  Prev: Resource Specification,  Up: Top
+
+8 Related Software and Resources
+********************************
+
+* Menu:
+
+* Software that can use the output of Hunlex as input::
+* Available resources::
+* Hunlex's relatives::
+
+
+File: ocamorph.info,  Node: Software that can use the output of Hunlex as input,  Next: Available resources,  Prev: Related Software and Resources,  Up: Related Software and Resources
+
+8.1 Software that can use the output of Hunlex as input
+=======================================================
+
+* Menu:
+
+* Huntools::
+* Myspell::
+* Jmorph::
+* Ispell::
+
+
+File: ocamorph.info,  Node: Huntools,  Next: Myspell,  Prev: Software that can use the output of Hunlex as input,  Up: Software that can use the output of Hunlex as input
+
+8.1.1 Huntools
+--------------
+
+
+File: ocamorph.info,  Node: Myspell,  Next: Jmorph,  Prev: Huntools,  Up: Software that can use the output of Hunlex as input
+
+8.1.2 Myspell
+-------------
+
+
+File: ocamorph.info,  Node: Jmorph,  Next: Ispell,  Prev: Myspell,  Up: Software that can use the output of Hunlex as input
+
+8.1.3 Jmorph
+------------
+
+
+File: ocamorph.info,  Node: Ispell,  Prev: Jmorph,  Up: Software that can use the output of Hunlex as input
+
+8.1.4 Ispell
+------------
+
+
+File: ocamorph.info,  Node: Available resources,  Next: Hunlex's relatives,  Prev: Software that can use the output of Hunlex as input,  Up: Related Software and Resources
+
+8.2 Available resources
+=======================
+
+* Menu:
+
+* The Hungarian Morphdb Project::
+* The English Morphdb Project::
+
+
+File: ocamorph.info,  Node: The Hungarian Morphdb Project,  Next: The English Morphdb Project,  Prev: Available resources,  Up: Available resources
+
+8.2.1 The Hungarian Morphdb Project
+-----------------------------------
+
+
+File: ocamorph.info,  Node: The English Morphdb Project,  Prev: The Hungarian Morphdb Project,  Up: Available resources
+
+8.2.2 The English Morphdb Project
+---------------------------------
+
+
+File: ocamorph.info,  Node: Hunlex's relatives,  Prev: Available resources,  Up: Related Software and Resources
+
+8.3 Hunlex's relatives
+======================
+
+* Menu:
+
+* XFST etc.::
+
+
+File: ocamorph.info,  Node: XFST etc.,  Prev: Hunlex's relatives,  Up: Hunlex's relatives
+
+8.3.1 XFST, TWOLC, LEXC
+-----------------------
+
+For `xfst, twolc, lexc', see
+
+`http://www.xrce.xerox.com/competencies/content-analysis/fst/home.en.html'
+
+or
+
+`http://www.stanford.edu/~laurik/fsmbook/home.html'
+
+
+File: ocamorph.info,  Node: Concept Index,  Next: Files Index,  Prev: Related Software and Resources,  Up: Top
+
+Concept Index
+*************
+
+ [index ]
+* Menu:
+
+* C library:                             Prerequisites.        (line 31)
+* Creative Commons Attribution License:  License.              (line  6)
+* debugging ocamorph:                    Generic options.      (line  6)
+* documentation <1>:                     Installed Files and Directories.
+                                                               (line 46)
+* documentation:                         Prerequisites.        (line 36)
+* hunmorph:                              Ocamorph.             (line  9)
+* license:                               License.              (line  6)
+* make:                                  Prerequisites.        (line 18)
+* make, GNU:                             Prerequisites.        (line 21)
+* make, ocamorph installation:           Install.              (line  6)
+* Makefile, ocamorph installation:       Install.              (line  6)
+* man page:                              Man page.             (line  6)
+* manual, man page:                      Installed Files and Directories.
+                                                               (line 53)
+* morphological analyser:                Ocamorph.             (line  9)
+* morphological analysis:                Ocamorph.             (line  9)
+* ocaml:                                 Prerequisites.        (line 10)
+* OCamlMakefile:                         Prerequisites.        (line 18)
+* ocamorph:                              Ocamorph.             (line  9)
+* ocamorph, C header:                    Installed Files and Directories.
+                                                               (line 42)
+* ocamorph, command line:                Invoking ocamorph.    (line  6)
+* ocamorph, library:                     Installed Files and Directories.
+                                                               (line 25)
+* ocamorph, ocaml native code include:   Installed Files and Directories.
+                                                               (line 34)
+* ocamorph, ocaml native code library:   Installed Files and Directories.
+                                                               (line 30)
+* ocamorph, static C library:            Installed Files and Directories.
+                                                               (line 38)
+* spellchecker:                          Ocamorph.             (line  9)
+* spellchecking:                         Ocamorph.             (line  9)
+* stemming stemmer:                      Ocamorph.             (line  9)
+* verbosity:                             Generic options.      (line  6)
+* warnings:                              Generic options.      (line  6)
+
+
+File: ocamorph.info,  Node: Files Index,  Next: Options Index,  Prev: Concept Index,  Up: Top
+
+Files Index
+***********
+
+ [index ]
+* Menu:
+
+* install_prefix:                        Uninstall and Reinstall.
+                                                               (line 10)
+* libocamorph.a:                         Installed Files and Directories.
+                                                               (line 38)
+* ocamorph:                              Installed Files and Directories.
+                                                               (line 20)
+* ocamorph (documentation directory, share/doc/ocamorph): Installed Files and Directories.
+                                                               (line 46)
+* ocamorph (library directory, lib/ocamorph): Installed Files and Directories.
+                                                               (line 25)
+* ocamorph.1:                            Installed Files and Directories.
+                                                               (line 53)
+* ocamorph.cmi:                          Installed Files and Directories.
+                                                               (line 34)
+* ocamorph.cmxa:                         Installed Files and Directories.
+                                                               (line 30)
+* ocamorph.h:                            Installed Files and Directories.
+                                                               (line 42)
+* ocamorph_debug:                        Installed Files and Directories.
+                                                               (line  9)
+* ocamorph_noassert:                     Installed Files and Directories.
+                                                               (line 14)
+
+
+File: ocamorph.info,  Node: Options Index,  Next: Control Flags Index,  Prev: Files Index,  Up: Top
+
+Variables and Options Index
+***************************
+
+ [index ]
+* Menu:
+
+* aff:                                   Resource Options.     (line 10)
+* bin:                                   Resource Options.     (line 22)
+* blocking:                              Algorithmic options.  (line 23)
+* compounds:                             Algorithmic options.  (line 17)
+* count_analyses:                        Input and output options.
+                                                               (line 41)
+* debug_level:                           Generic options.      (line  6)
+* dic:                                   Resource Options.     (line 14)
+* field:                                 Input and output options.
+                                                               (line 11)
+* help:                                  Generic options.      (line 26)
+* in:                                    Input and output options.
+                                                               (line  6)
+* minimize:                              Resource Options.     (line 61)
+* out:                                   Input and output options.
+                                                               (line 23)
+* saf:                                   Algorithmic options.  (line  6)
+* tag_preamble:                          Input and output options.
+                                                               (line 32)
+* tag_sep:                               Input and output options.
+                                                               (line 36)
+* version:                               Generic options.      (line 29)
+
+
+File: ocamorph.info,  Node: Control Flags Index,  Next: Frequently Asked Questions,  Prev: Options Index,  Up: Top
+
+Control Flags Index
+*******************
+
+ [index ]
+* Menu:
+
+File: ocamorph.info,  Node: Frequently Asked Questions,  Prev: Control Flags Index,  Up: Top
+
+Frequently Asked Questions
+**************************
+
+ [index ]
+* Menu:
+
+* Are there any Hunlex resources available for any language?: Available resources.
+                                                               (line  6)
+* Are there software with similar functionality?: XFST etc..   (line  6)
+* Can I sell ocamorph, or a product that relies on it to people for money? Yes.: License.
+                                                               (line 30)
+* Can I use ocamorph from a shell?:      Man page.             (line  6)
+* Can I use ocamorph in a commercial product? Yes.: License.   (line 30)
+* Can I use ocamorph on the command-line?: Man page.           (line  6)
+* Can you recommend a morphological analyzer? <1>: Jmorph.     (line  6)
+* Can you recommend a morphological analyzer?: Huntools.       (line  6)
+* Can you recommend a spellchecker?:     Huntools.             (line  6)
+* Can you recommend a stemmer?:          Huntools.             (line  6)
+* How can I change the installation target directories?: Installation in more detail.
+                                                               (line 31)
+* How can I contact you?:                Contact.              (line  6)
+* How can I debug ocamorph?:             Generic options.      (line  6)
+* How do I reinstall ocamorph?:          Uninstall and Reinstall.
+                                                               (line  6)
+* How do I uninstall ocamorph?:          Uninstall and Reinstall.
+                                                               (line  6)
+* How do I upgrade ocamorph?:            Uninstall and Reinstall.
+                                                               (line  6)
+* How to install ocamorph? <1>:          Install.              (line  6)
+* How to install ocamorph?:              Installation.         (line  6)
+* I am a keen hacker/stupid user with sleepless nights/long afternoons at work to be wasted/spent usefully. How can I contribute to your work?: Contribution.
+                                                               (line  6)
+* I am using ocamorph, but desparately lacking a feature X. Can I request it?: Requesting a New Feature.
+                                                               (line  6)
+* I found a bug/strange feature. What should I do?: LicenseExtra.
+                                                               (line  8)
+* I found ocamorph cool/useful/useless. How can I let the authors know?: Praises.
+                                                               (line  6)
+* I used ocamorph and report it in a paper. What reference do I use?: Reference.
+                                                               (line  6)
+* Under what copyright restrictions can I distribute linguistic resources compiled or to be compiled with hunlex?: License.
+                                                               (line 22)
+* Under what copyright restrictions can I redistribute this software?: License.
+                                                               (line 27)
+* Under what restrictions can I modify this software?: License.
+                                                               (line  6)
+* Under what restrictions can I use this software?: License.   (line  6)
+* What are the prerequisites for compiling the documentation of ocamorph?: Prerequisites.
+                                                               (line 36)
+* What are the prerequisites for the C library version of ocamorph?: Prerequisites.
+                                                               (line 31)
+* What do I need if I want to install ocamorph from source?: Prerequisites.
+                                                               (line  6)
+* What files and directories are installed when I install ocamorph?: Installed Files and Directories.
+                                                               (line  6)
+* What is ocamorph?:                     Installation.         (line 10)
+* What is Ocamorph?:                     Ocamorph.             (line  6)
+* What is the License of this software?: License.              (line  8)
+* What platforms are supported by ocamorph?: Supported Platforms.
+                                                               (line  6)
+* What version of ocaml do I need to compile ocamorph?: Prerequisites.
+                                                               (line 15)
+* Where can I find the sources?:         Download.             (line  6)
+* Which softwares can use the output of Hunlex?: Software that can use the output of Hunlex as input.
+                                                               (line  6)
+* Who are you?:                          Authors.              (line  6)
+
+
+
+Tag Table:
+Node: Top226
+Node: Introduction639
+Node: Ocamorph1028
+Node: Motivation2627
+Node: License4489
+Node: About5546
+Node: LicenseExtra5854
+Node: Submitting a Bug Report6029
+Node: Requesting a New Feature6452
+Node: Praises6854
+Node: Contribution7085
+Node: Reference7441
+Node: Authors8030
+Node: Acknowledgements8511
+Node: Contact9015
+Node: Installation9364
+Node: Download9841
+Node: Supported Platforms10185
+Node: Prerequisites10614
+Node: Install12186
+Node: Installation in more detail12529
+Node: Uninstall and Reinstall14731
+Node: Installed Files and Directories15622
+Node: Documentation17284
+Node: Bootstrapping17837
+Node: Command-line Control17975
+Node: Invoking ocamorph18259
+Node: Options19131
+Node: Resource Options19585
+Node: Algorithmic options23174
+Node: Input and output options25032
+Node: Generic options27186
+Node: Man page28124
+Node: Resource Specification30006
+Node: Related Software and Resources30189
+Node: Software that can use the output of Hunlex as input30494
+Node: Huntools30851
+Node: Myspell31056
+Node: Jmorph31214
+Node: Ispell31368
+Node: Available resources31506
+Node: The Hungarian Morphdb Project31806
+Node: The English Morphdb Project32030
+Node: Hunlex's relatives32222
+Node: XFST etc.32408
+Node: Concept Index32713
+Node: Files Index35513
+Node: Options Index37288
+Node: Control Flags Index39040
+Node: Frequently Asked Questions39219
+
+End Tag Table
+
+
+Local Variables:
+coding: iso-8859-2
+End:

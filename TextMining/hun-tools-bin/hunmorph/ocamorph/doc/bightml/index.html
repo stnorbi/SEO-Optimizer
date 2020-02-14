@@ -1,0 +1,1694 @@
+<html lang="en">
+<head>
+<title>Ocamorph - Reference Manual</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+<meta name="description" content="Ocamorph - Reference Manual">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="top" href="#Top">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<h1 class="settitle">Ocamorph - Reference Manual</h1>
+<div class="contents">
+<h2>Table of Contents</h2>
+<ul>
+<li><a name="toc_Top" href="#Top">Ocamorph Reference Manual</a>
+<li><a name="toc_Introduction" href="#Introduction">1 Introduction</a>
+<ul>
+<li><a href="#Ocamorph">1.1 Ocamorph: A Short Description</a>
+<li><a href="#Motivation">1.2 Motivation</a>
+</li></ul>
+<li><a name="toc_License" href="#License">2 License</a>
+<li><a name="toc_About" href="#About">3 Authors, Contact, Bugs</a>
+<ul>
+<li><a href="#LicenseExtra">3.1 License? What license?</a>
+<li><a href="#Submitting-a-Bug-Report">3.2 Submitting a Bug Report</a>
+<li><a href="#Requesting-a-New-Feature">3.3 Requesting a New Feature</a>
+<li><a href="#Praises">3.4 Praises</a>
+<li><a href="#Contribution">3.5 Contribution</a>
+<li><a href="#Reference">3.6 Reference</a>
+<li><a href="#Authors">3.7 Authors</a>
+<li><a href="#Acknowledgements">3.8 Acknowledgements</a>
+<li><a href="#Contact">3.9 Contact</a>
+</li></ul>
+<li><a name="toc_Installation" href="#Installation">4 Installation</a>
+<ul>
+<li><a href="#Download">4.1 Download</a>
+<li><a href="#Supported-Platforms">4.2 Supported Platforms</a>
+<li><a href="#Prerequisites">4.3 Prerequisites</a>
+<li><a href="#Install">4.4 Install</a>
+<li><a href="#Installation-in-more-detail">4.5 Advanced Install</a>
+<li><a href="#Uninstall-and-Reinstall">4.6 Uninstall and Reinstall</a>
+<li><a href="#Installed-Files-and-Directories">4.7 Installed Files and Directories</a>
+<li><a href="#Documentation">4.8 Documentation</a>
+</li></ul>
+<li><a name="toc_Bootstrapping" href="#Bootstrapping">5 Bootstrapping</a>
+<li><a name="toc_Command_002dline-Control" href="#Command_002dline-Control">6 Command-line Control</a>
+<ul>
+<li><a href="#Invoking-ocamorph">6.1 Invoking ocamorph</a>
+<li><a href="#Options">6.2 Options</a>
+<ul>
+<li><a href="#Resource-Options">6.2.1 Resource Options</a>
+<li><a href="#Algorithmic-options">6.2.2 Algorithmic options</a>
+<li><a href="#Input-and-output-options">6.2.3 Input and output options</a>
+<li><a href="#Generic-options">6.2.4 Generic options</a>
+</li></ul>
+<li><a href="#Man-page">6.3 Man page</a>
+</li></ul>
+<li><a name="toc_Resource-Specification" href="#Resource-Specification">7 Resource Specification</a>
+<li><a name="toc_Related-Software-and-Resources" href="#Related-Software-and-Resources">8 Related Software and Resources</a>
+<ul>
+<li><a href="#Software-that-can-use-the-output-of-Hunlex-as-input">8.1 Software that can use the output of Hunlex as input</a>
+<ul>
+<li><a href="#Huntools">8.1.1 Huntools</a>
+<li><a href="#Myspell">8.1.2 Myspell</a>
+<li><a href="#Jmorph">8.1.3 Jmorph</a>
+<li><a href="#Ispell">8.1.4 Ispell</a>
+</li></ul>
+<li><a href="#Available-resources">8.2 Available resources</a>
+<ul>
+<li><a href="#The-Hungarian-Morphdb-Project">8.2.1 The Hungarian Morphdb Project</a>
+<li><a href="#The-English-Morphdb-Project">8.2.2 The English Morphdb Project</a>
+</li></ul>
+<li><a href="#Hunlex_0027s-relatives">8.3 Hunlex's relatives</a>
+<ul>
+<li><a href="#XFST-etc_002e">8.3.1 XFST, TWOLC, LEXC</a>
+</li></ul>
+</li></ul>
+<li><a name="toc_Concept-Index" href="#Concept-Index">Concept Index</a>
+<li><a name="toc_Files-Index" href="#Files-Index">Files Index</a>
+<li><a name="toc_Options-Index" href="#Options-Index">Variables and Options Index</a>
+<li><a name="toc_Control-Flags-Index" href="#Control-Flags-Index">Control Flags Index</a>
+<li><a name="toc_Frequently-Asked-Questions" href="#Frequently-Asked-Questions">Frequently Asked Questions</a>
+</li></ul>
+</div>
+
+
+
+<!-- @end ifset -->
+<div class="node">
+<a name="Top"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Introduction">Introduction</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#dir">(dir)</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
+
+</div>
+
+<h2 class="unnumbered">Ocamorph Reference Manual</h2>
+
+<!-- @insertcopying -->
+<!-- define indices -->
+<!-- keywords -->
+<!-- files -->
+<!-- questions for the FAQ -->
+<ul class="menu">
+<li><a accesskey="1" href="#Introduction">Introduction</a>
+<li><a accesskey="2" href="#License">License</a>
+<li><a accesskey="3" href="#About">About</a>
+<li><a accesskey="4" href="#Installation">Installation</a>
+<li><a accesskey="5" href="#Bootstrapping">Bootstrapping</a>
+<li><a accesskey="6" href="#Command_002dline-Control">Command-line Control</a>
+<li><a accesskey="7" href="#Resource-Specification">Resource Specification</a>
+<li><a accesskey="8" href="#Related-Software-and-Resources">Related Software and Resources</a>
+<li><a accesskey="9" href="#Concept-Index">Concept Index</a>
+<li><a href="#Files-Index">Files Index</a>
+<li><a href="#Options-Index">Options Index</a>
+<li><a href="#Control-Flags-Index">Control Flags Index</a>
+<li><a href="#Frequently-Asked-Questions">Frequently Asked Questions</a>
+</ul>
+
+<div class="node">
+<a name="Introduction"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#License">License</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Top">Top</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">1 Introduction</h2>
+
+<p>This document presents <i>the Ocamorph morphological analyser</i> which is being developed as part
+of the Budapest Institute of Technology Media Education and Research
+Center's HunTool Natural Language Processing Toolkit. 
+<a href="http://mokk.bme.hu">http://mokk.bme.hu</a>
+
+<ul class="menu">
+<li><a accesskey="1" href="#Ocamorph">Ocamorph</a>
+<li><a accesskey="2" href="#Motivation">Motivation</a>
+</ul>
+
+<div class="node">
+<a name="Ocamorph"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Motivation">Motivation</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+
+</div>
+
+<h3 class="section">1.1 Ocamorph: A Short Description</h3>
+
+<p><a name="index-What-is-Ocamorph_003f-1"></a>
+Ocamorph is a morphological analyser. It is an implementation of the
+online layer of the Hunmorph morphological analysis architecture.
+
+<p><a name="index-ocamorph-2"></a><a name="index-hunmorph-3"></a><a name="index-morphological-analysis-4"></a><a name="index-morphological-analyser-5"></a><a name="index-stemming-stemmer-6"></a><a name="index-spellchecking-7"></a><a name="index-spellchecker-8"></a>
+Ocamorph is language independent. It reads
+<dfn>ispell-type</dfn> language resources and can analyse text based on the
+resources. Ocamorph implements various word analysis routines such as
+morphological analysis and lemmatization.
+
+<blockquote>
+<b>Note:</b> This document is not intended to describe how to create the language
+resources that feed the analyer with language dependent knowledge. 
+See <a href="#Resource-Specification">Resource Specification</a> for a specification of the input
+resources. The format described there is not intended to be edited
+manually. Hunlex, a resource compilation tool provides a convenient
+description language in which you can describe morphologies and can
+compile the <dfn>ispell-type</dfn> resources needed by ocamorph based on
+various configuration options. 
+</blockquote>
+
+<p>In particular, this document provides you with:
+     <ol type=1 start=1>
+
+     <li>The compulsory tedium about <a href="#License">License</a>, <a href="#Authors">Authors</a>, <a href="#Contact">Contact</a>, <a href="#Submitting-a-Bug-Report">Submitting a Bug Report</a>, etc.  See <a href="#About">About</a>.
+
+     <li>The indispensable but trivial Installation notes, see <a href="#Installation">Installation</a>.
+
+     <li>How to use ocamorph and <a href="#Command_002dline-Control">Command-line Control</a>.
+
+     <li>The detailed exposition of the input language dependent resource format
+(see <a href="#Resource-Specification">Resource Specification</a>);
+
+     <li>Information about <a href="#Related-Software-and-Resources">Related Software and Resources</a>.
+
+     </ol>
+
+<div class="node">
+<a name="Motivation"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Ocamorph">Ocamorph</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Introduction">Introduction</a>
+
+</div>
+
+<h3 class="section">1.2 Motivation</h3>
+
+<p>The motivation behind HunLex came from two opposing types of
+requirements <dfn>lexical resources</dfn> are supposed to fulfill:
+
+     <ol type=1 start=1>
+<li>(i) scalability, maintainability, extensibility; and
+<li>(ii) optimized format for the application.
+     </ol>
+
+<p>The constraints in (i) favour <i>one central, redundancy-free, abstract,
+but transparent</i> specification, while the ones in (ii) require
+<i>possibly multiple application-specific, potentially redundant,
+optimized formats</i>.
+
+<p>In order to reconcile these two opposing requirements, HunLex introduces
+an offline layer into the word-analysis workflow, which mediates between
+two levels of resources:
+
+     <ol type=1 start=1>
+<li>a central database conforming to (i) (also primary resource, input resource),
+<li>various application-specific formats conforming to (ii) (also secondary or output resource)
+     </ol>
+
+<p>The primary resources are supposed to reasonably designed to help human maintanance,
+and the secondary ones are supposed to optimize very different things ranging
+from file size, performance with the tool that uses it, coverage, robustness,
+verbosity, normative strictness depending on who uses it for what purpose.
+
+<p>HunLex is used to <dfn>compile</dfn> the primary resources into a particular
+application-specific format. This resource
+compilation phase is an offline process which is highly configurable so
+that users can fine-tune the output resources according to their needs.
+
+<p>By introducing this layer of offline resource compilation, maintenance,
+extendability, portability of lexical resources is possible without
+compromising your performance on specific word-analysis tasks.
+
+<p>Providing the environment for a sensible primary resource specification
+framework and managing the offline precompilation process are the
+<i>raison d'&ecirc;tre</i> behind Hunlex.
+
+<!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="License"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#About">About</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Introduction">Introduction</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">2 License</h2>
+
+<p><a name="index-Under-what-restrictions-can-I-use-this-software_003f-9"></a><a name="index-Under-what-restrictions-can-I-modify-this-software_003f-10"></a>
+<a name="index-license-11"></a><a name="index-Creative-Commons-Attribution-License-12"></a>
+Ocamorph is free software.
+
+<p><a name="index-What-is-the-License-of-this-software_003f-13"></a>
+It is licensed under the <strong>Creative Commons Attribution License</strong>. 
+To view a copy of this license, visit
+<a href="http://creativecommons.org/licenses/by/2.5/">http://creativecommons.org/licenses/by/2.5/</a>
+or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
+
+<p>There are <i>no restrictions on downloading</i> it other than
+your bandwidth and our slothful ways of making things available.
+
+<p>There are <i>no restrictions on use</i> either other than its deficiencies,
+clumsy features and bugs. However, this can be amended,
+because there are <i>no restrictions on modifying</i> it either. 
+See also <a href="#Contribution">Contribution</a>.
+
+<p><a name="index-Under-what-copyright-restrictions-can-I-distribute-linguistic-resources-compiled-or-to-be-compiled-with-hunlex_003f-14"></a>
+Freedom of use implies that any product (analysed text) that you created using
+ocamorph is yours and you hold the right to distribute it
+in any way. Consider letting us know that you used ocamorph, though; see <a href="#Contact">Contact</a>.
+
+<p><a name="index-Under-what-copyright-restrictions-can-I-redistribute-this-software_003f-15"></a>
+What is more, there are <i>no restrictions on redistributing</i> this software or
+modified versions of it.
+
+<!-- Creative Commons. -->
+<!-- @quotation -->
+<!-- @strong{Todo:} -->
+<!-- Shall we not include the License? -->
+<!-- @end quotation -->
+<!-- @ref{Creative Commons}. -->
+<p><a name="index-Can-I-use-ocamorph-in-a-commercial-product_003f-Yes_002e-16"></a>
+<a name="index-Can-I-sell-ocamorph_002c-or-a-product-that-relies-on-it-to-people-for-money_003f-Yes_002e-17"></a>
+
+<div class="node">
+<a name="About"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Installation">Installation</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#License">License</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">3 Authors, Contact, Bugs</h2>
+
+<ul class="menu">
+<li><a accesskey="1" href="#LicenseExtra">LicenseExtra</a>
+<li><a accesskey="2" href="#Submitting-a-Bug-Report">Submitting a Bug Report </a>
+<li><a accesskey="3" href="#Requesting-a-New-Feature">Requesting a New Feature</a>
+<li><a accesskey="4" href="#Praises">Praises</a>
+<li><a accesskey="5" href="#Contribution">Contribution</a>
+<li><a accesskey="6" href="#Reference">Reference</a>
+<li><a accesskey="7" href="#Authors">Authors</a>
+<li><a accesskey="8" href="#Acknowledgements">Acknowledgements</a>
+<li><a accesskey="9" href="#Contact">Contact</a>
+</ul>
+
+<div class="node">
+<a name="LicenseExtra"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Submitting-a-Bug-Report">Submitting a Bug Report</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#About">About</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.1 License? What license?</h3>
+
+<p>See <a href="#License">License</a>.
+
+<p><a name="index-I-found-a-bug_002fstrange-feature_002e-What-should-I-do_003f-18"></a>
+<div class="node">
+<a name="Submitting-a-Bug-Report"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Requesting-a-New-Feature">Requesting a New Feature</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#LicenseExtra">LicenseExtra</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.2 Submitting a Bug Report</h3>
+
+<p>If you find a bug or an undesireable feature or anything that is worth a
+couple of lines ranting at the authors, please go ahead and
+send a bugreport on the MOKK Lab bugzilla page at <a href="http://mokk.bme.hu">http://mokk.bme.hu</a>
+or send a mail to me (see <a href="#Contact">Contact</a>).
+
+<div class="node">
+<a name="Requesting-a-New-Feature"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Praises">Praises</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Submitting-a-Bug-Report">Submitting a Bug Report</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.3 Requesting a New Feature</h3>
+
+<p><a name="index-I-am-using-ocamorph_002c-but-desparately-lacking-a-feature-X_002e-Can-I-request-it_003f-19"></a>
+So you are using hunlex and find yourself realizing that you would need
+a certain feature desparately but it happens not to be implemented. 
+Go ahead and request it from the authors (see <a href="#Contact">Contact</a>) or sit silently and hope!
+
+<div class="node">
+<a name="Praises"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Contribution">Contribution</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Requesting-a-New-Feature">Requesting a New Feature</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.4 Praises</h3>
+
+<p><a name="index-I-found-ocamorph-cool_002fuseful_002fuseless_002e-How-can-I-let-the-authors-know_003f-20"></a>
+If you have an opinion about ocamorph and would like the authors to
+hear about it. See <a href="#Contact">Contact</a>.
+
+<div class="node">
+<a name="Contribution"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Reference">Reference</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Praises">Praises</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.5 Contribution</h3>
+
+<p><a name="index-I-am-a-keen-hacker_002fstupid-user-with-sleepless-nights_002flong-afternoons-at-work-to-be-wasted_002fspent-usefully_002e-How-can-I-contribute-to-your-work_003f-21"></a>
+Ocamorph is open source development, so developpers are welcome to
+contribute to make it better in any imaginable way. Contact us
+(see <a href="#Contact">Contact</a>) to work out the details of how and what you would want
+to contribute to Ocamorph.
+
+<div class="node">
+<a name="Reference"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Authors">Authors</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Contribution">Contribution</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.6 Reference</h3>
+
+<p><a name="index-I-used-ocamorph-and-report-it-in-a-paper_002e-What-reference-do-I-use_003f-22"></a>
+For the context of the whole huntools kit, use
+
+<pre class="verbatim">@InProceedings{tron:etal:05,
+  author =       {Viktor Tr\'on and Gy\''orgy Gyepesi and P\'eter Hal\'acsy and Andr\'as Kornai and L\'aszl\'o N\'emeth and D\'aniel Varga},
+  title =        {Hunmorph: open source word analysis},
+  booktitle =    {Proceedings of the ACL 2005 Workshop on Software},
+  year =         2005
+}
+</pre>
+
+<p>These and other papers can be downloaded from the MOKK Lab publications page at
+<a href="http://mokk.bme.hu">http://mokk.bme.hu</a>
+
+<div class="node">
+<a name="Authors"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Acknowledgements">Acknowledgements</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Reference">Reference</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.7 Authors</h3>
+
+<p><a name="index-Who-are-you_003f-23"></a>
+The author of ocamorph and this document is <i>Viktor Trón</i>. He can be mailed to on <br>
+<a href="mailto:v.tron@ed.ac.uk">v.tron@ed.ac.uk</a>
+<br>
+Hopefully more can be found on MOKK Lab's pages at <a href="http://mokk.bme.hu">http://mokk.bme.hu</a>.
+
+<p>Viktor Trón and Péter Halácsy wrote the C binding for ocamorph.
+
+<p>Péter Halácsy is the author of the MacOS package of the ocamorph
+executable.
+
+<p>Attila Balogh made the MS Windows executable.
+
+<div class="node">
+<a name="Acknowledgements"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Contact">Contact</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Authors">Authors</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.8 Acknowledgements</h3>
+
+<p>Thanks to Péter Halácsy, Dániel Varga and András Kornai who contributed various
+ideas and design suggestions during the development of ocamorph.
+
+<p>Thanks to Chrisoph Filliatre, whose ocaml modules implementing
+bitvectors and tries are the basis for the respective ocamorph components.
+
+<p>Special thanks to Dániel Varga and Péter Halácsy for extensive testing
+ of ocamorh.
+
+<div class="node">
+<a name="Contact"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Acknowledgements">Acknowledgements</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#About">About</a>
+
+</div>
+
+<h3 class="section">3.9 Contact</h3>
+
+<p><a name="index-How-can-I-contact-you_003f-24"></a>
+We can get in contact if you
+     <ol type=1 start=1>
+<li>Mail to <i>Viktor Trón</i> on <br>
+<a href="mailto:v.tron@ed.ac.uk">v.tron@ed.ac.uk</a>
+
+     <li>Join the forums on <a href="http://mokk.bme.hu">http://mokk.bme.hu</a>
+
+     <li>Submit a bug report (see <a href="#Submitting-a-Bug-Report">Submitting a Bug Report</a>) or feature request (see <a href="#Requesting-a-New-Feature">Requesting a New Feature</a>).
+
+     </ol>
+
+<!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Installation"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Bootstrapping">Bootstrapping</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#About">About</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">4 Installation</h2>
+
+<p><a name="index-How-to-install-ocamorph_003f-25"></a>
+So you want to install ocamorph (see <a href="#Introduction">Introduction</a>) from
+the source distribution.  This document describes what and how
+you can install with this distribution.
+
+<p><a name="index-What-is-ocamorph_003f-26"></a>
+
+<ul class="menu">
+<li><a accesskey="1" href="#Download">Download</a>
+<li><a accesskey="2" href="#Supported-Platforms">Supported Platforms</a>
+<li><a accesskey="3" href="#Prerequisites">Prerequisites</a>
+<li><a accesskey="4" href="#Install">Install</a>
+<li><a accesskey="5" href="#Installation-in-more-detail">Installation in more detail</a>
+<li><a accesskey="6" href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a>
+<li><a accesskey="7" href="#Installed-Files-and-Directories">Installed Files and Directories</a>
+<li><a accesskey="8" href="#Documentation">Documentation </a>
+</ul>
+
+<div class="node">
+<a name="Download"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Supported-Platforms">Supported Platforms</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Installation">Installation</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.1 Download</h3>
+
+<p><a name="index-Where-can-I-find-the-sources_003f-27"></a>
+The latest version of the ocamorph source distribution is always available
+from the MOKK LAB website at <a href="http://mokk.bme.hu/tools/ocamorph">http://mokk.bme.hu/tools/ocamorph</a> or, if all else fails, by
+mailing to Viktor Trón <a href="mailto:v.tron@ed.ac.uk">v.tron@ed.ac.uk</a>.
+
+<div class="node">
+<a name="Supported-Platforms"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Prerequisites">Prerequisites</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Download">Download</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.2 Supported Platforms</h3>
+
+<p><a name="index-What-platforms-are-supported-by-ocamorph_003f-28"></a>
+Ocamorph can be compiled on any platform for which there
+is an <code>ocaml</code> compiler (see <a href="#Prerequisites">Prerequisites</a>). This includes
+all Linuxes, unices, MacOSX, MS Windows. There are binary packages for
+these platforms on the MOKK LAB website at <a href="http://mokk.bme.hu/tools/ocamorph">http://mokk.bme.hu/tools/ocamorph</a>.
+
+<div class="node">
+<a name="Prerequisites"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Install">Install</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Supported-Platforms">Supported Platforms</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.3 Prerequisites</h3>
+
+<p><a name="index-What-do-I-need-if-I-want-to-install-ocamorph-from-source_003f-29"></a>If you install ocamorph from the source package you need to have
+some other software installed on your system.
+
+<div class="defun">
+&mdash; Prerequisite: <b>ocaml</b><var><a name="index-ocaml-30"></a></var><br>
+<blockquote><p><a name="index-ocaml-31"></a>
+Ocamorph is written in the <dfn>ocaml</dfn> programming language
+<a href="http://www.ocaml.org/">http://www.ocaml.org/</a>.  OCaml compilers are available for
+virtually all platforms in various
+package formats for free from <a href="http://caml.inria.fr/ocaml/distrib.html">http://caml.inria.fr/ocaml/distrib.html</a>.
+
+     <p><a name="index-What-version-of-ocaml-do-I-need-to-compile-ocamorph_003f-32"></a>
+You will need <samp><span class="command">ocaml</span></samp> version &gt;=3.08.2 to compile ocamorph. 
+</p></blockquote></div>
+
+<div class="defun">
+&mdash; Prerequisite: <b>make</b><var><a name="index-make-33"></a></var><br>
+<blockquote><p><a name="index-make-34"></a><a name="index-OCamlMakefile-35"></a>
+Installation is based on <samp><span class="file">OCamlMakefile</span></samp> (i.e., <code>ocaml-make</code>)
+courtesy of Markus Mottl <br>
+<a href="http://www.ai.univie.ac.at/~markus/home/ocaml_sources.html#OCamlMakefile">http://www.ai.univie.ac.at/~markus/home/ocaml_sources.html#OCamlMakefile</a>
+<br>
+
+     <p><a name="index-make_002c-GNU-36"></a>
+<samp><span class="file">OCamlMakefile</span></samp> presupposes &lsquo;<samp><span class="samp">GNU make</span></samp>&rsquo; &gt;= 3.80 but ocamorph
+installation works with earlier versions of GNU make as well. 
+The installation tries to determine the make version automatically and
+uses a workaround Makefile in case you use make &lt;3.80. 
+In case this fails, set the &lsquo;<samp><span class="samp">Makefile</span></samp>&rsquo; variable <code>OCAMLMAKEFILE</code> to
+either <samp><span class="file">OCamlMakefile</span></samp> (for make &gt;=3.80) or
+<samp><span class="file">make_pre3.80.OCamlMakefile</span></samp> (for make &lt;3.80).
+
+     </blockquote></div>
+
+<div class="defun">
+&mdash; Prerequisite: <b>C library</b><var><a name="index-C-library-37"></a></var><br>
+<blockquote><p><a name="index-C-library-38"></a><a name="index-What-are-the-prerequisites-for-the-C-library-version-of-ocamorph_003f-39"></a>
+If you want to compile and install the C library for ocamorph, you need
+&lsquo;<samp><span class="samp">ar</span></samp>&rsquo; and <code>ranlib</code>.
+
+     </blockquote></div>
+
+<div class="defun">
+&mdash; Prerequisite: <b>Documentation</b><var><a name="index-Documentation-40"></a></var><br>
+<blockquote><p><a name="index-documentation-41"></a><a name="index-What-are-the-prerequisites-for-compiling-the-documentation-of-ocamorph_003f-42"></a>
+If you want to compile the documentation for ocamorph, you need
+the GNU <code>texinfo</code> software documentation system installed. 
+<a href="ftp://ftp.gnu.org/gnu/texinfo/">ftp://ftp.gnu.org/gnu/texinfo/</a>
+</p></blockquote></div>
+
+<div class="node">
+<a name="Install"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Installation-in-more-detail">Installation in more detail</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Prerequisites">Prerequisites</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.4 Install</h3>
+
+<p><a name="index-How-to-install-ocamorph_003f-43"></a><a name="index-make_002c-ocamorph-installation-44"></a><a name="index-Makefile_002c-ocamorph-installation-45"></a>
+ocamorph is installed in the good old way by typing
+
+<pre class="example">     $ make &amp;&amp; sudo make install
+</pre>
+<p>in the toplevel directory of the unpacked distribution. 
+If this works, great! Go ahead to <a href="#Bootstrapping">Bootstrapping</a>.
+
+<div class="node">
+<a name="Installation-in-more-detail"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Install">Install</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.5 Advanced Install</h3>
+
+<p>The ocamorph distribution is available in a source tarball called <samp><span class="file">ocamorph.tgz</span></samp>. 
+First you have to unpack it by typing
+
+<pre class="example">     $ tar xzvf ocamorph.tgz
+</pre>
+<p>Then, you enter the toplevel directory of the unpacked distribution with
+<pre class="example">     $ cd ocamorph
+</pre>
+<p>To compile the tools and libraries and documentation, simply type
+
+<pre class="example">     $ make
+</pre>
+<p>in the toplevel directory of the distribution.
+
+<p>To install it (on what gets installed, see <a href="#Installed-Files-and-Directories">Installed Files and Directories</a>), type
+
+<pre class="example">     $ make install
+</pre>
+<p>Well, by default this would want to install things under <samp><span class="file">/usr/local</span></samp>, so
+you have to have admin permissions. If you are not root but you are in the
+sudoers file with the appropriate rights, you type:
+
+<pre class="example">     $ sudo make install
+</pre>
+<p><a name="index-How-can-I-change-the-installation-target-directories_003f-46"></a>
+You can change the location of the installation by changing the install prefix path with
+
+<pre class="example">     $ sudo make <samp><span class="env">INSTALLPREFIX</span></samp>=<samp><span class="file">/my/favourite/path</span></samp> install
+</pre>
+<p>Changing the location of installation for individual install targets
+individually is not recommended but easy-peasy if you have a clue about
+&lsquo;<samp><span class="samp">make</span></samp>&rsquo; and <samp><span class="file">Makefile</span></samp>-s. To do this you have to change the relevant
+<samp><span class="file">Makefile</span></samp>-s in the subdirectories of the distribution. 
+See <a href="#Installed-Files-and-Directories">Installed Files and Directories</a>.
+
+<p>If you have problems, doubleckeck that you have the prerequisites
+(see <a href="#Prerequisites">Prerequisites</a>). If you think you followed the instructions
+but still have problems, submit a bug report (see <a href="#Submitting-a-Bug-Report">Submitting a Bug Report</a>).
+
+<p>If you are upgrading an earlier version of ocamorph, you may want to
+<i>uninstall</i> the earlier one first (see <a href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a>).
+
+<p>If you do not want to compile and install the ocamorph C library, then
+use
+
+<pre class="example">     $ make CLIB=
+     $ make CLIB= install
+</pre>
+<p>you can also compile any of the ocaml subprojects separately by setting the
+<samp><span class="env">SUBPROJS</span></samp> variable:
+
+<pre class="example">     $ make SUBPROJS="ocamorphlib" CLIB=
+</pre>
+<p>The subprojects are called: &lsquo;<samp><span class="samp">ocamorph_debug ocamorphlib ocamorph_noassert</span></samp>&rsquo;
+If you compile subprojects individually than you have to cleanup after
+the projects, cause intermediate targets are incompatible.
+
+<pre class="example">     $ make SUBPROJS="ocamorphlib" cleanup
+</pre>
+<div class="node">
+<a name="Uninstall-and-Reinstall"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Installed-Files-and-Directories">Installed Files and Directories</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Installation-in-more-detail">Installation in more detail</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.6 Uninstall and Reinstall</h3>
+
+<p><a name="index-How-do-I-uninstall-ocamorph_003f-47"></a><a name="index-How-do-I-upgrade-ocamorph_003f-48"></a><a name="index-How-do-I-reinstall-ocamorph_003f-49"></a>
+The install prefix is remembered in the source distribution in the file
+<samp><span class="file">install_prefix</span></samp>. So after you <code>cd</code> into the toplevel
+directory of the distribution, you can uninstall ocamorph by typing
+
+<p><a name="index-install_005fprefix-50"></a>
+<pre class="example">     $ make uninstall
+</pre>
+<p>You can reinstall ocamorph with
+
+<pre class="example">     $ make reinstall
+</pre>
+<p>at any time if you make modifications to the code or compile options.
+
+<p>After installation you can delete the whole source and build tree,
+however, in this case the install location will not be remembered so
+uninstall and reinstall are not available.
+
+<!-- ref to changing keywords, maybe -->
+<blockquote>
+<strong>Warning:</strong>
+Note that if you fiddle with changing the location of individual install targets, uninstall
+and resinstall will not work correctly. 
+</blockquote>
+
+<div class="node">
+<a name="Installed-Files-and-Directories"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Documentation">Documentation</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.7 Installed Files and Directories</h3>
+
+<p><a name="index-What-files-and-directories-are-installed-when-I-install-ocamorph_003f-51"></a>
+The following files and directories are installed, paths are relative to
+the <i>install prefix</i> (see <a href="#Install">Install</a>):
+
+     <ul>
+<li><samp><span class="file">bin/ocamorph_debug</span></samp>
+<a name="index-ocamorph_005fdebug-52"></a>
+is the executable which can be run on the command line (see <a href="#Command_002dline-Control">Command-line Control</a>) and can be used for debugging.
+
+     <li><samp><span class="file">bin/ocamorph_debug</span></samp>
+<a name="index-ocamorph_005fnoassert-53"></a>
+is the executable which can be run on the command line (see <a href="#Command_002dline-Control">Command-line Control</a>) and cannot be used for debugging. Otherwise it has the same
+functionality as <samp><span class="file">ocamorph_debug</span></samp>.
+
+     <li><samp><span class="file">bin/ocamorph</span></samp>
+<a name="index-ocamorph-54"></a>
+the symbolic link to <samp><span class="file">ocamorph_noassert</span></samp> and can be run on the command line (see <a href="#Command_002dline-Control">Command-line Control</a>).
+
+     <li><samp><span class="file">lib/ocamorph</span></samp>
+<a name="index-ocamorph-_0028library-directory_002c-_0040file_007blib_002focamorph_007d_0029-55"></a><a name="index-ocamorph_002c-library-56"></a>
+is the directrory in which the ocamorph library components are
+installed.
+
+     <li><samp><span class="file">lib/ocamorph/ocamorph.cmxa</span></samp>
+<a name="index-ocamorph_002ecmxa-57"></a><a name="index-ocamorph_002c-ocaml-native-code-library-58"></a>
+is the ocamorph ocaml native code library.
+
+     <li><samp><span class="file">lib/ocamorph/ocamorph.cmi</span></samp>
+<a name="index-ocamorph_002ecmi-59"></a><a name="index-ocamorph_002c-ocaml-native-code-include-60"></a>
+is the ocamorph ocaml native code library.
+
+     <li><samp><span class="file">lib/ocamorph/libocamorph.a</span></samp>
+<a name="index-libocamorph_002ea-61"></a><a name="index-ocamorph_002c-static-C-library-62"></a>
+is the ocamorph static C library. See <!-- @ref{C library}. -->
+
+     <li><samp><span class="file">lib/ocamorph/ocamorph.h</span></samp>
+<a name="index-ocamorph_002eh-63"></a><a name="index-ocamorph_002c-C-header-64"></a>
+is the C header file for ocamorph C library.
+
+     <li><samp><span class="file">share/doc/ocamorph/</span></samp>
+<a name="index-documentation-65"></a><a name="index-ocamorph-_0028documentation-directory_002c-_0040file_007bshare_002fdoc_002focamorph_007d_0029-66"></a>
+is a directory containing the ocamorph documentation. 
+Subdirectories indicate the various document formats (see <a href="#Documentation">Documentation</a>)
+most probably including a replica of this document.
+
+     <li><samp><span class="file">ocamorph.1</span></samp>
+<a name="index-manual_002c-man-page-67"></a><a name="index-ocamorph_002e1-68"></a>
+is the ocamorph man page, that describes the command-line use of ocamorph (see
+see <a href="#Command_002dline-Control">Command-line Control</a>).
+
+</ul>
+
+<div class="node">
+<a name="Documentation"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Installed-Files-and-Directories">Installed Files and Directories</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Installation">Installation</a>
+
+</div>
+
+<h3 class="section">4.8 Documentation</h3>
+
+<p>Ocamorph documentation is available in various formats. 
+You can compile and install them from the source distribution by
+changing to the doc directory and typing <code>make</code>.
+
+<p>Available formats are
+
+     <ul>
+<li>info
+texinfo pages
+<li>plaintext
+<li>html
+big bundle of html
+<li>bightml
+one big file
+<li>dvi
+<li>ps
+<li>pdf
+compiling a pdf is done with <code>texi2pdf</code> (which is a prerequisite
+for pdf generation)
+</ul>
+
+<!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Bootstrapping"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Command_002dline-Control">Command-line Control</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Installation">Installation</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">5 Bootstrapping</h2>
+
+<!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Command-line-Control"></a>
+<a name="Command_002dline-Control"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Resource-Specification">Resource Specification</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Bootstrapping">Bootstrapping</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">6 Command-line Control</h2>
+
+<p>This chapter describes how to use ocamorph on the command line.
+
+<ul class="menu">
+<li><a accesskey="1" href="#Invoking-ocamorph">Invoking ocamorph</a>
+<li><a accesskey="2" href="#Options">Options</a>
+<li><a accesskey="3" href="#Man-page">Man page</a>
+</ul>
+
+<div class="node">
+<a name="Invoking-ocamorph"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Options">Options</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Command_002dline-Control">Command-line Control</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Command_002dline-Control">Command-line Control</a>
+
+</div>
+
+<h3 class="section">6.1 Invoking ocamorph</h3>
+
+<p><a name="index-ocamorph_002c-command-line-69"></a>
+ocamorph can be invoked by typing <samp><span class="command">ocamorph</span></samp> on the command line (in a
+shell, terminal). On windows platforms the name of the executable is
+<samp><span class="command">ocamorph.exe</span></samp>.
+
+<p>If you install ocamorph from the source distribution, then two
+executables are created (see see <a href="#Installation">Installation</a>):
+
+     <ul>
+<li><samp><span class="command">ocamorph_debug</span></samp>, and
+<li><samp><span class="command">ocamorph_noassert</span></samp>
+</ul>
+
+<p><samp><span class="command">ocamorph_debug</span></samp> can be used for debugging by setting the
+command-line option <samp><span class="option">debug_level</span></samp>. <samp><span class="command">ocamorph</span></samp> is a symbolic
+link to <samp><span class="command">ocamorph_noassert</span></samp>, which cannot be used for debugging. 
+<samp><span class="command">ocamorph_noassert</span></samp> is faster than <samp><span class="command">ocamorph_debug</span></samp>, but apart
+from debugging, the two executables are functionally equivalent. 
+The usage of ocamorph is the same with both of these executables.
+
+<div class="node">
+<a name="Options"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Man-page">Man page</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Invoking-ocamorph">Invoking ocamorph</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Command_002dline-Control">Command-line Control</a>
+
+</div>
+
+<h3 class="section">6.2 Options</h3>
+
+<p>All command line options are preceded by '&ndash;'. Only resource options are
+mandatory, the rest have default values. 
+Some options take arguments which are described in detail below. 
+Options can be given in any order.
+
+<ul class="menu">
+<li><a accesskey="1" href="#Resource-Options">Resource Options</a>
+<li><a accesskey="2" href="#Algorithmic-options">Algorithmic options</a>
+<li><a accesskey="3" href="#Input-and-output-options">Input and output options</a>
+<li><a accesskey="4" href="#Generic-options">Generic options</a>
+</ul>
+
+<div class="node">
+<a name="Resource-Options"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Algorithmic-options">Algorithmic options</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Options">Options</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Options">Options</a>
+
+</div>
+
+<h4 class="subsection">6.2.1 Resource Options</h4>
+
+<p>Ocamorph reads ispell-type resources, i.e., an affix and
+a dictionary file. The specification of these language resources are
+described in <a href="#Resource-Specification">Resource Specification</a>.
+
+<p><a name="index-aff-70"></a>
+
+<div class="defun">
+&mdash; Option: <code>--aff</code><var> affix file<a name="index-g_t_0040code_007b_002d_002daff_007d-71"></a></var><br>
+<blockquote><p><var>affix file</var> is the path to the affix file. 
+This option should be used together with the <code>--dic</code> option. 
+</p></blockquote></div>
+
+<p><a name="index-dic-72"></a>
+
+<div class="defun">
+&mdash; Option: <code>--dic</code><var> dictionary file<a name="index-g_t_0040code_007b_002d_002ddic_007d-73"></a></var><br>
+<blockquote><p><var>affix file</var> is the path to the dictionary file. 
+This option should be used together with the <code>--aff</code> option. 
+</p></blockquote></div>
+
+<p>Typical usage of ocamorph with the <code>-aff</code> and <code>--dic</code> options
+is
+
+<pre class="example">     $ ocamorph --aff ./morphdb_en.aff --dic ./morphdb_en.dic
+</pre>
+<p><a name="index-bin-74"></a>
+
+<div class="defun">
+&mdash; Option: <code>--bin</code><var> binary file<a name="index-g_t_0040code_007b_002d_002dbin_007d-75"></a></var><br>
+<blockquote><p>where <var>binary-file</var> is the ocamorph native format resource. 
+If used together with the <code>-aff</code> and <code>--dic</code> options,
+ocamorph compiles the native format resource and writes it to
+<var>binary-file</var>.
+
+     <p>If the <code>--bin</code> option is given without the <code>-aff</code> and
+<code>--dic</code> options, then <var>binary-file</var> is read.
+
+     </blockquote></div>
+
+<p>The ocamorph native resource format is a dump of the internal data
+structures that ocamorph uses for the analysis. This means that
+there is no initialization overhead if ocamorph is used with the native
+resource.
+
+<p>The native resource format is actually a memory dump of the internal
+data structure performed by the <code>ocaml</code> <code>Marshal</code> module. 
+The native format therefore is portable between platforms but not
+necessarily portable between versions of ocamorph compiled with a
+different version of the ocaml compiler (since the implementation of the
+Marshal module is not guaranteed to be stable). If there is a problem
+with reading a native format resource that was created with an
+incompatible version of ocamorph, the program exits with an error. 
+In such a case, you have to make sure you either have the appropriate version
+of the resource or you have the fully portable text format aff and dic
+files and create the native format yourself with your version ocamorph. 
+Typing
+
+<pre class="example">     $ echo | ocamorph --aff ./morphdb_en.aff --dic ./morphdb_en.dic --bin ./morphdb_en.bin
+</pre>
+<p>reads in the aff and dic files and creates the native format writing it
+to <code>./morphdb_en.bin</code>. 
+Once the compatible native format resource is available, ocamorph should
+be started with it. This makes ocamorph start up immediately.
+
+<p>A typical interactive use of ocamorph looks like this:
+<pre class="example">     $ ocamorph --bin ./morphdb_hu.bin
+     szeretlek
+     &gt; szeretlek
+     szeret/VERB&lt;PERS&lt;OBJ&lt;2&gt;&gt;&gt;
+</pre>
+<p><a name="index-minimize-76"></a>
+
+<div class="defun">
+&mdash; Option: <code>--minimize</code><var><a name="index-g_t_0040code_007b_002d_002dminimize_007d-77"></a></var><br>
+<blockquote><p>If this option is given the native format resource ocamorph generates
+is minimized.
+
+     <p>This option should be used together with the <code>-aff</code>, <code>--dic</code>
+and <code>--bin</code> options (when native format resources are generated
+from the aff and dic files). 
+</p></blockquote></div>
+
+<p>Ocamorph uses a coupled trie (a tree-like data-structure where the branches are
+labelled with characters) to store the lexicon and affix rules. If the
+<code>--minimize</code> option is given this trie is minimized by collapsing
+identical subtries basically resulting in a finite automaton.
+
+<p>This minimization is computationally intensive and therefore may take a
+very long time to perform (Minimizing the Hungarian morphological
+database on my MacOS X 10.4 (1.67GHz, 2Gb RAM) takes 15 minutes). 
+Although minimized tries give slightly better runtime perfomance, their
+major virtue is that the resulting resource takes less space as well as
+less memory space when loaded.
+
+<p>The exact performance effects of minimization is not fully clear to me
+yet.
+
+<div class="node">
+<a name="Algorithmic-options"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Input-and-output-options">Input and output options</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Resource-Options">Resource Options</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Options">Options</a>
+
+</div>
+
+<h4 class="subsection">6.2.2 Algorithmic options</h4>
+
+<p>These options influence the behaviour of the analysis algorithm. 
+<a name="index-saf-78"></a>
+
+<div class="defun">
+&mdash; Option: <code>--saf</code><var><a name="index-g_t_0040code_007b_002d_002dsaf_007d-79"></a></var><br>
+<blockquote><p>If the <code>--saf</code> (<i>s</i>top <i>a</i>t <i>f</i>irst analysis) option is
+given, the algorithm does not enumerate all the alternative analyses
+of a token, but stops after the first one is found. 
+</p></blockquote></div>
+
+<p>Typically, this option is used when ocamorph is used for stemming in
+document indexing or if postprocessing of alternatives would be too expensive.
+
+<p><a name="index-compounds-80"></a>
+
+<div class="defun">
+&mdash; Option: <code>--compounds</code><var><a name="index-g_t_0040code_007b_002d_002dcompounds_007d-81"></a></var><br>
+<blockquote><p>If the <code>--compounds</code> option is given the algorithm also gives back
+compound analyses. 
+</p></blockquote></div>
+
+<p>Only compounds that are licenced in the resource file are
+possible. This option serves to enable the compounds that are ligitimated
+in the lexical resources. 
+<a name="index-blocking-82"></a>
+
+<div class="defun">
+&mdash; Option: <code>--blocking</code><var><a name="index-g_t_0040code_007b_002d_002dblocking_007d-83"></a></var><br>
+<blockquote><p>If the <code>--blocking</code> option is given the algorithm gives back
+less analyses. A lexical (non-affixed) partial analysis always blocks
+one that involves affixation. Out of two partial analyses, only ones
+that are not equivalent are kept. 
+</p></blockquote></div>
+
+<p>Blocking is typically used if language resources are redundant in that
+they contain entries which are also productively analized by affixation
+or compounding but the two are considered equivalent. Blocking
+effectively implements the idea that productive generation of an item
+by affixation or compounding is a fallback option in case the item is
+not found lexicalized.
+
+<p>Blocking is done directly in the
+algorithm (as opposed to post-processing),
+therefore gives better runtime performance than full analysis without
+blocking.
+
+<p>The <code>blocking</code> and <code>compounds</code> options can be used alongside
+in which case blocking also suppresses a compound analysis if the
+compound is entered as a lexical item.
+
+<div class="node">
+<a name="Input-and-output-options"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Generic-options">Generic options</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Algorithmic-options">Algorithmic options</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Options">Options</a>
+
+</div>
+
+<h4 class="subsection">6.2.3 Input and output options</h4>
+
+<p><a name="index-in-84"></a>
+
+<div class="defun">
+&mdash; Option: <code>--in</code><var> input_file<a name="index-g_t_0040code_007b_002d_002din_007d-85"></a></var><br>
+<blockquote><p>the tokens to be analysed are read from <var>input_file</var>. By default
+input is read from standard input. 
+</p></blockquote></div>
+
+<p>The default file format has one token
+per line. Alternatively one can use the <code>--field</code> option. 
+<a name="index-field-86"></a>
+
+<div class="defun">
+&mdash; Option: <code>--field</code><var> field_num<a name="index-g_t_0040code_007b_002d_002dfield_007d-87"></a></var><br>
+<blockquote><p>the input is assumed to contain lines with tabulator delimited
+fields. Only the string in column <var>field_num</var> is considered a token to be
+analysed. Columns start from 1. Somewhat in the spirit of awk, 0 means
+the whole line which is the default behaviour. 
+</p></blockquote></div>
+
+<p>A common use of the <code>--field</code> option is when we want to enrich a
+file with record fields with morphological analysis. A typical such
+situation is a frequency dictionary.
+
+<p><a name="index-out-88"></a>
+
+<div class="defun">
+&mdash; Option: <code>--out</code><var> output_file<a name="index-g_t_0040code_007b_002d_002dout_007d-89"></a></var><br>
+<blockquote><p>the output is written to <var>output_file</var>. By default
+ocamorph uses the standard output. 
+</p></blockquote></div>
+
+<p>The format of the output is <br>
+<var>tag_preamble</var> + <var>input_line</var> + <var>no_of_analyses</var> + <var>analyses</var>
+
+<p>where <var>analyses</var> is the sequence of analyses delimited by
+<var>tag_sep</var>.
+
+<p><var>tag_preamble</var> and <var>tag_sep</var> can be changed via options:
+<a name="index-tag_005fpreamble-90"></a>
+
+<div class="defun">
+&mdash; Option: <code>--tab_preamble</code><var> tag_preamble<a name="index-g_t_0040code_007b_002d_002dtab_005fpreamble_007d-91"></a></var><br>
+<blockquote><p>specifies the tag preamble. By default the preamble string is "&gt; ". 
+</p></blockquote></div>
+<a name="index-tag_005fsep-92"></a>
+
+<div class="defun">
+&mdash; Option: <code>--tab_sep</code><var> tag_preamble<a name="index-g_t_0040code_007b_002d_002dtab_005fsep_007d-93"></a></var><br>
+<blockquote><p>specifies the tag separator. By default the delimiter string is a newline. 
+</p></blockquote></div>
+
+<p>Additionally we can output the number of analyses:
+<a name="index-count_005fanalyses-94"></a>
+
+<div class="defun">
+&mdash; Option: <code>--count_analyses</code><var><a name="index-g_t_0040code_007b_002d_002dcount_005fanalyses_007d-95"></a></var><br>
+<blockquote><p>If the <code>--count_analyses</code> option is given
+the number of analyses is prepended to
+the array of analyses (delimited by <var>tag_sep</var>). 
+By default the number of analyses is not output. 
+Note that using this with the <code>--saf</code> (stop at first analysis)
+option does not make much sense. 
+</p></blockquote></div>
+
+<p>A typical use of these input/output options is illustrated with the
+following command line:
+
+<pre class="example">     $ cat text|tr -s ' ' '\n' | sort | uniq -c | sed 's/^ *//' | tr ' ' '\t' |\
+      ocamorph --bin ./morphdb_en.bin --field 2 --tag_sep ' ' --tag_preamble '' \
+     --count_analyses &gt; text.analysed.freq
+</pre>
+<div class="node">
+<a name="Generic-options"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Input-and-output-options">Input and output options</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Options">Options</a>
+
+</div>
+
+<h4 class="subsection">6.2.4 Generic options</h4>
+
+<p><a name="index-debug_005flevel-96"></a><a name="index-debugging-ocamorph-97"></a><a name="index-verbosity-98"></a><a name="index-warnings-99"></a>
+<a name="index-How-can-I-debug-ocamorph_003f-100"></a>
+
+<div class="defun">
+&mdash; Option: <code>--debug_level</code><var> debug_level<a name="index-g_t_0040code_007b_002d_002ddebug_005flevel_007d-101"></a></var><br>
+<blockquote><p><var>debug_level</var> is an integer that specifies the debug level, virtually the verbosity of ocamorph. 
+The higher the number the more verbose. 
+</p></blockquote></div>
+
+<p>Ocamorph writes messages to the standard error.
+
+<p>Debug levels have the following effects:
+     <ul>
+<li>0:
+the default value. Only error messages are written to standard
+error
+<li>1:
+Basic messages and warnings
+<li>2-6:
+more and more logs used for debugging. Only available with
+<samp><span class="command">ocamorph_debug</span></samp>
+<li>&lt;0:
+completely silent. Even error messages are suppressed. Errors
+throw exceptions and you only see them the way the ocaml runtime system
+verbalizes them. 
+</ul>
+
+<p><a name="index-help-102"></a>
+
+<div class="defun">
+&mdash; Option: <code>--help</code><var><a name="index-g_t_0040code_007b_002d_002dhelp_007d-103"></a></var><br>
+<blockquote><p>displays the list of options and quits
+</p></blockquote></div>
+
+<p><a name="index-version-104"></a>
+
+<div class="defun">
+&mdash; Option: <code>--version</code><var><a name="index-g_t_0040code_007b_002d_002dversion_007d-105"></a></var><br>
+<blockquote><p>displays the version number and quits
+</p></blockquote></div>
+
+<div class="node">
+<a name="Man-page"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Options">Options</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Command_002dline-Control">Command-line Control</a>
+
+</div>
+
+<h3 class="section">6.3 Man page</h3>
+
+<p><a name="index-Can-I-use-ocamorph-from-a-shell_003f-106"></a><a name="index-Can-I-use-ocamorph-on-the-command_002dline_003f-107"></a><a name="index-man-page-108"></a>
+This last section is a verbatim include of the ocamorph manpage
+(which is automatically generated by <samp><span class="command">help2man</span></samp>). 
+Please be suspicious if it seems inconsistent with the previous section.
+
+<pre class="verbatim">OCAMORPH(1)			 User Commands			   OCAMORPH(1)
+
+
+
+NAME
+       ocamorph - manual page for ocamorph 0.1
+
+SYNOPSIS
+       &lt;command> &lt;options>
+
+OPTIONS
+       option description (default settings)
+
+       ------------------------------------------
+
+       --aff  input affix file (affix.aff)
+
+       --dic  input dictionary file (dictionary.dic)
+
+       --bin  binary format (no)
+
+       ALGORITHMIC OPTIONS
+
+       --minimize
+	      minimize	the  trie  [gives better performance, saves space, but
+	      takes long to build] (no)
+
+       --saf  stop at first analysis (no)
+
+       --compounds
+	      allow compounds (no)
+
+       --blocking
+	      blocking by lexicalized relative stems (no)
+
+       INPUT OPTIONS
+
+       --in   input from file (stdin)
+
+       --out  output to file (stdout)
+
+       --field
+	      analyse only this field (0 = whole line)
+
+       OUTPUT OPTIONS
+
+       --count_analyses
+	      outputs the number of analyses (no)
+
+       --tag_preamble
+	      preamble string ("> ")
+
+       --tag_sep
+	      tag separator (newline)
+
+       GENERIC OPTIONS
+
+       --debug_level
+	      debug level (0)
+
+       --help display this list of options and quits
+
+       --version
+	      displays version info and quits
+
+       -help  Display this list of options
+
+SEE ALSO
+       The full documentation for ocamorph is maintained as a Texinfo  manual.
+       If  the info and ocamorph programs are properly installed at your site,
+       the command
+
+	      info ocamorph
+
+       should give you access to the complete manual.
+
+
+
+ocamorph 0.1			 December 2005			   OCAMORPH(1)
+</pre>
+<!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+
+<div class="node">
+<a name="Resource-Specification"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Related-Software-and-Resources">Related Software and Resources</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Command_002dline-Control">Command-line Control</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">7 Resource Specification</h2>
+
+<div class="node">
+<a name="Related-Software-and-Resources"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Concept-Index">Concept Index</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Resource-Specification">Resource Specification</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">8 Related Software and Resources</h2>
+
+<ul class="menu">
+<li><a accesskey="1" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>
+<li><a accesskey="2" href="#Available-resources">Available resources</a>
+<li><a accesskey="3" href="#Hunlex_0027s-relatives">Hunlex's relatives</a>
+</ul>
+
+<div class="node">
+<a name="Software-that-can-use-the-output-of-Hunlex-as-input"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Available-resources">Available resources</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Related-Software-and-Resources">Related Software and Resources</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Related-Software-and-Resources">Related Software and Resources</a>
+
+</div>
+
+<h3 class="section">8.1 Software that can use the output of Hunlex as input</h3>
+
+<p><a name="index-Which-softwares-can-use-the-output-of-Hunlex_003f-109"></a>
+
+<ul class="menu">
+<li><a accesskey="1" href="#Huntools">Huntools</a>
+<li><a accesskey="2" href="#Myspell">Myspell</a>
+<li><a accesskey="3" href="#Jmorph">Jmorph</a>
+<li><a accesskey="4" href="#Ispell">Ispell</a>
+</ul>
+
+<div class="node">
+<a name="Huntools"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Myspell">Myspell</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>
+
+</div>
+
+<h4 class="subsection">8.1.1 Huntools</h4>
+
+<p><a name="index-Can-you-recommend-a-spellchecker_003f-110"></a><a name="index-Can-you-recommend-a-stemmer_003f-111"></a><a name="index-Can-you-recommend-a-morphological-analyzer_003f-112"></a>
+<div class="node">
+<a name="Myspell"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Jmorph">Jmorph</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Huntools">Huntools</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>
+
+</div>
+
+<h4 class="subsection">8.1.2 Myspell</h4>
+
+<div class="node">
+<a name="Jmorph"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Ispell">Ispell</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Myspell">Myspell</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>
+
+</div>
+
+<h4 class="subsection">8.1.3 Jmorph</h4>
+
+<p><a name="index-Can-you-recommend-a-morphological-analyzer_003f-113"></a>
+<div class="node">
+<a name="Ispell"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Jmorph">Jmorph</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>
+
+</div>
+
+<h4 class="subsection">8.1.4 Ispell</h4>
+
+<div class="node">
+<a name="Available-resources"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Hunlex_0027s-relatives">Hunlex's relatives</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Related-Software-and-Resources">Related Software and Resources</a>
+
+</div>
+
+<h3 class="section">8.2 Available resources</h3>
+
+<p><a name="index-Are-there-any-Hunlex-resources-available-for-any-language_003f-114"></a>
+
+<ul class="menu">
+<li><a accesskey="1" href="#The-Hungarian-Morphdb-Project">The Hungarian Morphdb Project</a>
+<li><a accesskey="2" href="#The-English-Morphdb-Project">The English Morphdb Project</a>
+</ul>
+
+<div class="node">
+<a name="The-Hungarian-Morphdb-Project"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#The-English-Morphdb-Project">The English Morphdb Project</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Available-resources">Available resources</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Available-resources">Available resources</a>
+
+</div>
+
+<h4 class="subsection">8.2.1 The Hungarian Morphdb Project</h4>
+
+<div class="node">
+<a name="The-English-Morphdb-Project"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#The-Hungarian-Morphdb-Project">The Hungarian Morphdb Project</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Available-resources">Available resources</a>
+
+</div>
+
+<h4 class="subsection">8.2.2 The English Morphdb Project</h4>
+
+<div class="node">
+<a name="Hunlex's-relatives"></a>
+<a name="Hunlex_0027s-relatives"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Available-resources">Available resources</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Related-Software-and-Resources">Related Software and Resources</a>
+
+</div>
+
+<h3 class="section">8.3 Hunlex's relatives</h3>
+
+<ul class="menu">
+<li><a accesskey="1" href="#XFST-etc_002e">XFST etc.</a>
+</ul>
+
+<div class="node">
+<a name="XFST-etc."></a>
+<a name="XFST-etc_002e"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Hunlex_0027s-relatives">Hunlex's relatives</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Hunlex_0027s-relatives">Hunlex's relatives</a>
+
+</div>
+
+<h4 class="subsection">8.3.1 XFST, TWOLC, LEXC</h4>
+
+<p><a name="index-Are-there-software-with-similar-functionality_003f-115"></a>
+For <code>xfst, twolc, lexc</code>, see
+
+<p><a href="http://www.xrce.xerox.com/competencies/content-analysis/fst/home.en.html">http://www.xrce.xerox.com/competencies/content-analysis/fst/home.en.html</a>
+
+<p>or
+
+<p><a href="http://www.stanford.edu/~laurik/fsmbook/home.html">http://www.stanford.edu/~laurik/fsmbook/home.html</a>
+
+<!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Concept-Index"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Files-Index">Files Index</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Related-Software-and-Resources">Related Software and Resources</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="unnumbered">Concept Index</h2>
+
+<ul class="index-cp" compact>
+<li><a href="#index-C-library-38">C library</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-Creative-Commons-Attribution-License-12">Creative Commons Attribution License</a>: <a href="#License">License</a></li>
+<li><a href="#index-debugging-ocamorph-97">debugging ocamorph</a>: <a href="#Generic-options">Generic options</a></li>
+<li><a href="#index-documentation-65">documentation</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-documentation-41">documentation</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-hunmorph-3">hunmorph</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-license-11">license</a>: <a href="#License">License</a></li>
+<li><a href="#index-make-34">make</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-make_002c-GNU-36">make, GNU</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-make_002c-ocamorph-installation-44">make, ocamorph installation</a>: <a href="#Install">Install</a></li>
+<li><a href="#index-Makefile_002c-ocamorph-installation-45">Makefile, ocamorph installation</a>: <a href="#Install">Install</a></li>
+<li><a href="#index-man-page-108">man page</a>: <a href="#Man-page">Man page</a></li>
+<li><a href="#index-manual_002c-man-page-67">manual, man page</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-morphological-analyser-5">morphological analyser</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-morphological-analysis-4">morphological analysis</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-ocaml-31">ocaml</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-OCamlMakefile-35">OCamlMakefile</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-ocamorph-2">ocamorph</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-ocamorph_002c-C-header-64">ocamorph, C header</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002c-command-line-69">ocamorph, command line</a>: <a href="#Invoking-ocamorph">Invoking ocamorph</a></li>
+<li><a href="#index-ocamorph_002c-library-56">ocamorph, library</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002c-ocaml-native-code-include-60">ocamorph, ocaml native code include</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002c-ocaml-native-code-library-58">ocamorph, ocaml native code library</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002c-static-C-library-62">ocamorph, static C library</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-spellchecker-8">spellchecker</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-spellchecking-7">spellchecking</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-stemming-stemmer-6">stemming stemmer</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-verbosity-98">verbosity</a>: <a href="#Generic-options">Generic options</a></li>
+<li><a href="#index-warnings-99">warnings</a>: <a href="#Generic-options">Generic options</a></li>
+</ul><!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Files-Index"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Options-Index">Options Index</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Concept-Index">Concept Index</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="unnumbered">Files Index</h2>
+
+
+
+<ul class="index-fi" compact>
+<li><a href="#index-install_005fprefix-50">install_prefix</a>: <a href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a></li>
+<li><a href="#index-libocamorph_002ea-61">libocamorph.a</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph-54">ocamorph</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph-_0028documentation-directory_002c-_0040file_007bshare_002fdoc_002focamorph_007d_0029-66">ocamorph (documentation directory, <samp><span class="file">share/doc/ocamorph</span></samp>)</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph-_0028library-directory_002c-_0040file_007blib_002focamorph_007d_0029-55">ocamorph (library directory, <samp><span class="file">lib/ocamorph</span></samp>)</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002e1-68">ocamorph.1</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002ecmi-59">ocamorph.cmi</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002ecmxa-57">ocamorph.cmxa</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_002eh-63">ocamorph.h</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_005fdebug-52">ocamorph_debug</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-ocamorph_005fnoassert-53">ocamorph_noassert</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+</ul><!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Options-Index"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Control-Flags-Index">Control Flags Index</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Files-Index">Files Index</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="unnumbered">Variables and Options Index</h2>
+
+
+
+<ul class="index-vr" compact>
+<li><a href="#index-aff-70"><code>aff</code></a>: <a href="#Resource-Options">Resource Options</a></li>
+<li><a href="#index-bin-74"><code>bin</code></a>: <a href="#Resource-Options">Resource Options</a></li>
+<li><a href="#index-blocking-82"><code>blocking</code></a>: <a href="#Algorithmic-options">Algorithmic options</a></li>
+<li><a href="#index-compounds-80"><code>compounds</code></a>: <a href="#Algorithmic-options">Algorithmic options</a></li>
+<li><a href="#index-count_005fanalyses-94"><code>count_analyses</code></a>: <a href="#Input-and-output-options">Input and output options</a></li>
+<li><a href="#index-debug_005flevel-96"><code>debug_level</code></a>: <a href="#Generic-options">Generic options</a></li>
+<li><a href="#index-dic-72"><code>dic</code></a>: <a href="#Resource-Options">Resource Options</a></li>
+<li><a href="#index-field-86"><code>field</code></a>: <a href="#Input-and-output-options">Input and output options</a></li>
+<li><a href="#index-help-102"><code>help</code></a>: <a href="#Generic-options">Generic options</a></li>
+<li><a href="#index-in-84"><code>in</code></a>: <a href="#Input-and-output-options">Input and output options</a></li>
+<li><a href="#index-minimize-76"><code>minimize</code></a>: <a href="#Resource-Options">Resource Options</a></li>
+<li><a href="#index-out-88"><code>out</code></a>: <a href="#Input-and-output-options">Input and output options</a></li>
+<li><a href="#index-saf-78"><code>saf</code></a>: <a href="#Algorithmic-options">Algorithmic options</a></li>
+<li><a href="#index-tag_005fpreamble-90"><code>tag_preamble</code></a>: <a href="#Input-and-output-options">Input and output options</a></li>
+<li><a href="#index-tag_005fsep-92"><code>tag_sep</code></a>: <a href="#Input-and-output-options">Input and output options</a></li>
+<li><a href="#index-version-104"><code>version</code></a>: <a href="#Generic-options">Generic options</a></li>
+</ul><div class="node">
+<a name="Control-Flags-Index"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Frequently-Asked-Questions">Frequently Asked Questions</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Options-Index">Options Index</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="unnumbered">Control Flags Index</h2>
+
+
+
+<ul class="index-kw" compact>
+</ul><!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+<div class="node">
+<a name="Frequently-Asked-Questions"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Control-Flags-Index">Control Flags Index</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="unnumbered">Frequently Asked Questions</h2>
+
+
+
+<ul class="index-qu" compact>
+<li><a href="#index-Are-there-any-Hunlex-resources-available-for-any-language_003f-114">Are there any Hunlex resources available for any language?</a>: <a href="#Available-resources">Available resources</a></li>
+<li><a href="#index-Are-there-software-with-similar-functionality_003f-115">Are there software with similar functionality?</a>: <a href="#XFST-etc_002e">XFST etc.</a></li>
+<li><a href="#index-Can-I-sell-ocamorph_002c-or-a-product-that-relies-on-it-to-people-for-money_003f-Yes_002e-17">Can I sell ocamorph, or a product that relies on it to people for money? Yes.</a>: <a href="#License">License</a></li>
+<li><a href="#index-Can-I-use-ocamorph-from-a-shell_003f-106">Can I use ocamorph from a shell?</a>: <a href="#Man-page">Man page</a></li>
+<li><a href="#index-Can-I-use-ocamorph-in-a-commercial-product_003f-Yes_002e-16">Can I use ocamorph in a commercial product? Yes.</a>: <a href="#License">License</a></li>
+<li><a href="#index-Can-I-use-ocamorph-on-the-command_002dline_003f-107">Can I use ocamorph on the command-line?</a>: <a href="#Man-page">Man page</a></li>
+<li><a href="#index-Can-you-recommend-a-morphological-analyzer_003f-113">Can you recommend a morphological analyzer?</a>: <a href="#Jmorph">Jmorph</a></li>
+<li><a href="#index-Can-you-recommend-a-morphological-analyzer_003f-112">Can you recommend a morphological analyzer?</a>: <a href="#Huntools">Huntools</a></li>
+<li><a href="#index-Can-you-recommend-a-spellchecker_003f-110">Can you recommend a spellchecker?</a>: <a href="#Huntools">Huntools</a></li>
+<li><a href="#index-Can-you-recommend-a-stemmer_003f-111">Can you recommend a stemmer?</a>: <a href="#Huntools">Huntools</a></li>
+<li><a href="#index-How-can-I-change-the-installation-target-directories_003f-46">How can I change the installation target directories?</a>: <a href="#Installation-in-more-detail">Installation in more detail</a></li>
+<li><a href="#index-How-can-I-contact-you_003f-24">How can I contact you?</a>: <a href="#Contact">Contact</a></li>
+<li><a href="#index-How-can-I-debug-ocamorph_003f-100">How can I debug ocamorph?</a>: <a href="#Generic-options">Generic options</a></li>
+<li><a href="#index-How-do-I-reinstall-ocamorph_003f-49">How do I reinstall ocamorph?</a>: <a href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a></li>
+<li><a href="#index-How-do-I-uninstall-ocamorph_003f-47">How do I uninstall ocamorph?</a>: <a href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a></li>
+<li><a href="#index-How-do-I-upgrade-ocamorph_003f-48">How do I upgrade ocamorph?</a>: <a href="#Uninstall-and-Reinstall">Uninstall and Reinstall</a></li>
+<li><a href="#index-How-to-install-ocamorph_003f-43">How to install ocamorph?</a>: <a href="#Install">Install</a></li>
+<li><a href="#index-How-to-install-ocamorph_003f-25">How to install ocamorph?</a>: <a href="#Installation">Installation</a></li>
+<li><a href="#index-I-am-a-keen-hacker_002fstupid-user-with-sleepless-nights_002flong-afternoons-at-work-to-be-wasted_002fspent-usefully_002e-How-can-I-contribute-to-your-work_003f-21">I am a keen hacker/stupid user with sleepless nights/long afternoons at work to be wasted/spent usefully. How can I contribute to your work?</a>: <a href="#Contribution">Contribution</a></li>
+<li><a href="#index-I-am-using-ocamorph_002c-but-desparately-lacking-a-feature-X_002e-Can-I-request-it_003f-19">I am using ocamorph, but desparately lacking a feature X. Can I request it?</a>: <a href="#Requesting-a-New-Feature">Requesting a New Feature</a></li>
+<li><a href="#index-I-found-a-bug_002fstrange-feature_002e-What-should-I-do_003f-18">I found a bug/strange feature. What should I do?</a>: <a href="#LicenseExtra">LicenseExtra</a></li>
+<li><a href="#index-I-found-ocamorph-cool_002fuseful_002fuseless_002e-How-can-I-let-the-authors-know_003f-20">I found ocamorph cool/useful/useless. How can I let the authors know?</a>: <a href="#Praises">Praises</a></li>
+<li><a href="#index-I-used-ocamorph-and-report-it-in-a-paper_002e-What-reference-do-I-use_003f-22">I used ocamorph and report it in a paper. What reference do I use?</a>: <a href="#Reference">Reference</a></li>
+<li><a href="#index-Under-what-copyright-restrictions-can-I-distribute-linguistic-resources-compiled-or-to-be-compiled-with-hunlex_003f-14">Under what copyright restrictions can I distribute linguistic resources compiled or to be compiled with hunlex?</a>: <a href="#License">License</a></li>
+<li><a href="#index-Under-what-copyright-restrictions-can-I-redistribute-this-software_003f-15">Under what copyright restrictions can I redistribute this software?</a>: <a href="#License">License</a></li>
+<li><a href="#index-Under-what-restrictions-can-I-modify-this-software_003f-10">Under what restrictions can I modify this software?</a>: <a href="#License">License</a></li>
+<li><a href="#index-Under-what-restrictions-can-I-use-this-software_003f-9">Under what restrictions can I use this software?</a>: <a href="#License">License</a></li>
+<li><a href="#index-What-are-the-prerequisites-for-compiling-the-documentation-of-ocamorph_003f-42">What are the prerequisites for compiling the documentation of ocamorph?</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-What-are-the-prerequisites-for-the-C-library-version-of-ocamorph_003f-39">What are the prerequisites for the C library version of ocamorph?</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-What-do-I-need-if-I-want-to-install-ocamorph-from-source_003f-29">What do I need if I want to install ocamorph from source?</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-What-files-and-directories-are-installed-when-I-install-ocamorph_003f-51">What files and directories are installed when I install ocamorph?</a>: <a href="#Installed-Files-and-Directories">Installed Files and Directories</a></li>
+<li><a href="#index-What-is-ocamorph_003f-26">What is ocamorph?</a>: <a href="#Installation">Installation</a></li>
+<li><a href="#index-What-is-Ocamorph_003f-1">What is Ocamorph?</a>: <a href="#Ocamorph">Ocamorph</a></li>
+<li><a href="#index-What-is-the-License-of-this-software_003f-13">What is the License of this software?</a>: <a href="#License">License</a></li>
+<li><a href="#index-What-platforms-are-supported-by-ocamorph_003f-28">What platforms are supported by ocamorph?</a>: <a href="#Supported-Platforms">Supported Platforms</a></li>
+<li><a href="#index-What-version-of-ocaml-do-I-need-to-compile-ocamorph_003f-32">What version of ocaml do I need to compile ocamorph?</a>: <a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#index-Where-can-I-find-the-sources_003f-27">Where can I find the sources?</a>: <a href="#Download">Download</a></li>
+<li><a href="#index-Which-softwares-can-use-the-output-of-Hunlex_003f-109">Which softwares can use the output of Hunlex?</a>: <a href="#Software-that-can-use-the-output-of-Hunlex-as-input">Software that can use the output of Hunlex as input</a></li>
+<li><a href="#index-Who-are-you_003f-23">Who are you?</a>: <a href="#Authors">Authors</a></li>
+</ul><!-- Local Variables: -->
+<!-- mode: texinfo -->
+<!-- TeX-master: "ocamorph.texinfo" -->
+<!-- End: -->
+</body></html>
+
+<!--
+
+Local Variables:
+coding: iso-8859-2
+End:
+
+-->

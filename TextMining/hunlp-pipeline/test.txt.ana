@@ -1,0 +1,24 @@
+Állatok	állat	NOUN<PLUR>	állat/NOUN<PLUR>
+vannak	van	VERB<PLUR>	van/VERB<PLUR>
+mindenhol	mindenhol	ADV	mindenhol/ADV
+az	a	ART	a/ART
+erdőben	erdő	NOUN<CAS<INE>>	erdő/NOUN<CAS<INE>>
+.	.	PUNCT	./PUNCT
+
+Ha	ha	CONJ	ha/CONJ
+nem	nem	ADV	nem/ADV
+tudtuk	tud	VERB<PAST><PERS<1>><PLUR><DEF>	tud/VERB<PAST><PERS<1>><PLUR><DEF>
+volna	van	VERB<COND>	van/VERB<COND>
+elintézni	elintéz	VERB<INF>	elintéz/VERB<INF>
+őket	ők	NOUN<PERS><PLUR><CAS<ACC>>	ők/NOUN<PERS><PLUR><CAS<ACC>>
+,	,	PUNCT	,/PUNCT
+akkor	akkor	ADV	akkor/ADV
+nekünk	ti	NOUN<PERS<1>><PLUR><CAS<DAT>>	ti/NOUN<PERS<1>><PLUR><CAS<DAT>>
+jönnek	jön	VERB<PLUR>	jön/VERB<PLUR>
+.	.	PUNCT	./PUNCT
+
+Csodálatos	csodálatos	ADJ	csodálatos/ADJ
+ez	ez	NOUN	ez/NOUN
+a	a	ART	a/ART
+képregény	képregény	NOUN	képregény/NOUN
+

@@ -1,0 +1,18 @@
+/META/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/Makefile/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/aff_lexer.mll/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/aff_parser.mly/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/analysis.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/bv.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/constraint.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/dic_lexer.mll/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/dic_parser.mly/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/kr.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/minimize.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/parser_common.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/stringTrie.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/tag.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/trie.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/utils.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+/zip_list.ml/1.1.1.1/Tue Aug  4 00:11:16 2009//
+D
