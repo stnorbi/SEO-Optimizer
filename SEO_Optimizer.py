@@ -91,3 +91,4 @@ app=QApplication(sys.argv)
 window=SeoOptimizer()
 window.show()
 app.exec_() 
+
